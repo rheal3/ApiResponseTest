@@ -51,9 +51,18 @@ for audit in output['audits']:
 ################ access information on an audit ##############################
 
 auditURL = "https://sandpit-api.safetyculture.io/audits/"
-response = requests.get(auditURL + auditIDs[0], headers=header)
-audit = response.json() if response.status_code == requests.codes.ok else None 
-print(audit['audit_data'])
 
-for key in audit.keys():
-    print(key)
+score = 0
+totalScore = 0
+for auditID in auditIDs:
+    response = requests.get(auditURL + auditID, headers=header)
+    audit = response.json() if response.status_code == requests.codes.ok else None 
+    #print(audit)
+    print(audit['audit_data']['score'])
+    print(audit['audit_data']['total_score'])
+
+    score += audit['audit_data']['score']
+    totalScore += audit['audit_data']['total_score']
+
+print ("Score: " + str(score))
+print ("Total Score: " + str(totalScore))
