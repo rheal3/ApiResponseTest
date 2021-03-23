@@ -48,12 +48,13 @@ for audit in output['audits']:
 
 #print(auditIDs[0])
 
-################ get score and total score from an audit ##############################
+################ get score, total score, and failed items from an audit ##############################
 
 auditURL = "https://sandpit-api.safetyculture.io/audits/"
 
 score = 0
 totalScore = 0
+failedItems = 0
 for auditID in auditIDs:
     response = requests.get(auditURL + auditID, headers=header)
     audit = response.json() if response.status_code == requests.codes.ok else None 
@@ -64,26 +65,22 @@ for auditID in auditIDs:
     score += audit['audit_data']['score']
     totalScore += audit['audit_data']['total_score']
 
-#print ("Score: " + str(score))
-#print ("Total Score: " + str(totalScore))
+    for key in audit['template_data']['response_sets'].keys():
+        #print(key)
+        #print(audit['template_data']['response_sets'][key]['responses'])
+        #print(" ")
+        for metaData in audit['template_data']['response_sets'][key]['responses']:
+            #print("Data: " + str(metaData))
+            if metaData['score'] == 0 and metaData['enable_score'] == True:
+                failedItems += 1
+            #for metaKey in metaData.keys():
+                #print(metaKey)
 
-############# get numnber of failed items #######################
-
-response = requests.get(auditURL + auditIDs[0], headers=header)
-audit = response.json() if response.status_code == requests.codes.ok else None
-#print(audit['template_data']['response_sets'])
-
-failedItems = 0
-for key in audit['template_data']['response_sets'].keys():
-    #print(key)
-    data = audit['template_data']['response_sets'][key]
-    #print(audit['template_data']['response_sets'][key]['responses'])
-    print(" ")
-    for metaData in audit['template_data']['response_sets'][key]['responses']:
-        print("Data: " + str(metaData))
-        if metaData['score'] == 0 and metaData['enable_score'] == True:
-            failedItems += 1
-        #for metaKey in metaData.keys():
-            #print(metaKey)
-
+print ("Score: " + str(score))
+print ("Total Score: " + str(totalScore))
 print("Number of failed items: " + str(failedItems))
+
+
+
+############### get each individual's score, total score, and failed items ###################
+
