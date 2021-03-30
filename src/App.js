@@ -4,7 +4,7 @@ import Login from './components/Login/Login'
 
 
 const App = () => {
-
+    localStorage.setItem('BASE_URL', "https://sandpit-api.safetyculture.io")
 
 
     return(

@@ -1,56 +1,29 @@
-import React, {useState} from 'react'
-import GetAuthToken from './GetAuthToken'
+import React, { useState } from 'react'
+import getAccessToken from './GetAccessToken'
 
 const Login = () => {
     const [usernameValue, setUsernameValue] = useState('')
     const [passwordValue, setPasswordValue] = useState('')
-    let apiToken
-    const BASE_URL = "https://sandpit-api.safetyculture.io"
 
-    const handleUsernameChange = (event) => {
+    const handleUsernameInputChange = (event) => {
         setUsernameValue(event.target.value)
     }
 
-    const handlePasswordChange = (event) => {
+    const handlePasswordInputChange = (event) => {
         setPasswordValue(event.target.value)
     }
 
-    const handleClick = () => {
-        setUsernameValue("")
-        setPasswordValue("")
-        let url = BASE_URL + "/auth"
-        apiToken = GetAuthToken(usernameValue, passwordValue, url)
-        console.log(apiToken)
-        // console.log(apiToken)
-        // fetch(url, {
-        //     body: `grant_type=password&username=${usernameValue}&password=${passwordValue}`,
-        //     headers: {
-        //         "Content-Type": "application/x-www-form-urlencoded"
-        //     },
-        //     method: "POST"
-        //   })
-        //   .then(response => {
-        //         return response.json()
-        //   })
-        //   .then(data => {
-        //       apiToken = data.access_token
-        //       console.log(apiToken)
-        //   })
-        //   .catch(error => console.log(error))
-    }
-
-    return(
+    return (
         <div>
-            <label >Enter username: </label>
-            <input type="text" value={usernameValue} onChange={handleUsernameChange}/> 
-            <br/>
-            <label >Enter password: </label>
-            <input type="password" value={passwordValue} onChange={handlePasswordChange}/>
-            <br/>
-            <button onClick={handleClick}>Get Token</button>
+            <input type="text" value={usernameValue} onChange={handleUsernameInputChange} placeholder="email" />
+            <input type="password" value={passwordValue} onChange={handlePasswordInputChange} placeholder="password" />
+            <button onClick={() => {
+                getAccessToken(usernameValue, passwordValue)
+                setUsernameValue('')
+                setPasswordValue('')
+                }}>Submit</button>
         </div>
     )
-
 }
 
 export default Login
