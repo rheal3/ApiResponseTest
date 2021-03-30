@@ -1,7 +1,7 @@
 let apiToken;
 
 function getAccessToken(username, password) {
-    let url = localStorage.getItem('BASE_URL') + "/auth";
+    let url = sessionStorage.getItem('BASE_URL') + "/auth";
     fetch(url, {
         body: `grant_type=password&username=${username}&password=${password}`,
         headers: {
@@ -13,7 +13,7 @@ function getAccessToken(username, password) {
     }).then(data => {
         apiToken = data.access_token;
         console.log(apiToken)
-        localStorage.setItem('apiToken', apiToken)
+        sessionStorage.setItem('apiToken', apiToken)
         alert('Token Acquired.')
     }).catch(error => console.log(error))
 }
