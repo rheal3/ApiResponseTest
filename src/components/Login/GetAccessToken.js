@@ -1,5 +1,3 @@
-let apiToken;
-
 function getAccessToken(username, password) {
     let url = sessionStorage.getItem('BASE_URL') + "/auth";
 
@@ -12,16 +10,22 @@ function getAccessToken(username, password) {
         },
         method: "POST"
     }).then(response => {
-
         let endTime = window.performance.now()
         let time = endTime - startTime
         console.log("Get API Token Response Execution Time: " + time + " milliseconds")
 
-        return response.json()
+        if (response.ok) {
+            return response.json()
+        } else {
+            alert('Invalid Login Details')
+            return false
+        }
     }).then(data => {
-        apiToken = data.access_token;
-        sessionStorage.setItem('apiToken', apiToken)
-        alert('Token Acquired.')
+        if (data !== false) {
+            const apiToken = data.access_token;
+            sessionStorage.setItem('apiToken', apiToken)
+            alert('Token Acquired.')
+        }
     }).catch(error => console.log(error))
 }
 
