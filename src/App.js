@@ -1,8 +1,7 @@
 import React from 'react'
 import Login from './components/Login/Login'
+import GetUSers from './components/ApiCalls/GetUsers'
 import GetGroups from './components/ApiCalls/GetGroups'
-import GetUsers from './components/ApiCalls/GetUsers'
-
 
 
 const App = () => {
@@ -10,10 +9,12 @@ const App = () => {
 
     return(
         <div>
+
         <Login></Login>
         <p>Log in to use these super cool features: </p>
         <GetGroups></GetGroups>
-        <GetUsers></GetUsers>
+        <GetUSers></GetUSers>
+
         </div>
     )
 }

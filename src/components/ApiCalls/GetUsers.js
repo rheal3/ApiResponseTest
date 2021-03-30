@@ -1,5 +1,5 @@
 import React from 'react'
-import { getGroups } from './GetGroups'
+import getGroups from './GetGroups'
 
 function getUsersInGroup() {
     let apiToken = sessionStorage.getItem('apiToken')
