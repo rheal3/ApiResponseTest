@@ -21,29 +21,30 @@ function getAccessToken(username, password) {
             sessionStorage.setItem('accept_time', time)
             sessionStorage.setItem('username', username)
             sessionStorage.setItem('password', password)
+
             return response.json()
         } else {
-            sessionStorage.setItem('reject_time', time)
             // alert('Invalid Login Details')
+            sessionStorage.setItem('reject_time', time)
             return false
         }
     }).then(data => {
         if (data !== false) {
-            
+            // alert('Token Acquired.')
             const apiToken = data.access_token;
             sessionStorage.setItem('apiToken', apiToken)
+
             storeData({
                 process: 'getAccessToken',
-                responseOk: true,
+                responseStatus: 'ok',
                 time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                 numItemsRetrieved: 2,
                 dateTime: dateTime(),
             })
-            // alert('Token Acquired.')
         } else {
             storeData({
                 process: 'getAccessToken',
-                responseOk: false,
+                responseStatus: 'error',
                 time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                 numItemsRetrieved: 0,
                 dateTime: dateTime(),

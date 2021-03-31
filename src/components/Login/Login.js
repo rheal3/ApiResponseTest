@@ -17,17 +17,17 @@ const Login = () => {
 
     const testResponseTime = async (e) => {
         console.log(sessionStorage.getItem('apiToken'))
+
         if (!sessionStorage['apiToken']) {
             alert("You need to login successfully at least once")
         } else {
             await getAccessToken(sessionStorage.getItem('username'), sessionStorage.getItem('password'))
             await getAccessToken("random@safetyculture.io", "invalid")
-            
+
             setloginRejectTime(sessionStorage.getItem('reject_time') + " milliseconds")
             setloginResolveTime(sessionStorage.getItem('accept_time') + " milliseconds")
 
             React.createElement('p', `successful login time: ${loginResolveTime}`)
-
             console.log(e.target.children)
         }
     }
@@ -43,14 +43,13 @@ const Login = () => {
                 }}>Submit</button>
             <br/>
             <div>
-                <h3>Login response time test</h3>
+                <h3>Login accept/reject response time test</h3>
                 <div onClick={testResponseTime}>
-                    <button >Test response time</button>
+                    <button >Test Login time</button>
 
                 </div>
                 <p>successful login time: {loginResolveTime}</p>
                 <p>unsucessful login time: {loginRejectTime}</p>
-                {/* <p>{sessionStorage.getItem('apiToken')}</p> */}
             </div>
         </div>
     )
