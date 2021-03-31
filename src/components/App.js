@@ -3,6 +3,7 @@ import Login from './Login/Login'
 import GetUsers from './ApiCalls/GetUsers'
 import GetGroups from './ApiCalls/GetGroups'
 import SearchTemplates from './ApiCalls/SearchTemplates'
+import SearchInspections from './ApiCalls/SearchInspections'
 
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
         <GetGroups />
         <GetUsers />
         <SearchTemplates />
+        <SearchInspections />
 
         </div>
     )

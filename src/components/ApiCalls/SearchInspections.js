@@ -1,12 +1,12 @@
 import React from 'react'
 import { storeData, dateTime } from '../dataStorage'
 
-function searchTemplates () {
+function searchInspections () {
     if (!sessionStorage['apiToken']) {
         return alert("LOGIN FOR COOL FEATURES!")
     } else {
         let apiToken = sessionStorage.getItem('apiToken')
-        let url = sessionStorage.getItem('BASE_URL') + '/templates/search?field=template_id&field=modified_at'
+        let url = sessionStorage.getItem('BASE_URL') + '/audits/search?field=audit_id&field=modified_at'
 
         const startTime = window.performance.now()
         let time;
@@ -28,7 +28,7 @@ function searchTemplates () {
         }).then(data => {
             if (data !== false) {
                 storeData({
-                    process: 'searchTemplates',
+                    process: 'searchInspections',
                     responseOk: true,
                     time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                     numItemsRetrieved: data.count,
@@ -36,7 +36,7 @@ function searchTemplates () {
                 })
             } else {
                 storeData({
-                    process: 'searchTemplates',
+                    process: 'searchInspections',
                     responseOk: false,
                     time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                     numItemsRetrieved: 0,
@@ -49,12 +49,12 @@ function searchTemplates () {
 }
 
 
-const SearchTemplates = () => {
+const SearchInspections = () => {
     return (
         <div>
-            <button onClick={searchTemplates}>Search Templates</button>
+            <button onClick={searchInspections}>Search Inspections</button>
         </div>
     )
 }
 
-export default SearchTemplates
+export default SearchInspections
