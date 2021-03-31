@@ -35,7 +35,7 @@ const GetUsers = () => {
                 }
             }).then(data => {
                 // alert(`API call to get users from ${groupName} returned ${data.users.length} user(s) in ${time} milliseconds`)
-                setGroupUsersTime(time + " milliseconds")
+                setGroupUsersTime(Math.round((time + Number.EPSILON) * 100) / 100 + " milliseconds")
                 if (data !== false) {
                     storeData({
                         process: 'getUsers',

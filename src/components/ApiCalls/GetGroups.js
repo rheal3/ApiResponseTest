@@ -32,7 +32,7 @@ const GetGroups = () => {
                     return false
                 }
             }).then(data => {
-                setGroupTime(time + " milliseconds")
+                setGroupTime(Math.round((time + Number.EPSILON) * 100) / 100 + " milliseconds")
 
                 if (data !== false) {
                     sessionStorage.setItem('groupObj', JSON.stringify(data))

@@ -24,7 +24,7 @@ const SearchTemplates = () => {
                 time = endTime - startTime
     
                 if (response.ok) {
-                    setTemplateTime(time + " milliseconds")
+                    setTemplateTime(Math.round((time + Number.EPSILON) * 100) / 100 + " milliseconds")
                     return response.json()
                 } else {
                     return false

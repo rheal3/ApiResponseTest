@@ -24,7 +24,7 @@ const SearchInspections = () => {
                 time = endTime - startTime
     
                 if (response.ok) {
-                    setInspectionTime(time + " milliseconds")
+                    setInspectionTime(Math.round((time + Number.EPSILON) * 100) / 100 + " milliseconds")
                     return response.json()
                 } else {
                     return false
