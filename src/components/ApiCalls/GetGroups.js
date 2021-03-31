@@ -1,4 +1,5 @@
 import React from 'react'
+import { storeData, dateTime } from '../dataStorage'
 
 export function getGroups() {
     if (!sessionStorage['apiToken']) {
@@ -24,9 +25,15 @@ export function getGroups() {
         }).then(data => {
             alert(`Get My Groups Returned ${data.groups.length} groups in ${time} milliseconds`)
             sessionStorage.setItem('groupObj', JSON.stringify(data))
+            storeData({
+                process: 'getGroups',
+                responseStatus: 'ok',
+                time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
+                numItemsRetrieved: data.groups.length,
+                dateTime: dateTime(),
+            })
             return data
         }).catch(error => console.log(error))
-    
     }
 }
 
@@ -35,8 +42,6 @@ const GetGroups = () => {
         <div>
             <button onClick={getGroups}>Get Group Times</button>
         </div>
-
-
     )
 }
 

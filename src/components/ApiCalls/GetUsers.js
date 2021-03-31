@@ -1,5 +1,7 @@
 import React from 'react'
 import getGroups from './GetGroups'
+import { storeData, dateTime } from '../dataStorage'
+
 
 function getUsersInGroup() {
     let apiToken = sessionStorage.getItem('apiToken')
@@ -29,7 +31,14 @@ function getUsersInGroup() {
 
             return response.json()
         }).then(data => {
-            alert(`API call to get users from ${groupName} returned ${data.users.length} users in ${time} milliseconds`)
+            alert(`API call to get users from ${groupName} returned ${data.users.length} user(s) in ${time} milliseconds`)
+            storeData({
+                process: 'getUsers',
+                responseStatus: 'ok',
+                time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
+                numItemsRetrieved: data.users.length,
+                dateTime: dateTime(),
+            })
             return data
         })
     } 

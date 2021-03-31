@@ -1,7 +1,7 @@
 import React from 'react'
-import Login from './components/Login/Login'
-import GetUSers from './components/ApiCalls/GetUsers'
-import GetGroups from './components/ApiCalls/GetGroups'
+import Login from './Login/Login'
+import GetUSers from './ApiCalls/GetUsers'
+import GetGroups from './ApiCalls/GetGroups'
 
 
 const App = () => {

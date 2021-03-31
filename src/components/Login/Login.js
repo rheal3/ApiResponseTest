@@ -15,19 +15,19 @@ const Login = () => {
         setPasswordValue(event.target.value)
     }
 
-    const testResponseTime = () => {
+    const testResponseTime = async (e) => {
         console.log(sessionStorage.getItem('apiToken'))
-        if (sessionStorage.getItem('apiToken') !== null) {
-            getAccessToken(sessionStorage.getItem('username'), sessionStorage.getItem('password'))
-            getAccessToken("random@safetyculture.io", "invalid")
-
-            
+        if (!sessionStorage['apiToken']) {
+            alert("You need to login successfully at least once")
+        } else {
+            await getAccessToken(sessionStorage.getItem('username'), sessionStorage.getItem('password'))
+            await getAccessToken("random@safetyculture.io", "invalid")
             setBadTime(sessionStorage.getItem('bad_time'))
             setGoodTime(sessionStorage.getItem('good_time'))
-            
-        }
-        else {
-            alert("You need to login successfully at least once")
+
+            React.createElement('p', `successful login time: ${goodTime}`)
+
+            console.log(e.target.children)
         }
     }
 
@@ -43,7 +43,10 @@ const Login = () => {
             <br/>
             <div>
                 <h3>Login response time test</h3>
-                <button onClick={testResponseTime}>Test response time</button>
+                <div onClick={testResponseTime}>
+                    <button >Test response time</button>
+
+                </div>
                 <p>successful login time: {goodTime}</p>
                 <p>unsucessful login time: {badTime}</p>
                 {/* <p>{sessionStorage.getItem('apiToken')}</p> */}
