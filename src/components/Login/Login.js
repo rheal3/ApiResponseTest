@@ -4,8 +4,8 @@ import getAccessToken from './GetAccessToken'
 const Login = () => {
     const [usernameValue, setUsernameValue] = useState('')
     const [passwordValue, setPasswordValue] = useState('')
-    const [goodTime, setGoodTime] = useState('')
-    const [badTime, setBadTime] = useState('')
+    const [loginResolveTime, setloginResolveTime] = useState('')
+    const [loginRejectTime, setloginRejectTime] = useState('')
 
     const handleUsernameInputChange = (event) => {
         setUsernameValue(event.target.value)
@@ -22,10 +22,11 @@ const Login = () => {
         } else {
             await getAccessToken(sessionStorage.getItem('username'), sessionStorage.getItem('password'))
             await getAccessToken("random@safetyculture.io", "invalid")
-            setBadTime(sessionStorage.getItem('bad_time'))
-            setGoodTime(sessionStorage.getItem('good_time'))
+            
+            setloginRejectTime(sessionStorage.getItem('reject_time') + " milliseconds")
+            setloginResolveTime(sessionStorage.getItem('accept_time') + " milliseconds")
 
-            React.createElement('p', `successful login time: ${goodTime}`)
+            React.createElement('p', `successful login time: ${loginResolveTime}`)
 
             console.log(e.target.children)
         }
@@ -47,8 +48,8 @@ const Login = () => {
                     <button >Test response time</button>
 
                 </div>
-                <p>successful login time: {goodTime}</p>
-                <p>unsucessful login time: {badTime}</p>
+                <p>successful login time: {loginResolveTime}</p>
+                <p>unsucessful login time: {loginRejectTime}</p>
                 {/* <p>{sessionStorage.getItem('apiToken')}</p> */}
             </div>
         </div>
