@@ -29,16 +29,31 @@ function getUsersInGroup() {
             let endTime = window.performance.now()
             time = endTime - startTime
 
-            return response.json()
+            if (response.ok) {
+                return response.json()
+            } else {
+                return false
+            }
         }).then(data => {
-            alert(`API call to get users from ${groupName} returned ${data.users.length} user(s) in ${time} milliseconds`)
-            storeData({
-                process: 'getUsers',
-                responseStatus: 'ok',
-                time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
-                numItemsRetrieved: data.users.length,
-                dateTime: dateTime(),
-            })
+            if (data !== false) {
+                alert(`API call to get users from ${groupName} returned ${data.users.length} user(s) in ${time} milliseconds`)
+
+                storeData({
+                    process: 'getUsers',
+                    responseOk: true,
+                    time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
+                    numItemsRetrieved: data.users.length,
+                    dateTime: dateTime(),
+                })
+            } else {
+                storeData({
+                    process: 'getUsers',
+                    responseOk: false,
+                    time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
+                    numItemsRetrieved: 0,
+                    dateTime: dateTime(),
+                })
+            }
             return data
         })
     } 

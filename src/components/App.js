@@ -1,7 +1,8 @@
 import React from 'react'
 import Login from './Login/Login'
-import GetUSers from './ApiCalls/GetUsers'
+import GetUsers from './ApiCalls/GetUsers'
 import GetGroups from './ApiCalls/GetGroups'
+import SearchTemplates from './ApiCalls/SearchTemplates'
 
 
 const App = () => {
@@ -10,10 +11,11 @@ const App = () => {
     return(
         <div>
 
-        <Login></Login>
+        <Login />
         <p>Log in to use these super cool features: </p>
-        <GetGroups></GetGroups>
-        <GetUSers></GetUSers>
+        <GetGroups />
+        <GetUsers />
+        <SearchTemplates />
 
         </div>
     )
