@@ -38,7 +38,7 @@ function getAccessToken(username, password) {
                 process: 'getAccessToken',
                 responseOk: true,
                 time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
-                numItemsRetrieved: 2,
+                numItemsRetrieved: 1,
                 dateTime: dateTime(),
             })
         } else {

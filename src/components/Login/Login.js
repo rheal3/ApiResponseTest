@@ -22,22 +22,27 @@ const Login = () => {
             await getAccessToken(sessionStorage.getItem('username'), sessionStorage.getItem('password'))
             await getAccessToken("random@safetyculture.io", "invalid")
 
-            setloginRejectTime(sessionStorage.getItem('reject_time') + " milliseconds")
+            setloginRejectTime(sessionStorage.getItem('reject_time') + "milliseconds")
             setloginResolveTime(sessionStorage.getItem('accept_time') + " milliseconds")
-
-            React.createElement('p', `successful login time: ${loginResolveTime}`)
         }
     }
 
     return (
         <div>
-            <input type="text" value={usernameValue} onChange={handleUsernameInputChange} placeholder="email" />
-            <input type="password" value={passwordValue} onChange={handlePasswordInputChange} placeholder="password" />
-            <button onClick={() => {
-                getAccessToken(usernameValue, passwordValue)
-                setUsernameValue('')
-                setPasswordValue('')
-                }}>Submit</button>
+            <div style={{textAlign: "right"}}>
+                {!sessionStorage.getItem('apiToken') && (<input type="text" value={usernameValue} onChange={handleUsernameInputChange} placeholder="email" />)}
+                {!sessionStorage.getItem('apiToken') && (<input type="password" value={passwordValue} onChange={handlePasswordInputChange} placeholder="password" />)}
+                {!sessionStorage.getItem('apiToken') && (<button onClick={() => {
+                    getAccessToken(usernameValue, passwordValue)
+                    setUsernameValue('')
+                    setPasswordValue('')
+                }}>LOGIN</button>)}
+                {sessionStorage.getItem('apiToken') && (<button onClick={() => {
+                    delete sessionStorage.apiToken
+                    delete sessionStorage.username
+                    delete sessionStorage.password
+                }}>LOGOUT</button>)}
+            </div>
             <br/>
             <div>
                 <h3>Login accept/reject response time test</h3>
