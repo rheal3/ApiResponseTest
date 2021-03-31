@@ -27,8 +27,6 @@ function searchTemplates () {
             } else {
                 return false
             }
-    
-            
         }).then(data => {
             if (data !== false) {
                 console.log(data)
@@ -47,18 +45,7 @@ function searchTemplates () {
                     numItemsRetrieved: 0,
                     dateTime: dateTime(),
                 })
-
             }
-            
-            // alert(`Search Templates Returned ${data.groups.length} templates in ${time} milliseconds`)
-            // sessionStorage.setItem('groupObj', JSON.stringify(data))
-            // storeData({
-            //     process: 'getGroups',
-            //     responseOk: true,
-            //     time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
-            //     numItemsRetrieved: data.groups.length,
-            //     dateTime: dateTime(),
-            // })
             return data
         }).catch(error => console.log(error))
     }
