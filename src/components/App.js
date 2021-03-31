@@ -11,14 +11,14 @@ const App = () => {
     return(
         <div>
 
-        <Login/>
-        <br/>
-        <GetGroups/>
-        <br/>
-        <GetUSers/>
-        <br/>
-        <SearchTemplates/>
-        <SearchInspections/>
+            <Login/>
+            <br/>
+            <GetGroups/>
+            <br/>
+            <GetUSers/>
+            <br/>
+            <SearchTemplates/>
+            <SearchInspections/>
 
         </div>
     )

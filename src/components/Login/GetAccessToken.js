@@ -15,7 +15,7 @@ function getAccessToken(username, password) {
     }).then(response => {
         let endTime = window.performance.now()
         time = endTime - startTime
-        console.log("Get API Token Response Execution Time: " + time + " milliseconds")
+        // console.log("Get API Token Response Execution Time: " + time + " milliseconds")
 
         if (response.ok) {
             sessionStorage.setItem('accept_time', Math.round((time + Number.EPSILON) * 100) / 100)

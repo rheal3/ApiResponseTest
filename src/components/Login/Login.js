@@ -16,8 +16,6 @@ const Login = () => {
     }
 
     const testResponseTime = async (e) => {
-        console.log(sessionStorage.getItem('apiToken'))
-
         if (!sessionStorage['apiToken']) {
             alert("You need to login successfully at least once")
         } else {
@@ -28,7 +26,6 @@ const Login = () => {
             setloginResolveTime(sessionStorage.getItem('accept_time') + " milliseconds")
 
             React.createElement('p', `successful login time: ${loginResolveTime}`)
-            console.log(e.target.children)
         }
     }
 
