@@ -3,4 +3,3 @@ __pycache__
 src/.env
 .DS_Store
 node_modules/
-node_modules/.cache/.eslintcache
