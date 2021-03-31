@@ -36,7 +36,7 @@ function getAccessToken(username, password) {
 
             storeData({
                 process: 'getAccessToken',
-                responseStatus: 'ok',
+                responseOk: true,
                 time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                 numItemsRetrieved: 2,
                 dateTime: dateTime(),
@@ -44,7 +44,7 @@ function getAccessToken(username, password) {
         } else {
             storeData({
                 process: 'getAccessToken',
-                responseStatus: 'error',
+                responseOk: false,
                 time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                 numItemsRetrieved: 0,
                 dateTime: dateTime(),
