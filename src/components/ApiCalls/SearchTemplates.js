@@ -24,7 +24,6 @@ const SearchTemplates = () => {
                 time = endTime - startTime
     
                 if (response.ok) {
-                    setTemplateTime(Math.round((time + Number.EPSILON) * 100) / 100 + " milliseconds")
                     return response.json()
                 } else {
                     return false
@@ -38,6 +37,8 @@ const SearchTemplates = () => {
                         numItemsRetrieved: data.count,
                         dateTime: dateTime(),
                     })
+
+                    setTemplateTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 1]['time'])
                 } else {
                     storeData({
                         process: 'searchTemplates',
@@ -47,7 +48,6 @@ const SearchTemplates = () => {
                         dateTime: dateTime(),
                     })
                 }
-                return data
             }).catch(error => console.log(error))
         }
     }

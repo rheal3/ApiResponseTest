@@ -33,9 +33,7 @@ const GetUsers = () => {
                 } else {
                     return false
                 }
-            }).then(data => {
-                // alert(`API call to get users from ${groupName} returned ${data.users.length} user(s) in ${time} milliseconds`)
-                setGroupUsersTime(Math.round((time + Number.EPSILON) * 100) / 100 + " milliseconds")
+            }).then(data => {             
                 if (data !== false) {
                     storeData({
                         process: 'getUsers',
@@ -44,6 +42,8 @@ const GetUsers = () => {
                         numItemsRetrieved: data.users.length,
                         dateTime: dateTime(),
                     })
+
+                    setGroupUsersTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 1]['time'])
                 } else {
                     storeData({
                         process: 'getUsers',
@@ -53,7 +53,6 @@ const GetUsers = () => {
                         dateTime: dateTime(),
                     })
                 }
-                return data
             })
         } 
     }

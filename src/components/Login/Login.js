@@ -22,8 +22,8 @@ const Login = () => {
             await getAccessToken(sessionStorage.getItem('username'), sessionStorage.getItem('password'))
             await getAccessToken("random@safetyculture.io", "invalid")
 
-            setloginRejectTime(sessionStorage.getItem('reject_time') + "milliseconds")
-            setloginResolveTime(sessionStorage.getItem('accept_time') + " milliseconds")
+            setloginResolveTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 2]['time'])
+            setloginRejectTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 1]['time'])
         }
     }
 

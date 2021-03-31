@@ -24,7 +24,6 @@ const SearchInspections = () => {
                 time = endTime - startTime
     
                 if (response.ok) {
-                    setInspectionTime(Math.round((time + Number.EPSILON) * 100) / 100 + " milliseconds")
                     return response.json()
                 } else {
                     return false
@@ -38,6 +37,8 @@ const SearchInspections = () => {
                         numItemsRetrieved: data.count,
                         dateTime: dateTime(),
                     })
+
+                    setInspectionTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 1]['time'])
                 } else {
                     storeData({
                         process: 'searchInspections',
@@ -47,7 +48,6 @@ const SearchInspections = () => {
                         dateTime: dateTime(),
                     })
                 }
-                return data
             }).catch(error => console.log(error))
         }
     }
