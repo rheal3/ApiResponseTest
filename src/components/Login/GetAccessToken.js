@@ -18,14 +18,12 @@ function getAccessToken(username, password) {
         // console.log("Get API Token Response Execution Time: " + time + " milliseconds")
 
         if (response.ok) {
-            sessionStorage.setItem('accept_time', Math.round((time + Number.EPSILON) * 100) / 100)
             sessionStorage.setItem('username', username)
             sessionStorage.setItem('password', password)
 
             return response.json()
         } else {
             // alert('Invalid Login Details')
-            sessionStorage.setItem('reject_time', Math.round((time + Number.EPSILON) * 100) / 100)
             return false
         }
     }).then(data => {

@@ -32,8 +32,6 @@ const GetGroups = () => {
                     return false
                 }
             }).then(data => {
-                setGroupTime(Math.round((time + Number.EPSILON) * 100) / 100 + " milliseconds")
-
                 if (data !== false) {
                     sessionStorage.setItem('groupObj', JSON.stringify(data))
                     storeData({
@@ -43,6 +41,8 @@ const GetGroups = () => {
                         numItemsRetrieved: data.groups.length,
                         dateTime: dateTime(),
                     })
+
+                    setGroupTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 1]['time'])
                 } else {
                     storeData({
                         process: 'getGroups',
@@ -52,9 +52,8 @@ const GetGroups = () => {
                         dateTime: dateTime(),
                     })
                 }
-                // alert(`Get My Groups Returned ${data.groups.length} groups in ${time} milliseconds`)
-                return data
             }).catch(error => console.log(error))
+            
         }
     }
 
