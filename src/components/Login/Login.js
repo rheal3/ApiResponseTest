@@ -6,6 +6,7 @@ const Login = () => {
     const [passwordValue, setPasswordValue] = useState('')
     const [loginResolveTime, setloginResolveTime] = useState('')
     const [loginRejectTime, setloginRejectTime] = useState('')
+    const [apiToken, setApiToken] = useState(sessionStorage.apiToken);
 
     const handleUsernameInputChange = (event) => {
         setUsernameValue(event.target.value)
@@ -30,17 +31,18 @@ const Login = () => {
     return (
         <div>
             <div style={{textAlign: "right"}}>
-                {!sessionStorage.getItem('apiToken') && (<input type="text" value={usernameValue} onChange={handleUsernameInputChange} placeholder="email" />)}
-                {!sessionStorage.getItem('apiToken') && (<input type="password" value={passwordValue} onChange={handlePasswordInputChange} placeholder="password" />)}
-                {!sessionStorage.getItem('apiToken') && (<button onClick={() => {
-                    getAccessToken(usernameValue, passwordValue)
+                {!apiToken && (<input type="text" value={usernameValue} onChange={handleUsernameInputChange} placeholder="email" />)}
+                {!apiToken && (<input type="password" value={passwordValue} onChange={handlePasswordInputChange} placeholder="password" />)}
+                {!apiToken && (<button onClick={ async () => {
+                    setApiToken(await getAccessToken(usernameValue, passwordValue))
                     setUsernameValue('')
                     setPasswordValue('')
                 }}>LOGIN</button>)}
-                {sessionStorage.getItem('apiToken') && (<button onClick={() => {
+                {apiToken && (<button onClick={() => {
                     delete sessionStorage.apiToken
                     delete sessionStorage.username
                     delete sessionStorage.password
+                    setApiToken(sessionStorage.getItem('apiToken'))
                 }}>LOGOUT</button>)}
             </div>
             <br/>

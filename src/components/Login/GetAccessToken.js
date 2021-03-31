@@ -39,6 +39,7 @@ function getAccessToken(username, password) {
                 numItemsRetrieved: 1,
                 dateTime: dateTime(),
             })
+            return apiToken
         } else {
             storeData({
                 process: 'getAccessToken',
