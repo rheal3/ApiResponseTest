@@ -6,7 +6,7 @@ function getAccessToken(username, password) {
     let startTime = window.performance.now()
     let time;
 
-    fetch(url, {
+    return (fetch(url, {
         body: `grant_type=password&username=${username}&password=${password}`,
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -18,8 +18,12 @@ function getAccessToken(username, password) {
         console.log("Get API Token Response Execution Time: " + time + " milliseconds")
 
         if (response.ok) {
+            sessionStorage.setItem('accept_time', time)
+            sessionStorage.setItem('username', username)
+            sessionStorage.setItem('password', password)
             return response.json()
         } else {
+            sessionStorage.setItem('reject_time', time)
             // alert('Invalid Login Details')
             return false
         }
@@ -46,6 +50,7 @@ function getAccessToken(username, password) {
             })
         }
     }).catch(error => console.log(error))
+    )
 }
 
 export default getAccessToken
