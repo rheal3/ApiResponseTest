@@ -25,19 +25,34 @@ const GetGroups = () => {
             }).then(response => {
                 let endTime = window.performance.now()
                 time = endTime - startTime
-        
-                return response.json()
+                
+                if (response.ok) {
+                    return response.json()
+                } else {
+                    return false
+                }
             }).then(data => {
                 setGroupTime(time + " milliseconds")
+
+                if (data !== false) {
+                    sessionStorage.setItem('groupObj', JSON.stringify(data))
+                    storeData({
+                        process: 'getGroups',
+                        responseOk: true,
+                        time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
+                        numItemsRetrieved: data.groups.length,
+                        dateTime: dateTime(),
+                    })
+                } else {
+                    storeData({
+                        process: 'getGroups',
+                        responseOk: false,
+                        time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
+                        numItemsRetrieved: 0,
+                        dateTime: dateTime(),
+                    })
+                }
                 // alert(`Get My Groups Returned ${data.groups.length} groups in ${time} milliseconds`)
-                sessionStorage.setItem('groupObj', JSON.stringify(data))
-                storeData({
-                    process: 'getGroups',
-                    responseStatus: 'ok',
-                    time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
-                    numItemsRetrieved: data.groups.length,
-                    dateTime: dateTime(),
-                })
                 return data
             }).catch(error => console.log(error))
         }
