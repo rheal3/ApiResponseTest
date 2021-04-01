@@ -1,9 +1,10 @@
 import React from 'react'
 import Login from './Login/Login'
-import GetUSers from './ApiCalls/GetUsers'
-import GetGroups from './ApiCalls/GetGroups'
-import SearchTemplates from './ApiCalls/SearchTemplates'
-import SearchInspections from './ApiCalls/SearchInspections'
+import LoginTest from './ResponseTests/LoginTest'
+import GetGroupsTest from './ResponseTests/GetGroupsTest'
+import GetUsersTest from './ResponseTests/GetUserTest'
+import SearchTemplatesTest from './ResponseTests/SearchTemplatesTest'
+import SearchInspectionsTest from './ResponseTests/SearchInspectionsTest'
 
 const App = () => {
     sessionStorage.setItem('BASE_URL', "https://sandpit-api.safetyculture.io")
@@ -12,14 +13,12 @@ const App = () => {
         <div>
 
         <Login/>
-        <br/>
-        <GetGroups/>
-        <br/>
-        <GetUSers/>
-        <br/>
-        <SearchTemplates/>
-        <SearchInspections/>
-
+        <LoginTest/>
+        <GetGroupsTest/>
+        <GetUsersTest/>
+        <SearchTemplatesTest/>
+        <SearchInspectionsTest/>
+   
         </div>
     )
 }
