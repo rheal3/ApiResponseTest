@@ -12,7 +12,7 @@ function GetUser() {
     const startTime = window.performance.now()
     let time;
 
-fetch(url, {
+    return ( fetch(url, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + apiToken
@@ -44,9 +44,6 @@ fetch(url, {
                 dateTime: dateTime(),
             })
         }
-    })
-
-    let saveData = JSON.parse(localStorage.getItem('saveData'))
-    return saveData[saveData.length -1].time
+    }))
 }
 export default GetUser

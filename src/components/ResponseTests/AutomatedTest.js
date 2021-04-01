@@ -13,31 +13,42 @@ const AutomatedTest = () => {
     const [getTemplateTime, setTemplateTime] = useState('')
     const [getInspectionTime, setInspectionTime] = useState('')
 
-    const handleClick = async () => {
+
+    const startTests = () => {
         if (sessionStorage['apiToken']) {
-            // while(true) {
-                console.log("In Loop")
-                 setTimeout((
-                     await runTests(),
-                     setloginResolveTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 6]['time']),
-                     setloginRejectTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 5]['time']),
-                     setGroupsTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 4]['time']),
-                     setUserTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 3]['time']),
-                     setTemplateTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 2]['time']),
-                     setInspectionTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 1]['time'])
-         
-                 ), 5000)    
-            //  }
+            let intervalID = setInterval(async () => {
+                if(!sessionStorage.getItem('intervalID')) {
+                    sessionStorage.setItem('intervalID', intervalID)
+                }
+                console.log("In interval with ID: " + intervalID)
+                
+                await runTests()
+                setloginResolveTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 6]['time'])
+                setloginRejectTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 5]['time'])
+                setGroupsTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 4]['time'])
+                setUserTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 3]['time'])
+                setTemplateTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 2]['time'])
+                setInspectionTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 1]['time'])
+            }, 10000)
         } else {
             alert("You need to login first")
         }
-        }
+    }
+
+    const stopTests = () => {
+        console.log("I'm supposed to stop the timer with ID: " + sessionStorage.getItem('intervalID') + " !!")
+        clearInterval(sessionStorage.getItem('intervalID'))
+        sessionStorage.removeItem('intervalID')
+    }
  
 
     return (
         <div>
             <h3>Automated Testing Test</h3>
-            <button onClick={handleClick}>Start Tests</button>
+            {!sessionStorage.getItem('intervalID') && (<button onClick={startTests}>Start Tests</button>)}
+            <br/>
+            {sessionStorage.getItem('intervalID') && (<button onClick={stopTests}>Stop Tests</button>)}
+            <br/>
             <p>Login Accept: {loginResolveTime}</p>
             <p>Login Reject: {loginRejectTime}</p>
             <p>Get Group: {getGroupsTime}</p>
