@@ -7,7 +7,7 @@ function SearchInspections() {
     const startTime = window.performance.now()
     let time;
 
-    return( fetch(url, {
+    fetch(url, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + apiToken
@@ -41,7 +41,8 @@ function SearchInspections() {
         }
     }).catch(error => console.log(error))
 
-    )
+    let saveData = JSON.parse(localStorage.getItem('saveData'))
+    return saveData[saveData.length -1].time
 }
 
 export default SearchInspections
