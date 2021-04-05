@@ -12,15 +12,17 @@ const AutomatedTest = () => {
     const [getUserTime, setUserTime] = useState('')
     const [getTemplateTime, setTemplateTime] = useState('')
     const [getInspectionTime, setInspectionTime] = useState('')
+    const [getIsTesting, setIsTesting] = useState(false)
 
 
     const startTests = () => {
         if (sessionStorage['apiToken']) {
+            setIsTesting(true)
             let intervalID = setInterval(async () => {
                 if(!sessionStorage.getItem('intervalID')) {
                     sessionStorage.setItem('intervalID', intervalID)
                 }
-                console.log("In interval with ID: " + intervalID)
+                // console.log("In interval with ID: " + intervalID)
                 
                 await runTests()
                 setloginResolveTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 6]['time'])
@@ -36,7 +38,8 @@ const AutomatedTest = () => {
     }
 
     const stopTests = () => {
-        console.log("I'm supposed to stop the timer with ID: " + sessionStorage.getItem('intervalID') + " !!")
+        setIsTesting(false)
+        // console.log("I'm supposed to stop the timer with ID: " + sessionStorage.getItem('intervalID') + " !!")
         clearInterval(sessionStorage.getItem('intervalID'))
         sessionStorage.removeItem('intervalID')
     }
@@ -45,9 +48,9 @@ const AutomatedTest = () => {
     return (
         <div>
             <h3>Automated Testing Test</h3>
-            {!sessionStorage.getItem('intervalID') && (<button onClick={startTests}>Start Tests</button>)}
+            {!getIsTesting && (<button onClick={startTests}>Start Tests</button>)}
             <br/>
-            {sessionStorage.getItem('intervalID') && (<button onClick={stopTests}>Stop Tests</button>)}
+            {getIsTesting && (<button onClick={stopTests}>Stop Tests</button>)}
             <br/>
             <p>Login Accept: {loginResolveTime}</p>
             <p>Login Reject: {loginRejectTime}</p>
