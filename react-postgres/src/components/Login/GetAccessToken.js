@@ -33,7 +33,7 @@ function getAccessToken(username, password) {
             sessionStorage.setItem('apiToken', apiToken)
 
             storeData({
-                process: 'getAccessToken',
+                tableName: 'access_token',
                 responseOk: true,
                 time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                 numItemsRetrieved: 1,
@@ -42,7 +42,7 @@ function getAccessToken(username, password) {
             return apiToken
         } else {
             storeData({
-                process: 'getAccessToken',
+                tableName: 'access_token',
                 responseOk: false,
                 time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                 numItemsRetrieved: 0,
