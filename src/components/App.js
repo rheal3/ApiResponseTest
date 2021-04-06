@@ -1,5 +1,6 @@
 import React from 'react'
 import Login from './Login/Login'
+// import Charts from './Charts/TestCharts'
 // import LoginTest from './ResponseTests/LoginTest'
 // import GetGroupsTest from './ResponseTests/GetGroupsTest'
 // import GetUsersTest from './ResponseTests/GetUserTest'
@@ -22,6 +23,8 @@ const App = () => {
         <SearchInspectionsTest/> */}
 
         <AutomatedTest/>
+        {/* <Charts/> */}
+
    
         </div>
     )
