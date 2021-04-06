@@ -3,7 +3,7 @@ import GetGroups from '../ApiCalls/GetGroups'
 import GetUser from '../ApiCalls/GetUser'
 import SearchInspections from '../ApiCalls/SearchInspections'
 import SearchTemplates from '../ApiCalls/SearchTemplates'
-import { getData, getLastDataPointTime } from '../dataStorage'
+import { getLoginDataPoint, getLastDataPointTime } from '../dataStorage'
 import { testLoginTime } from './LoginTest'
 
 const AutomatedTest = () => {
@@ -28,8 +28,8 @@ const AutomatedTest = () => {
                 await runTests()
                 // await getData('access_token');
                 await getLastDataPointTime('users');
-                setloginResolveTime(await getLastDataPointTime('access_token'));
-                setloginRejectTime(await getLastDataPointTime('access_token'));
+                setloginResolveTime(await getLoginDataPoint(true));
+                setloginRejectTime(await getLoginDataPoint(false));
                 setGroupsTime(await getLastDataPointTime('groups'));
                 setUserTime(await getLastDataPointTime('users'));
                 setTemplateTime(await getLastDataPointTime('templates'));

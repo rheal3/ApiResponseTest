@@ -19,7 +19,7 @@ app.post("/", async (req, res) => {
     const newData = await pool.query(queryStr, [responseOk, time, numItemsRetrieved, dateTime]);
     res.json(newData.rows);
   } catch(err) {
-      console.error(err.message);
+      console.error("post: " + err.message);
   }
 })
 
@@ -31,7 +31,7 @@ app.get("/:tableName", async (req, res) => {
     const allData = await pool.query(`SELECT * FROM ${tableName}`);
     res.json(allData.rows);
   } catch(err) {
-      console.error(err.message);
+      console.error("table: " + err.message);
   }
 })
 
@@ -43,7 +43,18 @@ app.get("/:tableName/last", async (req, res) => {
     const allData = await pool.query(`SELECT * FROM ${tableName} ORDER BY id DESC LIMIT 1`);
     res.json(allData.rows);
   } catch(err) {
-      console.error(err.message);
+      console.error("last: " + err.message);
+  }
+})
+
+// get last two login 
+app.get("/login/:status", async (req, res) => {
+  try {
+    const { status } = req.params; // set equal to the body of the request
+    const allData = await pool.query(`SELECT * FROM access_token WHERE response_ok = ${status} ORDER BY id DESC LIMIT 1`);
+    res.json(allData.rows);
+  } catch(err) {
+      console.error("last: " + err.message);
   }
 })
 
