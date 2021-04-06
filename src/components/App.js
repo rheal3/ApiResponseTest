@@ -1,11 +1,5 @@
 import React from 'react'
 import Login from './Login/Login'
-// import LoginTest from './ResponseTests/LoginTest'
-// import GetGroupsTest from './ResponseTests/GetGroupsTest'
-// import GetUsersTest from './ResponseTests/GetUserTest'
-// import SearchTemplatesTest from './ResponseTests/SearchTemplatesTest'
-// import SearchInspectionsTest from './ResponseTests/SearchInspectionsTest'
-
 import AutomatedTest from './ResponseTests/AutomatedTest'
 
 const App = () => {
@@ -15,12 +9,6 @@ const App = () => {
         <div>
 
         <Login/>
-        {/* <LoginTest/>
-        <GetGroupsTest/>
-        <GetUsersTest/>
-        <SearchTemplatesTest/>
-        <SearchInspectionsTest/> */}
-
         <AutomatedTest/>
    
         </div>
