@@ -67,3 +67,15 @@ export const getLoginDataPoint = async (status) => {
         console.log(err.message);
     }
 }
+
+export const getDateTime = async (tableName) => {
+    try {
+        const response = await fetch(`http://localhost:5000/${tableName}/last`);
+        const jsonData = await response.json();
+
+        return jsonData[0]['date_time'];
+
+    } catch (err) {
+        console.log(err.message);
+    }
+}

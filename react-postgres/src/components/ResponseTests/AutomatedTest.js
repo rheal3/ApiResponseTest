@@ -3,8 +3,9 @@ import GetGroups from '../ApiCalls/GetGroups'
 import GetUser from '../ApiCalls/GetUser'
 import SearchInspections from '../ApiCalls/SearchInspections'
 import SearchTemplates from '../ApiCalls/SearchTemplates'
-import { getLoginDataPoint, getLastDataPointTime } from '../dataStorage'
+import { getLoginDataPoint, getLastDataPointTime, getDateTime } from '../dataStorage'
 import { testLoginTime } from './LoginTest'
+import {Line} from 'react-chartjs-2'
 
 const AutomatedTest = () => {
     const [loginResolveTime, setloginResolveTime] = useState('')
@@ -14,6 +15,14 @@ const AutomatedTest = () => {
     const [getTemplateTime, setTemplateTime] = useState('')
     const [getInspectionTime, setInspectionTime] = useState('')
     const [getIsTesting, setIsTesting] = useState(false)
+    const [getChartState, setChartState] = useState({})
+    let labels = []
+    let acceptData = []
+    let rejectData = []
+    let groupData = []
+    let userData = []
+    let templateData = []
+    let inspectionData = []
 
 
     const startTests = () => {
@@ -26,8 +35,6 @@ const AutomatedTest = () => {
                 // console.log("In interval with ID: " + intervalID)
                 
                 await runTests()
-                // await getData('access_token');
-                await getLastDataPointTime('users');
                 setloginResolveTime(await getLoginDataPoint(true));
                 setloginRejectTime(await getLoginDataPoint(false));
                 setGroupsTime(await getLastDataPointTime('groups'));
@@ -35,12 +42,7 @@ const AutomatedTest = () => {
                 setTemplateTime(await getLastDataPointTime('templates'));
                 setInspectionTime(await getLastDataPointTime('inspections'));
 
-                // setloginResolveTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 6]['time'])
-                // setloginRejectTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 5]['time'])
-                // setGroupsTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 4]['time'])
-                // setUserTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 3]['time'])
-                // setTemplateTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 2]['time'])
-                // setInspectionTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 1]['time'])
+                updateChart()
             }, 10000)
         } else {
             alert("You need to login first")
@@ -52,6 +54,93 @@ const AutomatedTest = () => {
         // console.log("I'm supposed to stop the timer with ID: " + sessionStorage.getItem('intervalID') + " !!")
         clearInterval(sessionStorage.getItem('intervalID'))
         sessionStorage.removeItem('intervalID')
+    }
+
+    const updateChart = () => {
+
+        Promise.all([
+          getLoginDataPoint(true), 
+          getLoginDataPoint(false), 
+          getLastDataPointTime('groups'), 
+          getLastDataPointTime('users'), 
+          getLastDataPointTime('templates'), 
+          getLastDataPointTime('inspections'),
+          getDateTime('inspections')
+        ]).then((values) => {
+          acceptData.push(values[0])
+          rejectData.push(values[1])
+          groupData.push(values[2])
+          userData.push(values[3])
+          templateData.push(values[4])
+          inspectionData.push(values[5])
+          labels.push(values[6])
+        })
+
+        setChartState({})
+
+        setChartState({
+            // Login Accept
+            labels: labels,
+        datasets: [{
+            label: 'Login Accept',
+            data: acceptData,
+            fill: false,
+            borderColor: [
+              'rgb(0, 255, 0)'
+            ],
+            tension: 0.1
+          }, {
+            // Login Reject
+            label: 'Login Reject',
+            data: rejectData,
+            fill: false,
+            borderColor: [
+              'rgb(255, 0, 0)'
+            ],
+            tension: 0.1
+
+          }, {
+            // Group 
+            label: 'Group',
+            data: groupData,
+            fill: false,
+            borderColor: [
+              'rgb(128, 128, 0)'
+            ],
+            tension: 0.1
+
+          }, {
+            // User
+            label: 'User',
+            data: userData,
+            fill: false,
+            borderColor: [
+              'rgb(128, 128, 128)'
+            ],
+            tension: 0.1
+
+          }, {
+            // Template
+            label: 'Template',
+            data: templateData,
+            fill: false,
+              borderColor: [
+              'rgb(128, 0, 128)'
+            ],
+            tension: 0.1
+
+          }, {
+            // Inspection
+            label: 'Inspection',
+            data: inspectionData,
+            fill: false,
+            borderColor: [
+              'rgb(0, 0, 255)'
+            ],
+            tension: 0.1
+
+          }]
+        })
     }
  
 
@@ -68,7 +157,40 @@ const AutomatedTest = () => {
             <p>Get a Group User: {getUserTime}</p>
             <p>Search Template: {getTemplateTime}</p>
             <p>Search Inspection: {getInspectionTime}</p>
+
+            <div>
+            {/* <button onClick={updateChart}>Update Chart</button> */}
+            <Line
+                data = {getChartState}
+                options = {{
+                    maintainAspectRatio: false,
+                    scales: {
+                       yAxes: [{
+                           scaleLabel: {
+                               display: true,
+                               labelString: "Response Time (ms)",
+                               fontSize: 16
+                               
+                           }
+                       }],
+
+                       xAxes: [{
+                           scaleLabel: {
+                               display: true,
+                               labelString: "Date Time",
+                               fontSize: 16
+                           }
+                       }]
+                    }
+                }}
+                height = {'400%'}
+                width = {'30%'} 
+                />
+            </div>
+
         </div>
+
+        
     )
 }
 

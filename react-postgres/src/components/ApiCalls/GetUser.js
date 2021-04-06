@@ -31,7 +31,7 @@ function GetUser() {
             storeData({
                 tableName: 'users',
                 responseOk: true,
-                time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
+                time: `${Math.round((time + Number.EPSILON) * 100) / 100}`,
                 numItemsRetrieved: data.users.length,
                 dateTime: dateTime(),
             })
@@ -39,7 +39,7 @@ function GetUser() {
             storeData({
                 tableName: 'users',
                 responseOk: false,
-                time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
+                time: `${Math.round((time + Number.EPSILON) * 100) / 100}`,
                 numItemsRetrieved: 0,
                 dateTime: dateTime(),
             })

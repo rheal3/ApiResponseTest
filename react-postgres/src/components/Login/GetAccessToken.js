@@ -35,7 +35,7 @@ function getAccessToken(username, password) {
             storeData({
                 tableName: 'access_token',
                 responseOk: true,
-                time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
+                time: `${Math.round((time + Number.EPSILON) * 100) / 100}`,
                 numItemsRetrieved: 1,
                 dateTime: dateTime(),
             })
@@ -44,7 +44,7 @@ function getAccessToken(username, password) {
             storeData({
                 tableName: 'access_token',
                 responseOk: false,
-                time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
+                time: `${Math.round((time + Number.EPSILON) * 100) / 100}`,
                 numItemsRetrieved: 0,
                 dateTime: dateTime(),
             })
