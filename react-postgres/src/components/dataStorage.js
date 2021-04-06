@@ -16,20 +16,41 @@ export const dateTime = () => {
     return date + ' ' + time;
 }
 
-export function storeData(data) {
+export const storeData = async (data) => {
     // tableName, responseOk, time, numItemsRetrieved, dateTime
-    fetch('http://localhost:3001/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => {
-        console.log(response.json())
-        return response.json();
-    })
-    .then(data => {
-        alert(data);
-    });
+    try {
+        // const body = { data };
+        const response = await fetch('http://localhost:5000/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+        // console.log(response)
+    } catch (err) {
+        console.log(err.message)
+    }
+}
+
+export const getData = async (tableName) => {
+    try {
+        const response = await fetch(`http://localhost:5000/${tableName}`);
+        const jsonData = await response.json();
+
+        console.log(jsonData);
+    } catch (err) {
+        console.log(err.message);
+    }
+}
+
+export const getLastDataPointTime = async (tableName) => {
+    try {
+        const response = await fetch(`http://localhost:5000/${tableName}/last`);
+        const jsonData = await response.json();
+        console.log(jsonData[0]['time'])
+        return jsonData[0]['time'];
+    } catch (err) {
+        console.log(err.message);
+    }
 }

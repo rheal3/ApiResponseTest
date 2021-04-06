@@ -24,7 +24,7 @@ function SearchTemplates() {
     }).then(data => {
         if (data !== false) {
             storeData({
-                process: 'searchTemplates',
+                tableName: 'templates',
                 responseOk: true,
                 time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                 numItemsRetrieved: data.count,
@@ -32,7 +32,7 @@ function SearchTemplates() {
             })
         } else {
             storeData({
-                process: 'searchTemplates',
+                tableName: 'templates',
                 responseOk: false,
                 time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                 numItemsRetrieved: 0,

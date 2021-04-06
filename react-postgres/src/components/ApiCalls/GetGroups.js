@@ -25,7 +25,7 @@ function GetGroups() {
             if (data !== false) {
                 sessionStorage.setItem('groupObj', JSON.stringify(data))
                 storeData({
-                    process: 'getGroups',
+                    tableName: 'groups',
                     responseOk: true,
                     time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                     numItemsRetrieved: data.groups.length,
@@ -33,7 +33,7 @@ function GetGroups() {
                 })
             } else {
                 storeData({
-                    process: 'getGroups',
+                    tableName: 'groups',
                     responseOk: false,
                     time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                     numItemsRetrieved: 0,

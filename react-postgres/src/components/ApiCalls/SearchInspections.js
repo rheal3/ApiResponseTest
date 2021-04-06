@@ -24,7 +24,7 @@ function SearchInspections() {
     }).then(data => {
         if (data !== false) {
             storeData({
-                process: 'searchInspections',
+                tableName: 'inspections',
                 responseOk: true,
                 time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                 numItemsRetrieved: data.count,
@@ -32,7 +32,7 @@ function SearchInspections() {
             })
         } else {
             storeData({
-                process: 'searchInspections',
+                tableName: 'inspections',
                 responseOk: false,
                 time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                 numItemsRetrieved: 0,

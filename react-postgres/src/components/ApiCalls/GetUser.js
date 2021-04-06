@@ -29,7 +29,7 @@ function GetUser() {
     }).then(data => {             
         if (data !== false) {
             storeData({
-                process: 'getUsers',
+                tableName: 'users',
                 responseOk: true,
                 time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                 numItemsRetrieved: data.users.length,
@@ -37,7 +37,7 @@ function GetUser() {
             })
         } else {
             storeData({
-                process: 'getUsers',
+                tableName: 'users',
                 responseOk: false,
                 time: `${Math.round((time + Number.EPSILON) * 100) / 100} ms`,
                 numItemsRetrieved: 0,

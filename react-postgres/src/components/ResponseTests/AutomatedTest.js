@@ -3,6 +3,7 @@ import GetGroups from '../ApiCalls/GetGroups'
 import GetUser from '../ApiCalls/GetUser'
 import SearchInspections from '../ApiCalls/SearchInspections'
 import SearchTemplates from '../ApiCalls/SearchTemplates'
+import { getData, getLastDataPointTime } from '../dataStorage'
 import { testLoginTime } from './LoginTest'
 
 const AutomatedTest = () => {
@@ -23,12 +24,21 @@ const AutomatedTest = () => {
                 console.log("In interval with ID: " + intervalID)
                 
                 await runTests()
-                setloginResolveTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 6]['time'])
-                setloginRejectTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 5]['time'])
-                setGroupsTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 4]['time'])
-                setUserTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 3]['time'])
-                setTemplateTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 2]['time'])
-                setInspectionTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 1]['time'])
+                // await getData('access_token');
+                await getLastDataPointTime('users');
+                setloginResolveTime(await getLastDataPointTime('access_token'));
+                setloginRejectTime(await getLastDataPointTime('access_token'));
+                setGroupsTime(await getLastDataPointTime('groups'));
+                setUserTime(await getLastDataPointTime('users'));
+                setTemplateTime(await getLastDataPointTime('templates'));
+                setInspectionTime(await getLastDataPointTime('inspections'));
+
+                // setloginResolveTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 6]['time'])
+                // setloginRejectTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 5]['time'])
+                // setGroupsTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 4]['time'])
+                // setUserTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 3]['time'])
+                // setTemplateTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 2]['time'])
+                // setInspectionTime(JSON.parse(localStorage.getItem('saveData'))[JSON.parse(localStorage.getItem('saveData')).length - 1]['time'])
             }, 10000)
         } else {
             alert("You need to login first")
