@@ -82,9 +82,8 @@ const AutomatedTest = () => {
               // setInspectionTime(await getLastDataPointTime('inspections'));
 
             updateChart()
-            console.log(intervalID)
-
             }
+            
             let intervalID = setInterval(intervalFunc, intervalTime)
             intervalFunc();
 
