@@ -6,6 +6,7 @@ import SearchTemplates from '../ApiCalls/SearchTemplates'
 import { getLoginDataPoint, getLastDataPointTime, getDateTime } from '../dataStorage'
 import { testLoginTime } from './LoginTest'
 import {Line} from 'react-chartjs-2'
+import RunningLogo from '../Running_Logo/RunningLogo'
 
 const AutomatedTest = () => {
   const [getIsTesting, setIsTesting] = useState(false)
@@ -260,7 +261,7 @@ const AutomatedTest = () => {
             <button onClick={startTests}>Start Tests</button>
           </div>
         )}
-
+        {getIsTesting && (<RunningLogo/>)}
         {getIsTesting && (<button onClick={stopTests}>Stop Tests</button>)}
       </div>
      
