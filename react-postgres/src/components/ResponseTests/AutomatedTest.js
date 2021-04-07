@@ -275,7 +275,7 @@ const AutomatedTest = () => {
                     <option value="thirty-min">30 minutes</option>
                     <option value="fifteen-min">15 minutes</option>
                     <option value="five-min">5 minutes</option>
-                    <option value="one-min">1 minutes</option>
+                    <option value="one-min">1 minute</option>
                     <option value="thirty-secs">30 seconds</option>
                     <option value="ten-secs">10 seconds</option>
                 </select>
