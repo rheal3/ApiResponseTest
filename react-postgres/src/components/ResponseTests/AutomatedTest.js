@@ -348,6 +348,9 @@ const AutomatedTest = () => {
             redraw={true}
             data={getGroupChartState}
             options={{
+              legend: {
+                display: false
+              },
               maintainAspectRatio: false,
               title: {
                 display: true,
@@ -382,6 +385,9 @@ const AutomatedTest = () => {
             redraw={true}
             data={getUserChartState}
             options={{
+              legend: {
+                display: false
+              },
               maintainAspectRatio: false,
               title: {
                 display: true,
@@ -417,6 +423,9 @@ const AutomatedTest = () => {
             redraw={true}
             data={getTemplateChartState}
             options={{
+              legend: {
+                display: false
+              },
               maintainAspectRatio: false,
 
               title: {
@@ -453,6 +462,9 @@ const AutomatedTest = () => {
             redraw={true}
             data={getInspectionChartState}
             options={{
+              legend: {
+                display: false
+              },
               maintainAspectRatio: false,
               title: {
                 display: true,
