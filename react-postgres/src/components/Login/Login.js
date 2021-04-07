@@ -31,8 +31,6 @@ const Login = () => {
                     setApiToken(sessionStorage.getItem('apiToken'))
                 }}>LOGOUT</button>)}
             </div>
-            <br/>
-            
         </div>
     )
 }
