@@ -17,7 +17,7 @@ const AutomatedTest = () => {
     const [getIsTesting, setIsTesting] = useState(false)
     const [getChartState, setChartState] = useState({})
     const [intervalTime, setIntervalTime] = useState(0)
-    const [intervalValue, setIntervalValue] = useState({})
+    const [intervalValue, setIntervalValue] = useState("ten-secs")
     let labels = []
     let acceptData = []
     let rejectData = []
@@ -183,18 +183,18 @@ const AutomatedTest = () => {
               <div>
                 <label for="interval">Interval Time:</label>
                 <select value={intervalValue} onChange={handleChangeIntervalTime}>
-                    <option value="hour">1 Hour</option>
+                    <option value="hour">1 hour</option>
                     <option value="thirty-min">30 minutes</option>
                     <option value="fifteen-min">15 minutes</option>
                     <option value="five-min">5 minutes</option>
                     <option value="one-min">1 minutes</option>
                     <option value="thirty-secs">30 seconds</option>
-                    <option value="ten-secs" selected="selected">10 seconds</option>
+                    <option value="ten-secs">10 seconds</option>
                 </select>
                 <button onClick={startTests}>Start Tests</button>
               </div>
             )}
-            <br/>
+
             {getIsTesting && (<button onClick={stopTests}>Stop Tests</button>)}
             <br/>
             <p>Login Accept: {loginResolveTime}</p>
