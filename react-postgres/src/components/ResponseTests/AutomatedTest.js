@@ -16,6 +16,8 @@ const AutomatedTest = () => {
     const [getInspectionTime, setInspectionTime] = useState('')
     const [getIsTesting, setIsTesting] = useState(false)
     const [getChartState, setChartState] = useState({})
+    const [intervalTime, setIntervalTime] = useState(0)
+    const [intervalValue, setIntervalValue] = useState({})
     let labels = []
     let acceptData = []
     let rejectData = []
@@ -23,6 +25,36 @@ const AutomatedTest = () => {
     let userData = []
     let templateData = []
     let inspectionData = []
+
+    const handleChangeIntervalTime = (e) => {
+      let time = e.target.value;
+      let msTime = 0
+      switch (time) {
+        case "hour":
+          msTime = 3600000;
+          break;
+        case "thirty-min":
+          msTime = 1800000;
+          break;
+        case "fifteen-min":
+          msTime = 900000;
+          break;
+        case "five-min":
+          msTime = 300000;
+          break;
+        case "one-min":
+          msTime = 60000;
+          break;
+        case "thirty-secs":
+          msTime = 30000;
+          break;
+        case "ten-secs":
+          msTime = 10000;
+          break;
+      }
+      setIntervalTime(msTime);
+      setIntervalValue(time);
+    }
 
 
     const startTests = () => {
@@ -43,7 +75,7 @@ const AutomatedTest = () => {
                 setInspectionTime(await getLastDataPointTime('inspections'));
 
                 updateChart()
-            }, 10000)
+            }, intervalTime)
         } else {
             alert("You need to login first")
         }
@@ -147,7 +179,21 @@ const AutomatedTest = () => {
     return (
         <div>
             <h3>Automated Testing Test</h3>
-            {!getIsTesting && (<button onClick={startTests}>Start Tests</button>)}
+            {!getIsTesting && (
+              <div>
+                <label for="interval">Interval Time:</label>
+                <select value={intervalValue} onChange={handleChangeIntervalTime}>
+                    <option value="hour">1 Hour</option>
+                    <option value="thirty-min">30 minutes</option>
+                    <option value="fifteen-min">15 minutes</option>
+                    <option value="five-min">5 minutes</option>
+                    <option value="one-min">1 minutes</option>
+                    <option value="thirty-secs">30 seconds</option>
+                    <option value="ten-secs" selected="selected">10 seconds</option>
+                </select>
+                <button onClick={startTests}>Start Tests</button>
+              </div>
+            )}
             <br/>
             {getIsTesting && (<button onClick={stopTests}>Stop Tests</button>)}
             <br/>
