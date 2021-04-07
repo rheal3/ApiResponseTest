@@ -312,6 +312,9 @@ const AutomatedTest = () => {
             redraw={true}
             data={getLoginChartState}
             options={{
+              legend: {
+                display: false
+              },
               maintainAspectRatio: false,
               title: {
                 display: true,
