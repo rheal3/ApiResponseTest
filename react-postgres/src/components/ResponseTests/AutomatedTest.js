@@ -15,7 +15,13 @@ const AutomatedTest = () => {
     const [getTemplateTime, setTemplateTime] = useState('')
     const [getInspectionTime, setInspectionTime] = useState('')
     const [getIsTesting, setIsTesting] = useState(false)
-    const [getChartState, setChartState] = useState({})
+    const [getMainChartState, setMainChartState] = useState({})
+    const [getLoginChartState, setLoginChartState] = useState({})
+    const [getGroupChartState, setGroupChartState] = useState({})
+    const [getUserChartState, setUserChartState] = useState({})
+    const [getTemplateChartState, setTemplateChartState] = useState({})
+    const [getInspectionChartState, setInspectionChartState] = useState({})
+    
     let labels = []
     let acceptData = []
     let rejectData = []
@@ -76,9 +82,9 @@ const AutomatedTest = () => {
           labels.push(values[6])
         })
 
-        setChartState({})
+        setMainChartState({})
 
-        setChartState({
+        setMainChartState({
             // Login Accept
             labels: labels,
         datasets: [{
@@ -138,11 +144,93 @@ const AutomatedTest = () => {
               'rgb(0, 0, 255)'
             ],
             tension: 0.1
+          }]
+        })
+
+        setLoginChartState({})
+        setLoginChartState({
+          labels: labels,
+          datasets: [{
+            label: 'Login Accept',
+            data: acceptData,
+            fill: false,
+            borderColor: [
+              'rgb(0, 255, 0)'
+            ],
+            tension: 0.1
+          }, {
+            label: 'Login Reject',
+            data: rejectData,
+            fill: false,
+            borderColor: [
+              'rgb(255, 0, 0)'
+            ],
+            tension: 0.1
 
           }]
         })
+
+        setGroupChartState({})
+        setGroupChartState({
+          labels: labels,
+          datasets: [{
+            label: 'Group',
+            data: groupData,
+            fill: false,
+            borderColor: [
+              'rgb(128, 128, 0)'
+            ],
+            tension: 0.1
+          }]
+            
+        })
+
+        setUserChartState({})
+        setUserChartState({
+          labels: labels,
+          datasets: [{
+            label: 'User',
+            data: userData,
+            fill: false,
+            borderColor: [
+              'rgb(128, 128, 128)'
+            ],
+            tension: 0.1
+          }]
+            
+        })
+
+        setTemplateChartState({})
+        setTemplateChartState({
+          labels: labels,
+          datasets: [{
+            label: 'Template',
+            data: templateData,
+            fill: false,
+            borderColor: [
+            'rgb(128, 0, 128)'
+          ],
+          tension: 0.1
+          }]
+          
+        })
+
+        setInspectionChartState({})
+        setInspectionChartState({
+          labels: labels,
+          datasets: [{
+            label: 'Inspection',
+            data: inspectionData,
+            fill: false,
+            borderColor: [
+              'rgb(0, 0, 255)'
+            ],
+            tension: 0.1
+          }]
+            
+        })
     }
- 
+
 
     return (
         <div>
@@ -159,11 +247,15 @@ const AutomatedTest = () => {
             <p>Search Inspection: {getInspectionTime}</p>
 
             <div>
-            {/* <button onClick={updateChart}>Update Chart</button> */}
+              {/* Main Chart */}
             <Line
-                data = {getChartState}
+                data = {getMainChartState}
                 options = {{
                     maintainAspectRatio: false,
+                    title: {
+                      display: true,
+                      text: "Response Times"
+                    },
                     scales: {
                        yAxes: [{
                            scaleLabel: {
@@ -184,14 +276,185 @@ const AutomatedTest = () => {
                     }
                 }}
                 height = {'400%'}
-                width = {'30%'} 
                 />
             </div>
 
-        </div>
 
-        
-    )
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap'} }>
+                  <div >
+
+                    {/* Login Chart */}
+                  <Line
+                data = {getLoginChartState}
+                options = {{
+                    maintainAspectRatio: false,
+                    title: {
+                      display: true,
+                      text: "Login Times"
+                    },
+                    scales: {
+                       yAxes: [{
+                           scaleLabel: {
+                               display: true,
+                               labelString: "Response Time (ms)",
+                               fontSize: 14
+                               
+                           }
+                       }],
+
+                       xAxes: [{
+                           scaleLabel: {
+                               display: true,
+                               labelString: "Date Time",
+                               fontSize: 14
+                           }
+                       }]
+                    },
+                    responsive: false
+                }}
+
+                height = {'300%'}
+                />
+                  </div>
+                  <div >
+
+                    {/* group Chart */}
+                  <Line
+                data = {getGroupChartState}
+                options = {{
+                    maintainAspectRatio: false,
+                    title: {
+                      display: true,
+                      text: "Group Time"
+                    },
+                    scales: {
+                       yAxes: [{
+                           scaleLabel: {
+                               display: true,
+                               labelString: "Response Time (ms)",
+                               fontSize: 14
+                               
+                           }
+                       }],
+
+                       xAxes: [{
+                           scaleLabel: {
+                               display: true,
+                               labelString: "Date Time",
+                               fontSize: 14
+                           }
+                       }]
+                    },
+                    responsive: false
+                }}
+                height = {'300%'}
+                />
+                  </div>
+                  <div >
+                    {/* User Chart */}
+                  <Line
+                data = {getUserChartState}
+                options = {{
+                    maintainAspectRatio: false,
+                    title: {
+                      display: true,
+                      text: "User Time"
+                    },
+                    scales: {
+                       yAxes: [{
+                           scaleLabel: {
+                               display: true,
+                               labelString: "Response Time (ms)",
+                               fontSize: 14
+                               
+                           }
+                       }],
+
+                       xAxes: [{
+                           scaleLabel: {
+                               display: true,
+                               labelString: "Date Time",
+                               fontSize: 14
+                           }
+                       }]
+                    },
+                    responsive: false
+                }}
+                height = {'300%'}
+                />
+                  </div>
+                  <div >
+
+                    {/* Template Chart */}
+                  <Line
+                data = {getTemplateChartState}
+                options = {{
+                    maintainAspectRatio: false,
+
+                    title: {
+                      display: true,
+                      text: "Template Time"
+                    },
+                    scales: {
+                       yAxes: [{
+                           scaleLabel: {
+                               display: true,
+                               labelString: "Response Time (ms)",
+                               fontSize: 14
+                               
+                           }
+                       }],
+
+                       xAxes: [{
+                           scaleLabel: {
+                               display: true,
+                               labelString: "Date Time",
+                               fontSize: 14
+                           }
+                       }]
+                    },
+                    responsive: false
+                }}
+                height = {'300%'}
+                />
+                  </div>
+                  <div >
+
+                    {/* Inspection Chart */}
+                  <Line
+                data = {getInspectionChartState}
+                options = {{
+                    maintainAspectRatio: false,
+                    title: {
+                      display: true,
+                      text: "Inspection Time"
+                    },
+                    scales: {
+                       yAxes: [{
+                           scaleLabel: {
+                               display: true,
+                               labelString: "Response Time (ms)",
+                               fontSize: 14
+                               
+                           }
+                       }],
+
+                       xAxes: [{
+                           scaleLabel: {
+                               display: true,
+                               labelString: "Date Time",
+                               fontSize: 14
+                           }
+                       }]
+                    },
+                    responsive: false
+                }}
+                height = {'300%'}
+                />
+                  </div>
+            </div>
+        </div>
+    )    
 }
 
 async function runTests() {
