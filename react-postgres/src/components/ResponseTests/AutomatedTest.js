@@ -5,7 +5,6 @@ import SearchInspections from '../ApiCalls/SearchInspections'
 import SearchTemplates from '../ApiCalls/SearchTemplates'
 import { getLoginDataPoint, getLastDataPointTime, getDateTime } from '../dataStorage'
 import { testLoginTime } from './LoginTest'
-import {Line} from 'react-chartjs-2'
 import RunningLogo from '../Running_Logo/RunningLogo'
 import { getAvgTime, getBestTime, getWorstTime } from './cases';
 
@@ -323,7 +322,6 @@ const AutomatedTest = () => {
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
-
         <div style={{textAlign: 'center'}} >
           {/* Login Chart */}
           <SideChart data={getLoginChartState} title={'Login Time'}/>
