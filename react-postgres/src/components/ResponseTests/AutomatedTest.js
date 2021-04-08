@@ -16,6 +16,7 @@ const AutomatedTest = () => {
   const [getUserChartState, setUserChartState] = useState({})
   const [getTemplateChartState, setTemplateChartState] = useState({})
   const [getInspectionChartState, setInspectionChartState] = useState({})
+  const [chartHasData, setChartHasData] = useState(false)
 
   const [intervalTime, setIntervalTime] = useState(10000)
   const [intervalValue, setIntervalValue] = useState("ten-secs")
@@ -73,7 +74,7 @@ const AutomatedTest = () => {
               updateChart()
               }
             
-            let intervalID = setInterval(intervalFunc, intervalTime)
+            let intervalID = setInterval(intervalFunc, intervalTime) 
             intervalFunc();
 
         } else {
@@ -105,6 +106,9 @@ const AutomatedTest = () => {
         templateData.push(values[4])
         inspectionData.push(values[5])
         labels.push(values[6])
+        if (labels.length > 2) {
+          setChartHasData(true)
+        }
       })
     )
   }
@@ -118,7 +122,7 @@ const AutomatedTest = () => {
         data: acceptData,
         fill: false,
         borderColor: [
-          'rgb(0, 255, 0)'
+          'rgb(0, 200, 0)'
         ],
         tension: 0.1
       }, {
@@ -145,7 +149,7 @@ const AutomatedTest = () => {
         data: userData,
         fill: false,
         borderColor: [
-          'rgb(128, 128, 128)'
+          'rgb(64, 64, 64)'
         ],
         tension: 0.1
       }, {
@@ -176,7 +180,7 @@ const AutomatedTest = () => {
         data: acceptData,
         fill: false,
         borderColor: [
-          'rgb(0, 255, 0)'
+          'rgb(0, 200, 0)'
         ],
         tension: 0.1
       }, {
@@ -210,7 +214,7 @@ const AutomatedTest = () => {
         data: userData,
         fill: false,
         borderColor: [
-          'rgb(128, 128, 128)'
+          'rgb(64, 64, 64)'
         ],
         tension: 0.1
       }]
@@ -243,12 +247,37 @@ const AutomatedTest = () => {
     })
   }
 
+  const clearClicked = () => {
+    setChartHasData(false)
+    labels = []
+    acceptData = []
+    rejectData = []
+    groupData = []
+    userData = []
+    templateData = []
+    inspectionData = []
+
+    updateChart()
+
+    labels = ['start']
+    acceptData = [0]
+    rejectData = [0]
+    groupData = [0]
+    userData = [0]
+    templateData = [0]
+    inspectionData = [0]    
+  }
+
 
   return (
     <div>
       <div style={{ textAlign: "center" }}>
         <h1>Automated Response Time Tests</h1>
 
+        <div style={{textAlign: "end"}}>
+          {chartHasData && !getIsTesting && (<button onClick={clearClicked}>Clear Charts</button>)}
+        </div>
+        
         {!getIsTesting && (
           <div>
             <label for="interval">Interval Time:</label>
