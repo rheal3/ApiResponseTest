@@ -403,16 +403,16 @@ const AutomatedTest = () => {
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
             <div>
               <p>Login Accept</p>
-              <p>Average: {getLoginAcceptAverage} ms</p>
-              <p>Worst: {getLoginAcceptWorst} ms</p>
-              <p>Best: {getLoginAcceptBest} ms</p>
+              <div>Average: {getLoginAcceptAverage} ms</div>
+              <div>Worst: {getLoginAcceptWorst} ms</div>
+              <div>Best: {getLoginAcceptBest} ms</div>
             </div>
             <br/>
             <div>
               <p>Login Reject</p>
-              <p>Average: {getLoginRejectAverage} ms</p>
-              <p>Worst: {getLoginRejectWorst} ms</p>
-              <p>Best: {getLoginRejectBest} ms</p>
+              <div>Average: {getLoginRejectAverage} ms</div>
+              <div>Worst: {getLoginRejectWorst} ms</div>
+              <div>Best: {getLoginRejectBest} ms</div>
             </div>
           </div>
           
@@ -457,9 +457,10 @@ const AutomatedTest = () => {
             height={'300%'}
           />
 
-          <p>Average: {getGroupAverage} ms</p>
-          <p>Worst: {getGroupWorst} ms</p>
-          <p>Best: {getGroupBest} ms</p>
+          <p>Group</p>
+          <div>Average: {getGroupAverage} ms</div>
+          <div>Worst: {getGroupWorst} ms</div>
+          <div>Best: {getGroupBest} ms</div>
         </div>
         <div style={{textAlign: 'center'}} >
           {/* User Chart */}
@@ -498,9 +499,10 @@ const AutomatedTest = () => {
             height={'300%'}
           />
 
-          <p>Average: {getUserAverage} ms</p>
-          <p>Worst: {getUserWorst} ms</p>
-          <p>Best: {getUserBest} ms</p>
+          <p>User</p>
+          <div>Average: {getUserAverage} ms</div>
+          <div>Worst: {getUserWorst} ms</div>
+          <div>Best: {getUserBest} ms</div>
         </div>
         <div style={{textAlign: 'center'}} >
 
@@ -541,9 +543,10 @@ const AutomatedTest = () => {
             height={'300%'}
           />
 
-          <p>Average: {getTemplateAverage} ms</p>
-          <p>Worst: {getTemplateWorst} ms</p>
-          <p>Best: {getTemplateBest} ms</p>
+          <p>Template</p>
+          <div>Average: {getTemplateAverage} ms</div>
+          <div>Worst: {getTemplateWorst} ms</div>
+          <div>Best: {getTemplateBest} ms</div>
         </div>
         <div style={{textAlign: 'center'}} >
 
@@ -583,9 +586,10 @@ const AutomatedTest = () => {
             height={'300%'}
           />
 
-          <p>Average: {getInspectionAverage} ms</p>
-          <p>Worst: {getInspectionWorst} ms</p>
-          <p>Best: {getInspectionBest} ms</p>
+          <p>Inspection</p>
+          <div>Average: {getInspectionAverage} ms</div>
+          <div>Worst: {getInspectionWorst} ms</div>
+          <div>Best: {getInspectionBest} ms</div>
         </div>
       </div>
     </div>
