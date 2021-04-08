@@ -23,7 +23,6 @@ export const getWorstTime = async (idObj) => {
             const jsonData = await response.json();
             returnObj[tableName] = jsonData;
           }
-        console.log(returnObj)
         return returnObj;
         
     } catch (err) {

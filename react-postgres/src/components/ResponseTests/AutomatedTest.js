@@ -17,6 +17,13 @@ const AutomatedTest = () => {
   const [getUserChartState, setUserChartState] = useState({})
   const [getTemplateChartState, setTemplateChartState] = useState({})
   const [getInspectionChartState, setInspectionChartState] = useState({})
+  const [chartHasData, setChartHasData] = useState(false)
+
+  const [bestTimesData, setBestTimesData] = useState({})
+  const [worstTimesData, setWorstTimesData] = useState({})
+  // const [avgTimesData, setAvgTimesData] = useState({})
+
+
 
   const [intervalTime, setIntervalTime] = useState(10000)
   const [intervalValue, setIntervalValue] = useState("ten-secs")
@@ -73,11 +80,11 @@ const AutomatedTest = () => {
               await runTests()
               await getData()
               updateChart()
-              getBestTime(idCount[0]);
-              getWorstTime(idCount[0]);
+              setBestTimesData(await getBestTime(idCount[0]));
+              setWorstTimesData(await getWorstTime(idCount[0]));
               }
             
-            let intervalID = setInterval(intervalFunc, intervalTime)
+            let intervalID = setInterval(intervalFunc, intervalTime) 
             intervalFunc();
 
         } else {
@@ -116,6 +123,11 @@ const AutomatedTest = () => {
           'templates': values[4]['id'], 
           'inspections': values[5]['id']
         })
+
+        if (labels.length > 2) {
+          setChartHasData(true)
+        }
+
       })
     )
   }
@@ -129,7 +141,7 @@ const AutomatedTest = () => {
         data: acceptData,
         fill: false,
         borderColor: [
-          'rgb(0, 255, 0)'
+          'rgb(0, 200, 0)'
         ],
         tension: 0.1
       }, {
@@ -156,7 +168,7 @@ const AutomatedTest = () => {
         data: userData,
         fill: false,
         borderColor: [
-          'rgb(128, 128, 128)'
+          'rgb(64, 64, 64)'
         ],
         tension: 0.1
       }, {
@@ -187,7 +199,7 @@ const AutomatedTest = () => {
         data: acceptData,
         fill: false,
         borderColor: [
-          'rgb(0, 255, 0)'
+          'rgb(0, 200, 0)'
         ],
         tension: 0.1
       }, {
@@ -221,7 +233,7 @@ const AutomatedTest = () => {
         data: userData,
         fill: false,
         borderColor: [
-          'rgb(128, 128, 128)'
+          'rgb(64, 64, 64)'
         ],
         tension: 0.1
       }]
@@ -254,11 +266,37 @@ const AutomatedTest = () => {
     })
   }
 
+  const clearClicked = () => {
+    setChartHasData(false)
+    labels = []
+    acceptData = []
+    rejectData = []
+    groupData = []
+    userData = []
+    templateData = []
+    inspectionData = []
+
+    updateChart()
+
+    labels = ['start']
+    acceptData = [0]
+    rejectData = [0]
+    groupData = [0]
+    userData = [0]
+    templateData = [0]
+    inspectionData = [0]    
+  }
+
 
   return (
     <div>
       <div style={{ textAlign: "center" }}>
         <h1>Automated Response Time Tests</h1>
+
+        <div style={{textAlign: "end"}}>
+          {chartHasData && !getIsTesting && (<button onClick={clearClicked}>Clear Charts</button>)}
+        </div>
+        
         {!getIsTesting && (
           <div>
             <label for="interval">Interval Time:</label>
@@ -315,7 +353,7 @@ const AutomatedTest = () => {
 
 
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
-        <div >
+        <div style={{textAlign: 'center'}} >
 
           {/* Login Chart */}
           <Line
@@ -353,8 +391,26 @@ const AutomatedTest = () => {
 
             height={'300%'}
           />
+          {chartHasData && (<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+            <div>
+              <p>Login</p>
+              {/* <div>Average: {getLoginAcceptAverage} ms</div> */}
+              <div>Worst: {worstTimesData['access_token'][0]['time']} ms @ {worstTimesData['access_token'][0]['date_time']} ms</div>
+              <div>Best: {bestTimesData['access_token'][0]['time']} ms @ {bestTimesData['access_token'][0]['date_time']}</div>
+            </div>
+            <br/>
+            {/* <div>
+              <p>Login Reject</p>
+              <div>Average: {getLoginRejectAverage} ms</div>
+              <div>Worst: {getLoginRejectWorst} ms</div>
+              <div>Best: {getLoginRejectBest} ms</div>
+            </div> */}
+          </div>)}
+          
+
+          
         </div>
-        <div >
+        <div style={{textAlign: 'center'}} >
 
           {/* group Chart */}
           <Line
@@ -391,8 +447,15 @@ const AutomatedTest = () => {
             }}
             height={'300%'}
           />
+          {chartHasData && (<div>
+            <p>Group</p>
+            {/* <div>Average: {getGroupAverage} ms</div> */}
+            <div>Worst: {worstTimesData['groups'][0]['time']} ms @ {worstTimesData['groups'][0]['date_time']}</div>
+            <div>Best: {bestTimesData['groups'][0]['time']} ms @ {bestTimesData['groups'][0]['date_time']} </div>
+          </div>)}
+          
         </div>
-        <div >
+        <div style={{textAlign: 'center'}} >
           {/* User Chart */}
           <Line
             redraw={true}
@@ -428,8 +491,16 @@ const AutomatedTest = () => {
             }}
             height={'300%'}
           />
+
+          {chartHasData && (<div>
+            <p>User</p>
+            {/* <div>Average: {getUserAverage} ms</div> */}
+            <div>Worst: {worstTimesData['users'][0]['time']} ms @ {worstTimesData['users'][0]['date_time']}</div>
+            <div>Best: {bestTimesData['users'][0]['time']} ms @ {bestTimesData['users'][0]['date_time']}</div>
+          </div>)}
+          
         </div>
-        <div >
+        <div style={{textAlign: 'center'}} >
 
           {/* Template Chart */}
           <Line
@@ -467,8 +538,16 @@ const AutomatedTest = () => {
             }}
             height={'300%'}
           />
+
+          {chartHasData && (<div>
+            <p>Template</p>
+            {/* <div>Average: {getTemplateAverage} ms</div> */}
+            <div>Worst: {worstTimesData['templates'][0]['time']} ms @ {worstTimesData['templates'][0]['date_time']}</div>
+            <div>Best: {bestTimesData['templates'][0]['time']} ms @ {bestTimesData['templates'][0]['date_time']}</div>
+          </div>)}
+         
         </div>
-        <div >
+        <div style={{textAlign: 'center'}} >
 
           {/* Inspection Chart */}
           <Line
@@ -505,6 +584,14 @@ const AutomatedTest = () => {
             }}
             height={'300%'}
           />
+
+          {chartHasData && (<div>
+            <p>Inspection</p>
+            {/* <div>Average: {getInspectionAverage} ms</div> */}
+            <div>Worst: {worstTimesData['inspections'][0]['time']} ms @ {worstTimesData['access_token'][0]['date_time']}</div>
+            <div>Best: {bestTimesData['inspections'][0]['time']} ms @ {bestTimesData['access_token'][0]['date_time']}</div>
+          </div>)}
+          
         </div>
       </div>
     </div>
