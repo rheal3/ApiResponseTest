@@ -7,6 +7,7 @@ import { getLoginDataPoint, getLastDataPointTime, getDateTime } from '../dataSto
 import { testLoginTime } from './LoginTest'
 import {Line} from 'react-chartjs-2'
 import RunningLogo from '../Running_Logo/RunningLogo'
+import { getBestTime, getWorstTime } from './cases';
 
 const AutomatedTest = () => {
   const [getIsTesting, setIsTesting] = useState(false)
@@ -19,6 +20,7 @@ const AutomatedTest = () => {
 
   const [intervalTime, setIntervalTime] = useState(10000)
   const [intervalValue, setIntervalValue] = useState("ten-secs")
+  let idCount = [];
 
   let labels = ['start']
   let acceptData = [0]
@@ -71,6 +73,8 @@ const AutomatedTest = () => {
               await runTests()
               await getData()
               updateChart()
+              getBestTime(idCount[0]);
+              getWorstTime(idCount[0]);
               }
             
             let intervalID = setInterval(intervalFunc, intervalTime)
@@ -98,13 +102,20 @@ const AutomatedTest = () => {
         await getLastDataPointTime('inspections'),
         await getDateTime('inspections')
       ]).then((values) => {
-        acceptData.push(values[0])
-        rejectData.push(values[1])
-        groupData.push(values[2])
-        userData.push(values[3])
-        templateData.push(values[4])
-        inspectionData.push(values[5])
+        acceptData.push(values[0]['time'])
+        rejectData.push(values[1]['time'])
+        groupData.push(values[2]['time'])
+        userData.push(values[3]['time'])
+        templateData.push(values[4]['time'])
+        inspectionData.push(values[5]['time'])
         labels.push(values[6])
+        idCount.push({
+          'access_token': values[0]['id'], 
+          'groups': values[2]['id'], 
+          'users': values[3]['id'], 
+          'templates': values[4]['id'], 
+          'inspections': values[5]['id']
+        })
       })
     )
   }
@@ -248,7 +259,6 @@ const AutomatedTest = () => {
     <div>
       <div style={{ textAlign: "center" }}>
         <h1>Automated Response Time Tests</h1>
-
         {!getIsTesting && (
           <div>
             <label for="interval">Interval Time:</label>

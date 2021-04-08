@@ -49,7 +49,7 @@ export const getLastDataPointTime = async (tableName) => {
         const response = await fetch(`http://localhost:5000/${tableName}/last`);
         const jsonData = await response.json();
 
-        return jsonData[0]['time'];
+        return jsonData[0];
 
     } catch (err) {
         console.log(err.message);
@@ -61,7 +61,7 @@ export const getLoginDataPoint = async (status) => {
         const response = await fetch(`http://localhost:5000/login/${status}`);
         const jsonData = await response.json();
 
-        return jsonData[0]['time'];
+        return jsonData[0];
 
     } catch (err) {
         console.log(err.message);

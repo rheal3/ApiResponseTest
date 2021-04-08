@@ -8,7 +8,8 @@ jobs:
   test_suite:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Check Out Repo
+        uses: actions/checkout@v2
       - uses: actions/setup-node@v1
       - name: Install Client Dependencies
         run: |
@@ -18,7 +19,7 @@ jobs:
         run: |
           cd server
           npm install
-      - name: Setup DB
-        run: |
-          ./server/db/init.sh
-          ./server/migrate.sh
+      # - name: Setup DB
+      #   run: |
+      #     ./server/db/init.sh
+      #     ./server/migrate.sh

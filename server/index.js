@@ -58,6 +58,29 @@ app.get("/login/:status", async (req, res) => {
   }
 })
 
+// get best time in current session
+app.get("/:tableName/best/:id", async (req, res) => {
+  try {
+    const {tableName, id } = req.params;
+    let queryStr = `SELECT * FROM ${tableName} WHERE id > ${id} - 1 ORDER BY time LIMIT 1`
+    const allData = await pool.query(queryStr)
+    res.json(allData.rows)
+  } catch (err) {
+    console.log('best: ' + err.message);
+  }
+})
+
+// get worst time in current session
+app.get("/:tableName/worst/:id", async (req, res) => {
+  try {
+    const {tableName, id } = req.params;
+    let queryStr = `SELECT * FROM ${tableName} WHERE id > ${id} - 1 ORDER BY time DESC LIMIT 1`
+    const allData = await pool.query(queryStr)
+    res.json(allData.rows)
+  } catch (err) {
+    console.log('best: ' + err.message);
+  }
+})
 
 app.listen(5000, () => {
     console.log("Server started on port 5000.")
