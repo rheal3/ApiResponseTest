@@ -400,7 +400,7 @@ const AutomatedTest = () => {
 
             height={'300%'}
           />
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+          {chartHasData && (<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
             <div>
               <p>Login Accept</p>
               <div>Average: {getLoginAcceptAverage} ms</div>
@@ -414,7 +414,7 @@ const AutomatedTest = () => {
               <div>Worst: {getLoginRejectWorst} ms</div>
               <div>Best: {getLoginRejectBest} ms</div>
             </div>
-          </div>
+          </div>)}
           
 
           
@@ -456,11 +456,13 @@ const AutomatedTest = () => {
             }}
             height={'300%'}
           />
-
-          <p>Group</p>
-          <div>Average: {getGroupAverage} ms</div>
-          <div>Worst: {getGroupWorst} ms</div>
-          <div>Best: {getGroupBest} ms</div>
+          {chartHasData && (<div>
+            <p>Group</p>
+            <div>Average: {getGroupAverage} ms</div>
+            <div>Worst: {getGroupWorst} ms</div>
+            <div>Best: {getGroupBest} ms</div>
+          </div>)}
+          
         </div>
         <div style={{textAlign: 'center'}} >
           {/* User Chart */}
@@ -499,10 +501,13 @@ const AutomatedTest = () => {
             height={'300%'}
           />
 
-          <p>User</p>
-          <div>Average: {getUserAverage} ms</div>
-          <div>Worst: {getUserWorst} ms</div>
-          <div>Best: {getUserBest} ms</div>
+          {chartHasData && (<div>
+            <p>User</p>
+            <div>Average: {getUserAverage} ms</div>
+            <div>Worst: {getUserWorst} ms</div>
+            <div>Best: {getUserBest} ms</div>
+          </div>)}
+          
         </div>
         <div style={{textAlign: 'center'}} >
 
@@ -543,10 +548,13 @@ const AutomatedTest = () => {
             height={'300%'}
           />
 
-          <p>Template</p>
-          <div>Average: {getTemplateAverage} ms</div>
-          <div>Worst: {getTemplateWorst} ms</div>
-          <div>Best: {getTemplateBest} ms</div>
+          {chartHasData && (<div>
+            <p>Template</p>
+            <div>Average: {getTemplateAverage} ms</div>
+            <div>Worst: {getTemplateWorst} ms</div>
+            <div>Best: {getTemplateBest} ms</div>
+          </div>)}
+         
         </div>
         <div style={{textAlign: 'center'}} >
 
@@ -586,10 +594,13 @@ const AutomatedTest = () => {
             height={'300%'}
           />
 
-          <p>Inspection</p>
-          <div>Average: {getInspectionAverage} ms</div>
-          <div>Worst: {getInspectionWorst} ms</div>
-          <div>Best: {getInspectionBest} ms</div>
+          {chartHasData && (<div>
+            <p>Inspection</p>
+            <div>Average: {getInspectionAverage} ms</div>
+            <div>Worst: {getInspectionWorst} ms</div>
+            <div>Best: {getInspectionBest} ms</div>
+          </div>)}
+          
         </div>
       </div>
     </div>
