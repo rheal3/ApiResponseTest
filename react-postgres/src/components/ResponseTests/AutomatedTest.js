@@ -9,6 +9,9 @@ import {Line} from 'react-chartjs-2'
 import RunningLogo from '../Running_Logo/RunningLogo'
 import { getAvgTime, getBestTime, getWorstTime } from './cases';
 
+import MainChart from '../Charts/MainChart'
+import SideChart from '../Charts/sideChart'
+
 const AutomatedTest = () => {
   const [getIsTesting, setIsTesting] = useState(false)
   const [getMainChartState, setMainChartState] = useState({})
@@ -22,8 +25,6 @@ const AutomatedTest = () => {
   const [bestTimesData, setBestTimesData] = useState({})
   const [worstTimesData, setWorstTimesData] = useState({})
   const [avgTimesData, setAvgTimesData] = useState({})
-
-
 
   const [intervalTime, setIntervalTime] = useState(10000)
   const [intervalValue, setIntervalValue] = useState("ten-secs")
@@ -129,7 +130,6 @@ const AutomatedTest = () => {
         if (labels.length > 2) {
           setChartHasData(true)
         }
-
       })
     )
   }
@@ -318,81 +318,15 @@ const AutomatedTest = () => {
         {getIsTesting && (<button onClick={stopTests}>Stop Tests</button>)}
       </div>
      
-
       <div>
-        {/* Main Chart */}
-        <Line
-          redraw={true}
-          data={getMainChartState}
-          options={{
-            maintainAspectRatio: false,
-            title: {
-              display: true,
-              text: "Response Times"
-            },
-            scales: {
-              yAxes: [{
-                scaleLabel: {
-                  display: true,
-                  labelString: "Response Time (ms)",
-                  fontSize: 16
-
-                }
-              }],
-
-              xAxes: [{
-                scaleLabel: {
-                  display: true,
-                  labelString: "Date Time",
-                  fontSize: 16
-                }
-              }]
-            }
-          }}
-          height={'400%'}
-        />
+        <MainChart data={getMainChartState}/>
       </div>
 
-
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
+
         <div style={{textAlign: 'center'}} >
-
           {/* Login Chart */}
-          <Line
-            redraw={true}
-            data={getLoginChartState}
-            options={{
-              legend: {
-                display: false
-              },
-              maintainAspectRatio: false,
-              title: {
-                display: true,
-                text: "Login Times"
-              },
-              scales: {
-                yAxes: [{
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Response Time (ms)",
-                    fontSize: 14
-
-                  }
-                }],
-
-                xAxes: [{
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Date Time",
-                    fontSize: 14
-                  }
-                }]
-              },
-              responsive: false
-            }}
-
-            height={'300%'}
-          />
+          <SideChart data={getLoginChartState} title={'Login Time'}/>
           {chartHasData && (<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly'}}>
             <div>
               <p>Login Accept</p>
@@ -400,7 +334,9 @@ const AutomatedTest = () => {
               <div>Worst: {worstTimesData['access_token_true'][0]['time']} ms @ {worstTimesData['access_token_true'][0]['date_time']} ms</div>
               <div>Best: {bestTimesData['access_token_true'][0]['time']} ms @ {bestTimesData['access_token_true'][0]['date_time']}</div>
             </div>
+
             <br/>
+
             <div>
               <p>Login Reject</p>
               <div>Average: {avgTimesData['access_token_false'][0]['avg']} ms</div>
@@ -408,47 +344,11 @@ const AutomatedTest = () => {
               <div>Best: {bestTimesData['access_token_false'][0]['time']} ms @ {bestTimesData['access_token_false'][0]['date_time']}</div>
             </div>
           </div>)}
-          
-
-          
         </div>
+
         <div style={{textAlign: 'center'}} >
-
           {/* group Chart */}
-          <Line
-            redraw={true}
-            data={getGroupChartState}
-            options={{
-              legend: {
-                display: false
-              },
-              maintainAspectRatio: false,
-              title: {
-                display: true,
-                text: "Group Time"
-              },
-              scales: {
-                yAxes: [{
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Response Time (ms)",
-                    fontSize: 14
-
-                  }
-                }],
-
-                xAxes: [{
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Date Time",
-                    fontSize: 14
-                  }
-                }]
-              },
-              responsive: false
-            }}
-            height={'300%'}
-          />
+          <SideChart data={getGroupChartState} title={'Group Time'}/>
           {chartHasData && (<div>
             <p>Group</p>
             <div>Average: {avgTimesData['groups'][0]['avg']} ms</div>
@@ -459,141 +359,35 @@ const AutomatedTest = () => {
         </div>
         <div style={{textAlign: 'center'}} >
           {/* User Chart */}
-          <Line
-            redraw={true}
-            data={getUserChartState}
-            options={{
-              legend: {
-                display: false
-              },
-              maintainAspectRatio: false,
-              title: {
-                display: true,
-                text: "User Time"
-              },
-              scales: {
-                yAxes: [{
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Response Time (ms)",
-                    fontSize: 14
-
-                  }
-                }],
-
-                xAxes: [{
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Date Time",
-                    fontSize: 14
-                  }
-                }]
-              },
-              responsive: false
-            }}
-            height={'300%'}
-          />
-
+          <SideChart data={getUserChartState} title={'User Time'}/>
           {chartHasData && (<div>
             <p>User</p>
             <div>Average: {avgTimesData['users'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['users'][0]['time']} ms @ {worstTimesData['users'][0]['date_time']}</div>
             <div>Best: {bestTimesData['users'][0]['time']} ms @ {bestTimesData['users'][0]['date_time']}</div>
           </div>)}
-          
         </div>
+
         <div style={{textAlign: 'center'}} >
-
           {/* Template Chart */}
-          <Line
-            redraw={true}
-            data={getTemplateChartState}
-            options={{
-              legend: {
-                display: false
-              },
-              maintainAspectRatio: false,
-
-              title: {
-                display: true,
-                text: "Template Time"
-              },
-              scales: {
-                yAxes: [{
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Response Time (ms)",
-                    fontSize: 14
-
-                  }
-                }],
-
-                xAxes: [{
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Date Time",
-                    fontSize: 14
-                  }
-                }]
-              },
-              responsive: false
-            }}
-            height={'300%'}
-          />
-
+          <SideChart data={getTemplateChartState} title={'Template Time'}/>
           {chartHasData && (<div>
             <p>Template</p>
             <div>Average: {avgTimesData['templates'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['templates'][0]['time']} ms @ {worstTimesData['templates'][0]['date_time']}</div>
             <div>Best: {bestTimesData['templates'][0]['time']} ms @ {bestTimesData['templates'][0]['date_time']}</div>
           </div>)}
-         
         </div>
+
         <div style={{textAlign: 'center'}} >
-
           {/* Inspection Chart */}
-          <Line
-            redraw={true}
-            data={getInspectionChartState}
-            options={{
-              legend: {
-                display: false
-              },
-              maintainAspectRatio: false,
-              title: {
-                display: true,
-                text: "Inspection Time"
-              },
-              scales: {
-                yAxes: [{
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Response Time (ms)",
-                    fontSize: 14
-
-                  }
-                }],
-
-                xAxes: [{
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Date Time",
-                    fontSize: 14
-                  }
-                }]
-              },
-              responsive: false
-            }}
-            height={'300%'}
-          />
-
+          <SideChart data={getInspectionChartState} title={'Inspection Time'}/>
           {chartHasData && (<div>
             <p>Inspection</p>
             <div>Average: {avgTimesData['inspections'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['inspections'][0]['time']} ms @ {worstTimesData['inspections'][0]['date_time']}</div>
             <div>Best: {bestTimesData['inspections'][0]['time']} ms @ {bestTimesData['inspections'][0]['date_time']}</div>
           </div>)}
-          
         </div>
       </div>
     </div>
