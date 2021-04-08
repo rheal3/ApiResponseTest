@@ -18,6 +18,32 @@ const AutomatedTest = () => {
   const [getInspectionChartState, setInspectionChartState] = useState({})
   const [chartHasData, setChartHasData] = useState(false)
 
+
+  const [getLoginAcceptAverage, setLoginAcceptAverage] = useState('')
+  const [getLoginAcceptBest, setLoginAcceptBest] = useState('')
+  const [getLoginAcceptWorst, setLoginAcceptWorst] = useState('')
+
+  const [getLoginRejectAverage, setLoginRejectAverage] = useState('')
+  const [getLoginRejectBest, setLoginRejectBest] = useState('')
+  const [getLoginRejectWorst, setLoginRejectWorst] = useState('')
+
+  const [getGroupAverage, setGroupAverage] = useState('')
+  const [getGroupBest, setGroupBest] = useState('')
+  const [getGroupWorst, setGroupWorst] = useState('')
+
+  const [getUserAverage, setUserAverage] = useState('')
+  const [getUserBest, setUserBest] = useState('')
+  const [getUserWorst, setUserWorst] = useState('')
+
+  const [getTemplateAverage, setTemplateAverage] = useState('')
+  const [getTemplateBest, setTemplateBest] = useState('')
+  const [getTemplateWorst, setTemplateWorst] = useState('')
+
+  const [getInspectionAverage, setInspectionAverage] = useState('')
+  const [getInspectionBest, setInspectionBest] = useState('')
+  const [getInspectionWorst, setInspectionWorst] = useState('')
+
+
   const [intervalTime, setIntervalTime] = useState(10000)
   const [intervalValue, setIntervalValue] = useState("ten-secs")
 
@@ -106,9 +132,11 @@ const AutomatedTest = () => {
         templateData.push(values[4])
         inspectionData.push(values[5])
         labels.push(values[6])
+
         if (labels.length > 2) {
           setChartHasData(true)
         }
+
       })
     )
   }
@@ -334,7 +362,7 @@ const AutomatedTest = () => {
 
 
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
-        <div >
+        <div style={{textAlign: 'center'}} >
 
           {/* Login Chart */}
           <Line
@@ -372,8 +400,26 @@ const AutomatedTest = () => {
 
             height={'300%'}
           />
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+            <div>
+              <p>Login Accept</p>
+              <p>Average: {getLoginAcceptAverage} ms</p>
+              <p>Worst: {getLoginAcceptWorst} ms</p>
+              <p>Best: {getLoginAcceptBest} ms</p>
+            </div>
+            <br/>
+            <div>
+              <p>Login Reject</p>
+              <p>Average: {getLoginRejectAverage} ms</p>
+              <p>Worst: {getLoginRejectWorst} ms</p>
+              <p>Best: {getLoginRejectBest} ms</p>
+            </div>
+          </div>
+          
+
+          
         </div>
-        <div >
+        <div style={{textAlign: 'center'}} >
 
           {/* group Chart */}
           <Line
@@ -410,8 +456,12 @@ const AutomatedTest = () => {
             }}
             height={'300%'}
           />
+
+          <p>Average: {getGroupAverage} ms</p>
+          <p>Worst: {getGroupWorst} ms</p>
+          <p>Best: {getGroupBest} ms</p>
         </div>
-        <div >
+        <div style={{textAlign: 'center'}} >
           {/* User Chart */}
           <Line
             redraw={true}
@@ -447,8 +497,12 @@ const AutomatedTest = () => {
             }}
             height={'300%'}
           />
+
+          <p>Average: {getUserAverage} ms</p>
+          <p>Worst: {getUserWorst} ms</p>
+          <p>Best: {getUserBest} ms</p>
         </div>
-        <div >
+        <div style={{textAlign: 'center'}} >
 
           {/* Template Chart */}
           <Line
@@ -486,8 +540,12 @@ const AutomatedTest = () => {
             }}
             height={'300%'}
           />
+
+          <p>Average: {getTemplateAverage} ms</p>
+          <p>Worst: {getTemplateWorst} ms</p>
+          <p>Best: {getTemplateBest} ms</p>
         </div>
-        <div >
+        <div style={{textAlign: 'center'}} >
 
           {/* Inspection Chart */}
           <Line
@@ -524,6 +582,10 @@ const AutomatedTest = () => {
             }}
             height={'300%'}
           />
+
+          <p>Average: {getInspectionAverage} ms</p>
+          <p>Worst: {getInspectionWorst} ms</p>
+          <p>Best: {getInspectionBest} ms</p>
         </div>
       </div>
     </div>
