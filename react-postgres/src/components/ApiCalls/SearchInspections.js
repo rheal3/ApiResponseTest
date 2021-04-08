@@ -26,7 +26,7 @@ function SearchInspections() {
             storeData({
                 tableName: 'inspections',
                 responseOk: true,
-                time: `${Math.round((time + Number.EPSILON) * 100) / 100}`,
+                time: Math.round((time + Number.EPSILON) * 100) / 100,
                 numItemsRetrieved: data.count,
                 dateTime: dateTime(),
             })
@@ -34,7 +34,7 @@ function SearchInspections() {
             storeData({
                 tableName: 'inspections',
                 responseOk: false,
-                time: `${Math.round((time + Number.EPSILON) * 100) / 100}`,
+                time: Math.round((time + Number.EPSILON) * 100) / 100,
                 numItemsRetrieved: 0,
                 dateTime: dateTime(),
             })

@@ -27,7 +27,7 @@ function GetGroups() {
                 storeData({
                     tableName: 'groups',
                     responseOk: true,
-                    time: `${Math.round((time + Number.EPSILON) * 100) / 100}`,
+                    time: Math.round((time + Number.EPSILON) * 100) / 100,
                     numItemsRetrieved: data.groups.length,
                     dateTime: dateTime(),
                 })
@@ -35,7 +35,7 @@ function GetGroups() {
                 storeData({
                     tableName: 'groups',
                     responseOk: false,
-                    time: `${Math.round((time + Number.EPSILON) * 100) / 100}`,
+                    time: Math.round((time + Number.EPSILON) * 100) / 100,
                     numItemsRetrieved: 0,
                     dateTime: dateTime(),
                 })

@@ -82,10 +82,12 @@ const AutomatedTest = () => {
               updateChart()
               setBestTimesData(await getBestTime(idCount[0]));
               setWorstTimesData(await getWorstTime(idCount[0]));
+              console.log(idCount)
               }
             
             let intervalID = setInterval(intervalFunc, intervalTime) 
             intervalFunc();
+            
 
         } else {
             alert("You need to login first")
