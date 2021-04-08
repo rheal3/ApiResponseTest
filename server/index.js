@@ -7,12 +7,11 @@ const pool = require("./db");
 app.use(cors())
 app.use(express.json());
 
+
 // Routes //
 
-// create data
-
-// request from client side and response sent back to client
-app.post("/", async (req, res) => {
+// add data to database
+app.post("/", async (req, res) => { // request from client side and response sent back to client
   try {
     const { tableName, responseOk, time, numItemsRetrieved, dateTime } = req.body; // set from body of the request
     let queryStr = `INSERT INTO ${tableName} (response_ok, time, num_items_retrieved, date_time) VALUES ($1, $2, $3, $4) RETURNING *`
@@ -78,7 +77,7 @@ app.get("/:tableName/worst/:id", async (req, res) => {
     const allData = await pool.query(queryStr)
     res.json(allData.rows)
   } catch (err) {
-    console.log('best: ' + err.message);
+    console.log('worst: ' + err.message);
   }
 })
 
@@ -90,16 +89,47 @@ app.get("/:tableName/avg/:id", async (req, res) => {
     const allData = await pool.query(queryStr)
     res.json(allData.rows)
   } catch (err) {
-    console.log('best: ' + err.message);
+    console.log('avg: ' + err.message);
   }
 })
+
+// get best time in current session -- access token
+app.get("/access_token/best/:id/:bool", async (req, res) => {
+  try {
+    const {id, bool } = req.params;
+    let queryStr = `SELECT * FROM access_token WHERE response_ok = ${bool} AND id > ${id} - 1 ORDER BY time LIMIT 1`
+    const allData = await pool.query(queryStr)
+    res.json(allData.rows)
+  } catch (err) {
+    console.log('best - access_token: ' + err.message);
+  }
+})
+
+// get worst time in current session -- access token
+app.get("/access_token/worst/:id/:bool", async (req, res) => {
+  try {
+    const {id, bool } = req.params;
+    let queryStr = `SELECT * FROM access_token WHERE response_ok = ${bool} AND id > ${id} - 1 ORDER BY time DESC LIMIT 1`
+    const allData = await pool.query(queryStr)
+    res.json(allData.rows)
+  } catch (err) {
+    console.log('worst - access_token: ' + err.message);
+  }
+})
+
+// get avg time in current session -- access token
+app.get("/access_token/avg/:id/:bool", async (req, res) => {
+  try {
+    const {id, bool } = req.params;
+    let queryStr = `SELECT AVG(time)::NUMERIC(10,2) FROM access_token WHERE response_ok = ${bool} AND id > ${id} - 1 LIMIT 1`
+    const allData = await pool.query(queryStr)
+    res.json(allData.rows)
+  } catch (err) {
+    console.log('avg - access_token: ' + err.message);
+  }
+})
+
 
 app.listen(5000, () => {
     console.log("Server started on port 5000.")
 });
-
-
-
-// app.listen(port, () => {
-//     console.log(`App running on port ${port}.`)
-//   })

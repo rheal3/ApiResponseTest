@@ -395,18 +395,18 @@ const AutomatedTest = () => {
           />
           {chartHasData && (<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
             <div>
-              <p>Login</p>
-              <div>Average: {avgTimesData['access_token'][0]['avg']} ms</div>
-              <div>Worst: {worstTimesData['access_token'][0]['time']} ms @ {worstTimesData['access_token'][0]['date_time']} ms</div>
-              <div>Best: {bestTimesData['access_token'][0]['time']} ms @ {bestTimesData['access_token'][0]['date_time']}</div>
+              <p>Login Accept</p>
+              <div>Average: {avgTimesData['access_token_true'][0]['avg']} ms</div>
+              <div>Worst: {worstTimesData['access_token_true'][0]['time']} ms @ {worstTimesData['access_token_true'][0]['date_time']} ms</div>
+              <div>Best: {bestTimesData['access_token_true'][0]['time']} ms @ {bestTimesData['access_token_true'][0]['date_time']}</div>
             </div>
             <br/>
-            {/* <div>
+            <div>
               <p>Login Reject</p>
-              <div>Average: {getLoginRejectAverage} ms</div>
-              <div>Worst: {getLoginRejectWorst} ms</div>
-              <div>Best: {getLoginRejectBest} ms</div>
-            </div> */}
+              <div>Average: {avgTimesData['access_token_false'][0]['avg']} ms</div>
+              <div>Worst: {worstTimesData['access_token_false'][0]['time']} ms @ {worstTimesData['access_token_false'][0]['date_time']}</div>
+              <div>Best: {bestTimesData['access_token_false'][0]['time']} ms @ {bestTimesData['access_token_false'][0]['date_time']}</div>
+            </div>
           </div>)}
           
 
@@ -590,8 +590,8 @@ const AutomatedTest = () => {
           {chartHasData && (<div>
             <p>Inspection</p>
             <div>Average: {avgTimesData['inspections'][0]['avg']} ms</div>
-            <div>Worst: {worstTimesData['inspections'][0]['time']} ms @ {worstTimesData['access_token'][0]['date_time']}</div>
-            <div>Best: {bestTimesData['inspections'][0]['time']} ms @ {bestTimesData['access_token'][0]['date_time']}</div>
+            <div>Worst: {worstTimesData['inspections'][0]['time']} ms @ {worstTimesData['inspections'][0]['date_time']}</div>
+            <div>Best: {bestTimesData['inspections'][0]['time']} ms @ {bestTimesData['inspections'][0]['date_time']}</div>
           </div>)}
           
         </div>
