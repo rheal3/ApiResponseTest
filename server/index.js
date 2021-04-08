@@ -82,6 +82,18 @@ app.get("/:tableName/worst/:id", async (req, res) => {
   }
 })
 
+// get avg time in current session
+app.get("/:tableName/avg/:id", async (req, res) => {
+  try {
+    const {tableName, id } = req.params;
+    let queryStr = `SELECT AVG(time)::NUMERIC(10,2) FROM ${tableName} WHERE id > ${id} - 1 LIMIT 1`
+    const allData = await pool.query(queryStr)
+    res.json(allData.rows)
+  } catch (err) {
+    console.log('best: ' + err.message);
+  }
+})
+
 app.listen(5000, () => {
     console.log("Server started on port 5000.")
 });

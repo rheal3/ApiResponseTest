@@ -7,7 +7,7 @@ import { getLoginDataPoint, getLastDataPointTime, getDateTime } from '../dataSto
 import { testLoginTime } from './LoginTest'
 import {Line} from 'react-chartjs-2'
 import RunningLogo from '../Running_Logo/RunningLogo'
-import { getBestTime, getWorstTime } from './cases';
+import { getAvgTime, getBestTime, getWorstTime } from './cases';
 
 const AutomatedTest = () => {
   const [getIsTesting, setIsTesting] = useState(false)
@@ -21,7 +21,7 @@ const AutomatedTest = () => {
 
   const [bestTimesData, setBestTimesData] = useState({})
   const [worstTimesData, setWorstTimesData] = useState({})
-  // const [avgTimesData, setAvgTimesData] = useState({})
+  const [avgTimesData, setAvgTimesData] = useState({})
 
 
 
@@ -82,7 +82,7 @@ const AutomatedTest = () => {
               updateChart()
               setBestTimesData(await getBestTime(idCount[0]));
               setWorstTimesData(await getWorstTime(idCount[0]));
-              console.log(idCount)
+              setAvgTimesData(await getAvgTime(idCount[0]));
               }
             
             let intervalID = setInterval(intervalFunc, intervalTime) 
@@ -396,7 +396,7 @@ const AutomatedTest = () => {
           {chartHasData && (<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
             <div>
               <p>Login</p>
-              {/* <div>Average: {getLoginAcceptAverage} ms</div> */}
+              <div>Average: {avgTimesData['access_token'][0]['avg']} ms</div>
               <div>Worst: {worstTimesData['access_token'][0]['time']} ms @ {worstTimesData['access_token'][0]['date_time']} ms</div>
               <div>Best: {bestTimesData['access_token'][0]['time']} ms @ {bestTimesData['access_token'][0]['date_time']}</div>
             </div>
@@ -451,7 +451,7 @@ const AutomatedTest = () => {
           />
           {chartHasData && (<div>
             <p>Group</p>
-            {/* <div>Average: {getGroupAverage} ms</div> */}
+            <div>Average: {avgTimesData['groups'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['groups'][0]['time']} ms @ {worstTimesData['groups'][0]['date_time']}</div>
             <div>Best: {bestTimesData['groups'][0]['time']} ms @ {bestTimesData['groups'][0]['date_time']} </div>
           </div>)}
@@ -496,7 +496,7 @@ const AutomatedTest = () => {
 
           {chartHasData && (<div>
             <p>User</p>
-            {/* <div>Average: {getUserAverage} ms</div> */}
+            <div>Average: {avgTimesData['users'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['users'][0]['time']} ms @ {worstTimesData['users'][0]['date_time']}</div>
             <div>Best: {bestTimesData['users'][0]['time']} ms @ {bestTimesData['users'][0]['date_time']}</div>
           </div>)}
@@ -543,7 +543,7 @@ const AutomatedTest = () => {
 
           {chartHasData && (<div>
             <p>Template</p>
-            {/* <div>Average: {getTemplateAverage} ms</div> */}
+            <div>Average: {avgTimesData['templates'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['templates'][0]['time']} ms @ {worstTimesData['templates'][0]['date_time']}</div>
             <div>Best: {bestTimesData['templates'][0]['time']} ms @ {bestTimesData['templates'][0]['date_time']}</div>
           </div>)}
@@ -589,7 +589,7 @@ const AutomatedTest = () => {
 
           {chartHasData && (<div>
             <p>Inspection</p>
-            {/* <div>Average: {getInspectionAverage} ms</div> */}
+            <div>Average: {avgTimesData['inspections'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['inspections'][0]['time']} ms @ {worstTimesData['access_token'][0]['date_time']}</div>
             <div>Best: {bestTimesData['inspections'][0]['time']} ms @ {bestTimesData['access_token'][0]['date_time']}</div>
           </div>)}
