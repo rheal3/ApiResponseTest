@@ -393,7 +393,7 @@ const AutomatedTest = () => {
 
             height={'300%'}
           />
-          {chartHasData && (<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+          {chartHasData && (<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly'}}>
             <div>
               <p>Login Accept</p>
               <div>Average: {avgTimesData['access_token_true'][0]['avg']} ms</div>
