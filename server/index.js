@@ -26,7 +26,7 @@ app.post("/", async (req, res) => { // request from client side and response sen
 // get all data from a certain table
 app.get("/:tableName", async (req, res) => {
   try {
-    const { tableName } = req.params; // set equal to the body of the request
+    const { tableName } = req.params;
     const allData = await pool.query(`SELECT * FROM ${tableName}`);
     res.json(allData.rows);
   } catch(err) {
@@ -38,7 +38,7 @@ app.get("/:tableName", async (req, res) => {
 // get last item entered in data for certain table
 app.get("/:tableName/last", async (req, res) => {
   try {
-    const { tableName } = req.params; // set equal to the body of the request
+    const { tableName } = req.params;
     const allData = await pool.query(`SELECT * FROM ${tableName} ORDER BY id DESC LIMIT 1`);
     res.json(allData.rows);
   } catch(err) {
@@ -49,7 +49,7 @@ app.get("/:tableName/last", async (req, res) => {
 // get last two login data points
 app.get("/login/:status", async (req, res) => {
   try {
-    const { status } = req.params; // set equal to the body of the request
+    const { status } = req.params;
     const allData = await pool.query(`SELECT * FROM access_token WHERE response_ok = ${status} ORDER BY id DESC LIMIT 1`);
     res.json(allData.rows);
   } catch(err) {
