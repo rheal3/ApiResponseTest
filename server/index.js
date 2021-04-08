@@ -23,7 +23,7 @@ app.post("/", async (req, res) => { // request from client side and response sen
 })
 
 
-// get data 
+// get all data from a certain table
 app.get("/:tableName", async (req, res) => {
   try {
     const { tableName } = req.params; // set equal to the body of the request
@@ -35,7 +35,7 @@ app.get("/:tableName", async (req, res) => {
 })
 
 
-// get last item entered in data
+// get last item entered in data for certain table
 app.get("/:tableName/last", async (req, res) => {
   try {
     const { tableName } = req.params; // set equal to the body of the request
@@ -46,7 +46,7 @@ app.get("/:tableName/last", async (req, res) => {
   }
 })
 
-// get last two login 
+// get last two login data points
 app.get("/login/:status", async (req, res) => {
   try {
     const { status } = req.params; // set equal to the body of the request
@@ -57,7 +57,7 @@ app.get("/login/:status", async (req, res) => {
   }
 })
 
-// get best time in current session
+// get best time in current session for certain table starting at id
 app.get("/:tableName/best/:id", async (req, res) => {
   try {
     const {tableName, id } = req.params;
@@ -69,7 +69,7 @@ app.get("/:tableName/best/:id", async (req, res) => {
   }
 })
 
-// get worst time in current session
+// get worst time in current session for certain table starting at id
 app.get("/:tableName/worst/:id", async (req, res) => {
   try {
     const {tableName, id } = req.params;
@@ -81,7 +81,7 @@ app.get("/:tableName/worst/:id", async (req, res) => {
   }
 })
 
-// get avg time in current session
+// get avg time in current session for certain table starting at id
 app.get("/:tableName/avg/:id", async (req, res) => {
   try {
     const {tableName, id } = req.params;
@@ -93,7 +93,10 @@ app.get("/:tableName/avg/:id", async (req, res) => {
   }
 })
 
-// get best time in current session -- access token
+
+/* In hindsight, it would be best to spit up the access_token table into a fail 
+and succeed table rather than having these extra calls to the database */
+// get best time in current session starting at id -- access token 
 app.get("/access_token/best/:id/:bool", async (req, res) => {
   try {
     const {id, bool } = req.params;
@@ -105,7 +108,7 @@ app.get("/access_token/best/:id/:bool", async (req, res) => {
   }
 })
 
-// get worst time in current session -- access token
+// get worst time in current session starting at id -- access token
 app.get("/access_token/worst/:id/:bool", async (req, res) => {
   try {
     const {id, bool } = req.params;
@@ -117,7 +120,7 @@ app.get("/access_token/worst/:id/:bool", async (req, res) => {
   }
 })
 
-// get avg time in current session -- access token
+// get avg time in current session starting at id -- access token
 app.get("/access_token/avg/:id/:bool", async (req, res) => {
   try {
     const {id, bool } = req.params;
