@@ -1,7 +1,7 @@
 import logo from './logo.svg'
 import './RunningLogo.css';
 
-
+// returns the spinning react logo
 function RunningLogo() {
     return(
         <div>

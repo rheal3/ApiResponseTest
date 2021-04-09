@@ -1,5 +1,9 @@
 import { storeData, dateTime } from '../dataStorage'
 
+/*
+    sends a request to the API for groups through /share/connections which retrieves the name and ID of all the groups that the logged in user is apart of
+     and times the response which gets stored to the Database
+*/
 function GetGroups() {
     let apiToken = sessionStorage.getItem('apiToken')
     let url = sessionStorage.getItem('BASE_URL') + '/share/connections'

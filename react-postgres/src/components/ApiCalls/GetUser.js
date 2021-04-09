@@ -1,11 +1,13 @@
 import { storeData, dateTime } from '../dataStorage'
 
-
+/*
+    sends a request to the API for the all the members of the first group through /groups/{groupID}/users
+    and times the response which gets stored to the Database
+*/
 function GetUser() {
     let apiToken = sessionStorage.getItem('apiToken')
     let groupObj = JSON.parse(sessionStorage.getItem('groupObj'))
     
-
     let groupId = groupObj.groups[0].id
     let url = sessionStorage.getItem('BASE_URL')  + `/groups/${groupId}/users`;
 

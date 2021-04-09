@@ -1,4 +1,5 @@
 
+// gets the best time for each API calls
 export const getBestTime = async (idObj) => {
     try {
         let returnObj = {};
@@ -23,7 +24,7 @@ export const getBestTime = async (idObj) => {
     }
 }
 
-
+// gets the worst time for each API calls
 export const getWorstTime = async (idObj) => {
     try {
         let returnObj = {};
@@ -48,6 +49,7 @@ export const getWorstTime = async (idObj) => {
     }
 }
 
+// gets the average time for each API calls
 export const getAvgTime = async (idObj) => {
     try {
         let returnObj = {};
