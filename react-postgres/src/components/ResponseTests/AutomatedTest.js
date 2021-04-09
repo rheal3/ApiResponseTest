@@ -41,6 +41,15 @@ const AutomatedTest = () => {
   let templateData = [0]
   let inspectionData = [0]
 
+  //initialize backup of chart data
+  sessionStorage.setItem('labels', JSON.stringify(labels))
+  sessionStorage.setItem('acceptData', JSON.stringify(acceptData))
+  sessionStorage.setItem('rejectData', JSON.stringify(rejectData))
+  sessionStorage.setItem('groupData', JSON.stringify(groupData))
+  sessionStorage.setItem('userData', JSON.stringify(userData))
+  sessionStorage.setItem('templateData', JSON.stringify(templateData))
+  sessionStorage.setItem('inspectionData', JSON.stringify(inspectionData))
+
   //handles the drop down menu
   const handleChangeIntervalTime = (e) => {
     let time = e.target.value;
