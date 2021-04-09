@@ -7,7 +7,7 @@ Here's a sneaky peek of what's to come:
 
 ### API Endpoints
 For your convenience we have written an overview of the API endpoints that we have targeted. 
-<!-- For even more convenience this information can also be found within the application.   -->
+For even more convenience this information can also be found within the application (try hovering over the table names above the averages).  
 
 Login: **/auth**
 <!-- - retrieves api Token used throughout all other api calls -->
@@ -55,7 +55,7 @@ These installation steps assume you have PostgreSQL installed.
 <!-- ## Super Cool Features -->
 
 ## Features To Come!
-- Use tooltip to show which endpoint is being called in the app.
+<!-- - Use tooltip to show which endpoint is being called in the app. -->
 <!-- - more detailed data about why the time may be slow? -->
 - Charts that show data for the last 24 hours, week, 2 weeks, 1 month.
 <!-- - deploy to a website -->
