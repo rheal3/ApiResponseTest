@@ -1,13 +1,3 @@
-// export const storeData = (newObj) => {
-//     if (!localStorage['saveData']) {
-//         let saveData = [];
-//         localStorage.setItem('saveData', JSON.stringify(saveData))
-//     }
-//     let storedData = JSON.parse(localStorage.getItem('saveData'))
-//     storedData.push(newObj)
-//     localStorage.setItem('saveData', JSON.stringify(storedData))
-//     // return alert("data saved")
-// }
 
 export const dateTime = () => {
     let today = new Date();
@@ -19,7 +9,6 @@ export const dateTime = () => {
 export const storeData = async (data) => {
     // tableName, responseOk, time, numItemsRetrieved, dateTime
     try {
-        // const body = { data };
         const response = await fetch('http://localhost:5000/', {
             method: 'POST',
             headers: {
@@ -27,7 +16,6 @@ export const storeData = async (data) => {
             },
             body: JSON.stringify(data),
         });
-        // console.log(response)
     } catch (err) {
         console.log(err.message)
     }
@@ -38,7 +26,7 @@ export const getData = async (tableName) => {
         const response = await fetch(`http://localhost:5000/${tableName}`);
         const jsonData = await response.json();
 
-        console.log(jsonData);
+        return jsonData;
     } catch (err) {
         console.log(err.message);
     }
