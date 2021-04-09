@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './tooltip.css'
 import GetGroups from '../ApiCalls/GetGroups'
 import GetUser from '../ApiCalls/GetUser'
 import SearchInspections from '../ApiCalls/SearchInspections'
@@ -373,7 +374,7 @@ const AutomatedTest = () => {
           <SideChart data={getLoginChartState} title={'Login Time'} />
           {chartHasData && (<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
             <div>
-              <p>Login Accept</p>
+              <p className="tooltip">Login Accept<span className="tooltiptext">/auth</span></p>
               <div>Average: {avgTimesData['access_token_true'][0]['avg']} ms</div>
               <div>Worst: {worstTimesData['access_token_true'][0]['time']} ms @ {worstTimesData['access_token_true'][0]['date_time']} ms</div>
               <div>Best: {bestTimesData['access_token_true'][0]['time']} ms @ {bestTimesData['access_token_true'][0]['date_time']}</div>
@@ -382,7 +383,7 @@ const AutomatedTest = () => {
             <br />
 
             <div>
-              <p>Login Reject</p>
+              <p className="tooltip">Login Reject<span className="tooltiptext">/auth</span></p>
               <div>Average: {avgTimesData['access_token_false'][0]['avg']} ms</div>
               <div>Worst: {worstTimesData['access_token_false'][0]['time']} ms @ {worstTimesData['access_token_false'][0]['date_time']}</div>
               <div>Best: {bestTimesData['access_token_false'][0]['time']} ms @ {bestTimesData['access_token_false'][0]['date_time']}</div>
@@ -395,7 +396,7 @@ const AutomatedTest = () => {
           {/* group Chart */}
           <SideChart data={getGroupChartState} title={'Group Time'} />
           {chartHasData && (<div>
-            <p>Group</p>
+            <p className="tooltip">Group<span className="tooltiptext">/share/connections</span></p>
             <div>Average: {avgTimesData['groups'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['groups'][0]['time']} ms @ {worstTimesData['groups'][0]['date_time']}</div>
             <div>Best: {bestTimesData['groups'][0]['time']} ms @ {bestTimesData['groups'][0]['date_time']} </div>
@@ -407,7 +408,7 @@ const AutomatedTest = () => {
           {/* User Chart */}
           <SideChart data={getUserChartState} title={'User Time'} />
           {chartHasData && (<div>
-            <p>User</p>
+            <p className="tooltip">User<span className="tooltiptext">/groups/&lt;group_id&gt;users</span></p>
             <div>Average: {avgTimesData['users'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['users'][0]['time']} ms @ {worstTimesData['users'][0]['date_time']}</div>
             <div>Best: {bestTimesData['users'][0]['time']} ms @ {bestTimesData['users'][0]['date_time']}</div>
@@ -419,7 +420,7 @@ const AutomatedTest = () => {
           {/* Template Chart */}
           <SideChart data={getTemplateChartState} title={'Template Time'} />
           {chartHasData && (<div>
-            <p>Template</p>
+            <p className="tooltip">Template<span className="tooltiptext">/templates/search?field=template_id&amp;field=modified_at</span></p>
             <div>Average: {avgTimesData['templates'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['templates'][0]['time']} ms @ {worstTimesData['templates'][0]['date_time']}</div>
             <div>Best: {bestTimesData['templates'][0]['time']} ms @ {bestTimesData['templates'][0]['date_time']}</div>
@@ -431,7 +432,7 @@ const AutomatedTest = () => {
           {/* Inspection Chart */}
           <SideChart data={getInspectionChartState} title={'Inspection Time'} />
           {chartHasData && (<div>
-            <p>Inspection</p>
+            <p className="tooltip">Inspection<span className="tooltiptext">/audits/search?field=audit_id&amp;field=modified_at</span></p>
             <div>Average: {avgTimesData['inspections'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['inspections'][0]['time']} ms @ {worstTimesData['inspections'][0]['date_time']}</div>
             <div>Best: {bestTimesData['inspections'][0]['time']} ms @ {bestTimesData['inspections'][0]['date_time']}</div>
