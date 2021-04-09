@@ -1,5 +1,9 @@
 import { storeData, dateTime } from '../dataStorage'
 
+/*
+    sends a request to the API for the all the templates and returns the template ID's and modified at fields
+    and times the response which gets stored to the Database
+*/
 function SearchTemplates() {
     let apiToken = sessionStorage.getItem('apiToken')
     let url = sessionStorage.getItem('BASE_URL') + '/templates/search?field=template_id&field=modified_at'

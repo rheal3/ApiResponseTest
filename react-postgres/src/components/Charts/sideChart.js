@@ -1,6 +1,10 @@
 import React from 'react'
 import {Line} from 'react-chartjs-2'
 
+/*
+  returns a blank chart format that is used for the smaller, individual charts
+  Takes in data through props.data
+*/
 const SideChart = (props) => {
 
     return (

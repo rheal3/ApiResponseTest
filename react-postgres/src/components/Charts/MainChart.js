@@ -1,6 +1,10 @@
 import React from 'react'
 import {Line} from 'react-chartjs-2'
 
+/*
+  returns a blank chart format that is used as the main chart
+  Takes in data through props.data
+*/
 const MainChart = (props) => {
 
     return(

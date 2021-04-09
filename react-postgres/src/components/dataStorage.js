@@ -1,4 +1,4 @@
-
+// gets the date and time to be used for timestamping the data
 export const dateTime = () => {
     let today = new Date();
     let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -6,10 +6,11 @@ export const dateTime = () => {
     return date + ' ' + time;
 }
 
+// handles how the data gets stored to the database
 export const storeData = async (data) => {
     // tableName, responseOk, time, numItemsRetrieved, dateTime
     try {
-        const response = await fetch('http://localhost:5000/', {
+        await fetch('http://localhost:5000/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -21,17 +22,19 @@ export const storeData = async (data) => {
     }
 }
 
+// gets the data from the specified table
 export const getData = async (tableName) => {
     try {
         const response = await fetch(`http://localhost:5000/${tableName}`);
         const jsonData = await response.json();
 
-        return jsonData;
+       return jsonData
     } catch (err) {
         console.log(err.message);
     }
 }
 
+// gets the latest data from the specified table
 export const getLastDataPointTime = async (tableName) => {
     try {
         const response = await fetch(`http://localhost:5000/${tableName}/last`);
@@ -44,6 +47,7 @@ export const getLastDataPointTime = async (tableName) => {
     }
 }
 
+// gets the most recent datapoint from the access token table using the true/false status to filter out the successful/rejected logins
 export const getLoginDataPoint = async (status) => {
     try {
         const response = await fetch(`http://localhost:5000/login/${status}`);
@@ -55,7 +59,7 @@ export const getLoginDataPoint = async (status) => {
         console.log(err.message);
     }
 }
-
+// gets the data and time from the specified table
 export const getDateTime = async (tableName) => {
     try {
         const response = await fetch(`http://localhost:5000/${tableName}/last`);

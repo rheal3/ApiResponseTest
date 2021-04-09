@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import GetGroups from '../ApiCalls/GetGroups'
 import GetUser from '../ApiCalls/GetUser'
 import SearchInspections from '../ApiCalls/SearchInspections'
@@ -6,11 +6,15 @@ import SearchTemplates from '../ApiCalls/SearchTemplates'
 import { getLoginDataPoint, getLastDataPointTime, getDateTime } from '../dataStorage'
 import { testLoginTime } from './LoginTest'
 import RunningLogo from '../Running_Logo/RunningLogo'
-import { getAvgTime, getBestTime, getWorstTime } from './cases';
+import { getAvgTime, getBestTime, getWorstTime } from './bestWorstAverage';
 
 import MainChart from '../Charts/MainChart'
 import SideChart from '../Charts/sideChart'
 
+
+/*
+  handles all the automation of the tests and sends the data to the charts
+*/
 const AutomatedTest = () => {
   const [getIsTesting, setIsTesting] = useState(false)
   const [getMainChartState, setMainChartState] = useState({})
@@ -27,8 +31,8 @@ const AutomatedTest = () => {
 
   const [intervalTime, setIntervalTime] = useState(10000)
   const [intervalValue, setIntervalValue] = useState("ten-secs")
-  let idCount = [];
 
+  let idCount = []; // a container for datapoint ID's for the current session
   let labels = ['start']
   let acceptData = [0]
   let rejectData = [0]
@@ -37,6 +41,7 @@ const AutomatedTest = () => {
   let templateData = [0]
   let inspectionData = [0]
 
+  //handles the drop down menu
   const handleChangeIntervalTime = (e) => {
     let time = e.target.value;
     let msTime = 0
@@ -68,38 +73,37 @@ const AutomatedTest = () => {
     setIntervalValue(time);
   }
 
+  // starts the automation of the tests at an interval set by the dropdown menu
+  const startTests = () => {
+    if (sessionStorage['apiToken']) {
+      setIsTesting(true)
 
-    const startTests = () => {
-        if (sessionStorage['apiToken']) {
-            setIsTesting(true)
+      const intervalFunc = async () => {
+         sessionStorage.setItem('intervalID', intervalID)
+        await runTests()
+        await getData()
+        console.log(labels)
+        updateChart()
+        setBestTimesData(await getBestTime(idCount[0]));
+        setWorstTimesData(await getWorstTime(idCount[0]));
+        setAvgTimesData(await getAvgTime(idCount[0]));
+      }
 
-            const intervalFunc = async () => {
-              if(!sessionStorage.getItem('intervalID')) {
-                sessionStorage.setItem('intervalID', intervalID)
-              }
-              await runTests()
-              await getData()
-              updateChart()
-              setBestTimesData(await getBestTime(idCount[0]));
-              setWorstTimesData(await getWorstTime(idCount[0]));
-              setAvgTimesData(await getAvgTime(idCount[0]));
-              }
-            
-            let intervalID = setInterval(intervalFunc, intervalTime) 
-            intervalFunc();
-            
+      let intervalID = setInterval(intervalFunc, intervalTime)
+      intervalFunc(); // Initial running of tests once start button is pressed
 
-        } else {
-            alert("You need to login first")
-        }
+    } else {
+      alert("You need to login first")
+    }
   }
 
+  // Stops the automation of tests using clearInterval(intervalID)
   const stopTests = () => {
     setIsTesting(false)
     clearInterval(sessionStorage.getItem('intervalID'))
-    sessionStorage.removeItem('intervalID')
   }
 
+  // gets all the latest data from the database and appends it to the lists for the charts
   const getData = async () => {
     return (
       Promise.all([
@@ -118,11 +122,13 @@ const AutomatedTest = () => {
         templateData.push(values[4]['time'])
         inspectionData.push(values[5]['time'])
         labels.push(values[6])
+
+        // adds the ID of the latest datapoints 
         idCount.push({
-          'access_token': values[0]['id'], 
-          'groups': values[2]['id'], 
-          'users': values[3]['id'], 
-          'templates': values[4]['id'], 
+          'access_token': values[0]['id'],
+          'groups': values[2]['id'],
+          'users': values[3]['id'],
+          'templates': values[4]['id'],
           'inspections': values[5]['id']
         })
 
@@ -133,7 +139,10 @@ const AutomatedTest = () => {
     )
   }
 
+  //handles the formatting of the data to send to the charts
   const updateChart = () => {
+
+    // Main Chart
     setMainChartState({
       // Login Accept
       labels: labels,
@@ -193,6 +202,7 @@ const AutomatedTest = () => {
       }]
     })
 
+    // Login Chart
     setLoginChartState({
       labels: labels,
       datasets: [{
@@ -214,6 +224,7 @@ const AutomatedTest = () => {
       }]
     })
 
+    // Group Chart
     setGroupChartState({
       labels: labels,
       datasets: [{
@@ -227,6 +238,7 @@ const AutomatedTest = () => {
       }]
     })
 
+    // User Chart
     setUserChartState({
       labels: labels,
       datasets: [{
@@ -240,6 +252,7 @@ const AutomatedTest = () => {
       }]
     })
 
+    // Template Chart
     setTemplateChartState({
       labels: labels,
       datasets: [{
@@ -253,6 +266,7 @@ const AutomatedTest = () => {
       }]
     })
 
+    // Inspection Chart
     setInspectionChartState({
       labels: labels,
       datasets: [{
@@ -267,6 +281,7 @@ const AutomatedTest = () => {
     })
   }
 
+  // Handles clearing the charts
   const clearClicked = () => {
     setChartHasData(false)
     labels = []
@@ -285,19 +300,20 @@ const AutomatedTest = () => {
     groupData = [0]
     userData = [0]
     templateData = [0]
-    inspectionData = [0]    
+    inspectionData = [0]
   }
 
 
   return (
     <div>
+      {/* Title Buttons Logo */}
       <div style={{ textAlign: "center" }}>
         <h1>Automated Response Time Tests</h1>
 
-        <div style={{textAlign: "end"}}>
+        <div style={{ textAlign: "end" }}>
           {chartHasData && !getIsTesting && (<button onClick={clearClicked}>Clear Charts</button>)}
         </div>
-        
+
         {!getIsTesting && (
           <div>
             <label for="interval">Interval Time:</label>
@@ -313,19 +329,21 @@ const AutomatedTest = () => {
             <button onClick={startTests}>Start Tests</button>
           </div>
         )}
-        {getIsTesting && (<RunningLogo/>)}
+        {getIsTesting && (<RunningLogo />)}
         {getIsTesting && (<button onClick={stopTests}>Stop Tests</button>)}
       </div>
-     
+
+      {/* Charts and Key data Details */}
       <div>
-        <MainChart data={getMainChartState}/>
+        <MainChart data={getMainChartState} />
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
-        <div style={{textAlign: 'center'}} >
+        <div style={{ textAlign: 'center' }} >
+
           {/* Login Chart */}
-          <SideChart data={getLoginChartState} title={'Login Time'}/>
-          {chartHasData && (<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly'}}>
+          <SideChart data={getLoginChartState} title={'Login Time'} />
+          {chartHasData && (<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
             <div>
               <p>Login Accept</p>
               <div>Average: {avgTimesData['access_token_true'][0]['avg']} ms</div>
@@ -333,7 +351,7 @@ const AutomatedTest = () => {
               <div>Best: {bestTimesData['access_token_true'][0]['time']} ms @ {bestTimesData['access_token_true'][0]['date_time']}</div>
             </div>
 
-            <br/>
+            <br />
 
             <div>
               <p>Login Reject</p>
@@ -344,20 +362,22 @@ const AutomatedTest = () => {
           </div>)}
         </div>
 
-        <div style={{textAlign: 'center'}} >
+        <div style={{ textAlign: 'center' }} >
+
           {/* group Chart */}
-          <SideChart data={getGroupChartState} title={'Group Time'}/>
+          <SideChart data={getGroupChartState} title={'Group Time'} />
           {chartHasData && (<div>
             <p>Group</p>
             <div>Average: {avgTimesData['groups'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['groups'][0]['time']} ms @ {worstTimesData['groups'][0]['date_time']}</div>
             <div>Best: {bestTimesData['groups'][0]['time']} ms @ {bestTimesData['groups'][0]['date_time']} </div>
           </div>)}
-          
+
         </div>
-        <div style={{textAlign: 'center'}} >
+        <div style={{ textAlign: 'center' }} >
+
           {/* User Chart */}
-          <SideChart data={getUserChartState} title={'User Time'}/>
+          <SideChart data={getUserChartState} title={'User Time'} />
           {chartHasData && (<div>
             <p>User</p>
             <div>Average: {avgTimesData['users'][0]['avg']} ms</div>
@@ -366,9 +386,10 @@ const AutomatedTest = () => {
           </div>)}
         </div>
 
-        <div style={{textAlign: 'center'}} >
+        <div style={{ textAlign: 'center' }} >
+          
           {/* Template Chart */}
-          <SideChart data={getTemplateChartState} title={'Template Time'}/>
+          <SideChart data={getTemplateChartState} title={'Template Time'} />
           {chartHasData && (<div>
             <p>Template</p>
             <div>Average: {avgTimesData['templates'][0]['avg']} ms</div>
@@ -377,9 +398,10 @@ const AutomatedTest = () => {
           </div>)}
         </div>
 
-        <div style={{textAlign: 'center'}} >
+        <div style={{ textAlign: 'center' }} >
+
           {/* Inspection Chart */}
-          <SideChart data={getInspectionChartState} title={'Inspection Time'}/>
+          <SideChart data={getInspectionChartState} title={'Inspection Time'} />
           {chartHasData && (<div>
             <p>Inspection</p>
             <div>Average: {avgTimesData['inspections'][0]['avg']} ms</div>
@@ -392,6 +414,7 @@ const AutomatedTest = () => {
   )
 }
 
+// runs each of the API calls
 async function runTests() {
   await testLoginTime()
   await GetGroups()

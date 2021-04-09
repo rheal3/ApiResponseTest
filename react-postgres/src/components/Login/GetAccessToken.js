@@ -1,5 +1,9 @@
 import { storeData, dateTime } from '../dataStorage'
 
+/*
+    Sends a login request to the api and handles the response by retrieving the API token if the login was successful
+    Times the response which gets stored to the database with a responseOK depending if the login was successful or rejected
+*/
 function getAccessToken(username, password) {
     let url = sessionStorage.getItem('BASE_URL') + "/auth";
 
@@ -15,20 +19,18 @@ function getAccessToken(username, password) {
     }).then(response => {
         let endTime = window.performance.now()
         time = endTime - startTime
-        // console.log("Get API Token Response Execution Time: " + time + " milliseconds")
 
         if (response.ok) {
+            // Stored purely for the successful login test
             sessionStorage.setItem('username', username)
             sessionStorage.setItem('password', password)
 
             return response.json()
         } else {
-            // alert('Invalid Login Details')
             return false
         }
     }).then(data => {
         if (data !== false) {
-            // alert('Token Acquired.')
             const apiToken = data.access_token;
             sessionStorage.setItem('apiToken', apiToken)
 

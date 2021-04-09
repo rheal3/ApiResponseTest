@@ -1,5 +1,9 @@
 import { storeData, dateTime } from '../dataStorage'
 
+/*
+    sends a request to the API for all the audits and returns the first 1000 audit ID's and the modified_at fields
+    and times the response which gets stored to the Database
+*/
 function SearchInspections() {
     let apiToken = sessionStorage.getItem('apiToken')
     let url = sessionStorage.getItem('BASE_URL') + '/audits/search?field=audit_id&field=modified_at'
