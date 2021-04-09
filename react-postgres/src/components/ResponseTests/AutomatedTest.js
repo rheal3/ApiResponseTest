@@ -79,10 +79,20 @@ const AutomatedTest = () => {
       setIsTesting(true)
 
       const intervalFunc = async () => {
-         sessionStorage.setItem('intervalID', intervalID)
+        // if data for charts goes missing, grab from session storage (happened on stop tests then restart)
+        if (labels !== JSON.parse(sessionStorage.getItem('labels')) && sessionStorage['labels']) {
+          labels = JSON.parse(sessionStorage.getItem('labels'))
+          acceptData = JSON.parse(sessionStorage.getItem('acceptData'))
+          rejectData = JSON.parse(sessionStorage.getItem('rejectData'))
+          groupData = JSON.parse(sessionStorage.getItem('groupData'))
+          userData = JSON.parse(sessionStorage.getItem('userData'))
+          templateData = JSON.parse(sessionStorage.getItem('templateData'))
+          inspectionData = JSON.parse(sessionStorage.getItem('inspectionData'))
+        }
+        sessionStorage.setItem('intervalID', intervalID)
         await runTests()
         await getData()
-        console.log(labels)
+        // console.log(labels)
         updateChart()
         setBestTimesData(await getBestTime(idCount[0]));
         setWorstTimesData(await getWorstTime(idCount[0]));
@@ -122,6 +132,15 @@ const AutomatedTest = () => {
         templateData.push(values[4]['time'])
         inspectionData.push(values[5]['time'])
         labels.push(values[6])
+
+        // create backup of chart data
+        sessionStorage.setItem('labels', JSON.stringify(labels))
+        sessionStorage.setItem('acceptData', JSON.stringify(acceptData))
+        sessionStorage.setItem('rejectData', JSON.stringify(rejectData))
+        sessionStorage.setItem('groupData', JSON.stringify(groupData))
+        sessionStorage.setItem('userData', JSON.stringify(userData))
+        sessionStorage.setItem('templateData', JSON.stringify(templateData))
+        sessionStorage.setItem('inspectionData', JSON.stringify(inspectionData))
 
         // adds the ID of the latest datapoints 
         idCount.push({
@@ -301,6 +320,14 @@ const AutomatedTest = () => {
     userData = [0]
     templateData = [0]
     inspectionData = [0]
+
+    sessionStorage.setItem('labels', JSON.stringify(labels))
+    sessionStorage.setItem('acceptData', JSON.stringify(acceptData))
+    sessionStorage.setItem('rejectData', JSON.stringify(rejectData))
+    sessionStorage.setItem('groupData', JSON.stringify(groupData))
+    sessionStorage.setItem('userData', JSON.stringify(userData))
+    sessionStorage.setItem('templateData', JSON.stringify(templateData))
+    sessionStorage.setItem('inspectionData', JSON.stringify(inspectionData))
   }
 
 
