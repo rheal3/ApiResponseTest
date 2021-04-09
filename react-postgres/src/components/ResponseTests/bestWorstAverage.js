@@ -67,7 +67,7 @@ export const getAvgTime = async (idObj) => {
                 returnObj[`${tableName}_false`] = falseJsonData;
             }
           }
-          console.log(returnObj)
+        //   console.log(returnObj)
         return returnObj;
         
     } catch (err) {

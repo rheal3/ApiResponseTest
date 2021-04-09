@@ -79,11 +79,10 @@ const AutomatedTest = () => {
       setIsTesting(true)
 
       const intervalFunc = async () => {
-        if (!sessionStorage.getItem('intervalID')) {
-          sessionStorage.setItem('intervalID', intervalID)
-        }
+         sessionStorage.setItem('intervalID', intervalID)
         await runTests()
         await getData()
+        console.log(labels)
         updateChart()
         setBestTimesData(await getBestTime(idCount[0]));
         setWorstTimesData(await getWorstTime(idCount[0]));
@@ -102,7 +101,6 @@ const AutomatedTest = () => {
   const stopTests = () => {
     setIsTesting(false)
     clearInterval(sessionStorage.getItem('intervalID'))
-    sessionStorage.removeItem('intervalID')
   }
 
   // gets all the latest data from the database and appends it to the lists for the charts
