@@ -7,7 +7,7 @@ const pool = require("./db");
 app.use(cors())
 app.use(express.json());
 
-
+const dateTimeConversion = "id, response_ok, time, num_items_retrieved, TO_CHAR(date_time, 'YYYY-MM-DD HH24:MI:SS') AS date_time"
 // Routes //
 
 // add data to database
@@ -27,7 +27,7 @@ app.post("/", async (req, res) => { // request from client side and response sen
 app.get("/:tableName", async (req, res) => {
   try {
     const { tableName } = req.params;
-    const allData = await pool.query(`SELECT * FROM ${tableName}`);
+    const allData = await pool.query(`SELECT ${dateTimeConversion} FROM ${tableName}`);
     res.json(allData.rows);
   } catch(err) {
       console.error("table: " + err.message);
@@ -39,7 +39,10 @@ app.get("/:tableName", async (req, res) => {
 app.get("/:tableName/last", async (req, res) => {
   try {
     const { tableName } = req.params;
-    const allData = await pool.query(`SELECT * FROM ${tableName} ORDER BY id DESC LIMIT 1`);
+    const allData = await pool.query(`SELECT ${dateTimeConversion} FROM ${tableName} ORDER BY id DESC LIMIT 1`);
+    const datetime = await pool.query(`SELECT id, response_ok, time, num_items_retrieved, TO_CHAR(date_time, 'YYYY-MM-DD HH24:MI:SS') AS date_time from ${tableName}`) 
+    console.log(datetime.rows)
+    // console.log(allData.rows)
     res.json(allData.rows);
   } catch(err) {
       console.error("last: " + err.message);
@@ -50,7 +53,7 @@ app.get("/:tableName/last", async (req, res) => {
 app.get("/login/:status", async (req, res) => {
   try {
     const { status } = req.params;
-    const allData = await pool.query(`SELECT * FROM access_token WHERE response_ok = ${status} ORDER BY id DESC LIMIT 1`);
+    const allData = await pool.query(`SELECT ${dateTimeConversion} FROM access_token WHERE response_ok = ${status} ORDER BY id DESC LIMIT 1`);
     res.json(allData.rows);
   } catch(err) {
       console.error("last: " + err.message);
@@ -61,7 +64,7 @@ app.get("/login/:status", async (req, res) => {
 app.get("/:tableName/best/:id", async (req, res) => {
   try {
     const {tableName, id } = req.params;
-    let queryStr = `SELECT * FROM ${tableName} WHERE id > ${id} - 1 ORDER BY time LIMIT 1`
+    let queryStr = `SELECT ${dateTimeConversion} FROM ${tableName} WHERE id > ${id} - 1 ORDER BY time LIMIT 1`
     const allData = await pool.query(queryStr)
     res.json(allData.rows)
   } catch (err) {
@@ -73,7 +76,7 @@ app.get("/:tableName/best/:id", async (req, res) => {
 app.get("/:tableName/worst/:id", async (req, res) => {
   try {
     const {tableName, id } = req.params;
-    let queryStr = `SELECT * FROM ${tableName} WHERE id > ${id} - 1 ORDER BY time DESC LIMIT 1`
+    let queryStr = `SELECT ${dateTimeConversion} FROM ${tableName} WHERE id > ${id} - 1 ORDER BY time DESC LIMIT 1`
     const allData = await pool.query(queryStr)
     res.json(allData.rows)
   } catch (err) {
