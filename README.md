@@ -2,6 +2,9 @@
 
 This application is used to test the time it takes to get a response from the API. 
 
+Here's a sneaky peek of what's to come:
+![sneaky peek](images/peek.png)
+
 ### API Endpoints
 For your convenience we have written an overview of the API endpoints that we have targeted. 
 <!-- For even more convenience this information can also be found within the application.   -->
@@ -51,10 +54,10 @@ These installation steps assume you have PostgreSQL installed.
 
 <!-- ## Super Cool Features -->
 
-<!-- ## Features To Come!
-- tooltip showing which endpoint is being called
-- more detailed data about why the time may be slow?
-- button that shows charts data points for the last 24 hours, week, 2 weeks, 1 month, all(?)
-- deploy to a website -->
+## Features To Come!
+- Use tooltip to show which endpoint is being called in the app.
+<!-- - more detailed data about why the time may be slow? -->
+- Charts that show data for the last 24 hours, week, 2 weeks, 1 month.
+<!-- - deploy to a website -->
 
 <!-- ## Known Bugs (???) -->
