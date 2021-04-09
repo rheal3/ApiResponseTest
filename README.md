@@ -39,7 +39,7 @@ These installation steps assume you have PostgreSQL installed.
 2. Open two terminals and, in each, navigate into the newly cloned repo directory.
 3. In the first terminal set up the server with the following commands:
    - `cd server`
-   - `nmp install`
+   - `npm install`
    - `./db/init.sh`
    - `./migrate.sh`
    - `nodemon index`
