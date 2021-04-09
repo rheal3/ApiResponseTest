@@ -451,4 +451,10 @@ async function runTests() {
   await SearchInspections()
 }
 
+// Used to fix a reload bug
+window.onbeforeunload = () => {
+  sessionStorage.removeItem('intervalID')
+  sessionStorage.removeItem('labels')
+}
+
 export default AutomatedTest
