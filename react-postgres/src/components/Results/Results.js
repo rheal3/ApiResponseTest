@@ -1,125 +1,128 @@
 import React from 'react'
 
+import MainChart from '../Charts/MainChart'
+import SideChart from '../Charts/sideChart'
+
 const Results = () => {
 // will need to get the required data for each of the charts and setup in format that chart can read from
     return (
         <div>
             <div style={{backgroundColor: 'lightsalmon'}}>
-                24hr chart spot
+                <h2 style={{textAlign: 'center'}}>24hr chart spot</h2>
 
                 <div>
-                    main chart
+                    <MainChart/>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
                     <div style={{ textAlign: 'center' }}>
-                        Login chart                      
+                        <SideChart title={"Login Chart"}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                       Group chart                      
+                        <SideChart title={"Group Chart"}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                       User chart                      
+                        <SideChart title={"User Chart"}/>                    
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                       Template chart                      
+                        <SideChart title={"Template Chart"}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        Inspection chart                      
+                        <SideChart title={"Inspection Chart"}/>                     
                     </div>
                 </div>
             </div>
 
             <div  style={{backgroundColor: 'lightblue'}}>
-                1 week chart spot
+                <h2 style={{textAlign: 'center'}}>1 week chart spot</h2>
 
                 <div>
-                    main chart
+                    <MainChart/>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
                     <div style={{ textAlign: 'center' }}>
-                        Login chart                      
+                        <SideChart title={"Login Chart"}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                       Group chart                      
+                        <SideChart title={"Group Chart"}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                       User chart                      
+                        <SideChart title={"User Chart"}/>                    
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                       Template chart                      
+                        <SideChart title={"Template Chart"}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        Inspection chart                      
+                        <SideChart title={"Inspection Chart"}/>                     
                     </div>
                 </div>
             </div>
 
             <div style={{backgroundColor: 'lightgoldenrodyellow'}}>
-                1 fortnight chart spot
+                <h2 style={{textAlign: 'center'}}>1 fortnight chart spot</h2>
 
                 <div>
-                    main chart
+                    <MainChart/>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
                     <div style={{ textAlign: 'center' }}>
-                        Login chart                      
+                        <SideChart title={"Login Chart"}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                       Group chart                      
+                        <SideChart title={"Group Chart"}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                       User chart                      
+                        <SideChart title={"User Chart"}/>                    
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                       Template chart                      
+                        <SideChart title={"Template Chart"}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        Inspection chart                      
+                        <SideChart title={"Inspection Chart"}/>                     
                     </div>
                 </div>
             </div>
 
             <div style={{backgroundColor: 'lightgreen'}}>
-                1 month chart spot
+                <h2 style={{textAlign: 'center'}}>1 month chart spot</h2>
 
                 <div>
-                    main chart
+                    <MainChart/>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
                     <div style={{ textAlign: 'center' }}>
-                        Login chart                      
+                        <SideChart title={"Login Chart"}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                       Group chart                      
+                        <SideChart title={"Group Chart"}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                       User chart                      
+                        <SideChart title={"User Chart"}/>                    
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                       Template chart                      
+                        <SideChart title={"Template Chart"}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        Inspection chart                      
+                        <SideChart title={"Inspection Chart"}/>                     
                     </div>
                 </div>
             </div>
