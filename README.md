@@ -33,23 +33,71 @@ _Please Note: All api calls use the sandpit api as the base url. If you're feeli
 
 ## Installation
 
-These installation steps assume you have PostgreSQL installed.
+_These installation steps assume you have PostgreSQL installed._
 
+Setup PostgreSQL Database:
+1. Open PostgreSQL in the terminal.
+2.  Copy and paste the following:
+```
+CREATE USER admin WITH PASSWORD 'purplelobstermountain';
+ALTER USER admin WITH SUPERUSER;
+CREATE DATABASE sc_database;
+GRANT ALL PRIVILEGES ON DATABASE sc_database TO admin;
+```
+3. Navigate to the newly created database as admin user: `\c sc_database admin`
+4. Copy and paste the following:
+```
+CREATE TABLE access_token (
+    id SERIAL PRIMARY KEY,
+    response_ok BOOLEAN,
+    time NUMERIC,
+    num_items_retrieved INTEGER,
+    date_time VARCHAR(30)
+);
+CREATE TABLE groups (
+    id SERIAL PRIMARY KEY,
+    response_ok BOOLEAN,
+    time NUMERIC,
+    num_items_retrieved INTEGER,
+    date_time VARCHAR(30)
+);
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    response_ok BOOLEAN,
+    time NUMERIC,
+    num_items_retrieved INTEGER,
+    date_time VARCHAR(30)
+);
+CREATE TABLE templates (
+    id SERIAL PRIMARY KEY,
+    response_ok BOOLEAN,
+    time NUMERIC,
+    num_items_retrieved INTEGER,
+    date_time VARCHAR(30)
+);
+CREATE TABLE inspections (
+    id SERIAL PRIMARY KEY,
+    response_ok BOOLEAN,
+    time NUMERIC,
+    num_items_retrieved INTEGER,
+    date_time VARCHAR(30)
+);
+```
+
+Set up the application:
 1. Clone the repo `git clone https://github.com/macca-lachlan/SafetyCultureInternship.git`
 2. Open two terminals and, in each, navigate into the newly cloned repo directory.
 3. In the first terminal set up the server with the following commands:
    - `cd server`
    - `npm install`
-   - `./db/init.sh`
-   - `./migrate.sh`
    - `nodemon index`
    - You should see "Server started on port 5000." printed to the terminal
 4. In the second terminal start the react app with the following commands:
    - `cd react-postgres`
-   - run `npm install`
-   - run `npm start`
+   - `npm install`
+   - `npm start`
    - The application should pop open in your favorite browser
-5. Login and enjoy!
+5.  Login and enjoy!
 
 
 <!-- ## Super Cool Features -->
