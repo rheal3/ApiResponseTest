@@ -1,21 +1,24 @@
-import { useState } from 'react'
+import React from 'react'
+// import { useState } from 'react'
 import MainChart from '../Charts/MainChart'
-import { getAllDataFromTable, formatTableData } from '../getPastData'
+import { getDataInTimeframe, formatTableData } from '../getPastData'
 
-
-const DisplayPastData = () => {
-    let groupData = [0, ];
-    let groupLabels = ['start'];
+const Results = () => {
+    let labels = ['start'];
+    let groupData = [0];
+    let accessTokenData = [0];
+    let userData = [0];
+    let inspectionsData = [0];
+    let templatesData = [0];
     const allData = {};
 
-    const getAllData = async () => {
-
+    const getLast24Hours = async () => {
         Promise.all([
-            await getAllDataFromTable('access_token').then(formatTableData),
-            await getAllDataFromTable('groups').then(formatTableData),
-            await getAllDataFromTable('users').then(formatTableData),
-            await getAllDataFromTable('templates').then(formatTableData),
-            await getAllDataFromTable('inspections').then(formatTableData),
+            await getDataInTimeframe('access_token', '24 HOURS').then(formatTableData),
+            await getDataInTimeframe('groups', '24 HOURS').then(formatTableData),
+            await getDataInTimeframe('users', '24 HOURS').then(formatTableData),
+            await getDataInTimeframe('templates', '24 HOURS').then(formatTableData),
+            await getDataInTimeframe('inspections', '24 HOURS').then(formatTableData),
           ]).then((values) => {
             allData['access_token'] = values[0];
             allData['groups'] = values[1];
@@ -23,16 +26,20 @@ const DisplayPastData = () => {
             allData['templates'] = values[3];
             allData['inspections'] = values[4];
 
+            labels.push(allData['groups']['date_time'])
             groupData.push(allData['groups']['time'])
-            groupLabels.push(allData['groups']['date_time'])
+            userData.push(allData['users']['time'])
+            accessTokenData.push(allData['accessToken']['time'])
+            inspectionsData.push(allData['inspections']['time'])
+            templatesData.push(allData['templates']['time'])
         })
         // return allData;
     }
 
-    getAllData()
+    getLast24Hours()
 
     let allDataChartState = {
-        labels: groupLabels,
+        labels: labels,
         datasets: [{
           label: 'Group',
           data: groupData,
@@ -43,14 +50,11 @@ const DisplayPastData = () => {
           tension: 0.1
         }]
       }
-  
-
     return (
         <div>
             <MainChart data={allDataChartState} title={'All Data'}/>
         </div>
-
     )
 }
 
-export default DisplayPastData;
+export default Results

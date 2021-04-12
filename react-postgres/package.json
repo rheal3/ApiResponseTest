@@ -36,5 +36,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-install": "2.1.0",
+    "css-loader": "^4.3.0",
+    "webpack": "^4.44.2"
   }
 }
