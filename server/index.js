@@ -135,12 +135,13 @@ app.get("/access_token/avg/:id/:bool", async (req, res) => {
 
 // PAST CHARTS //
 // data from the last 24 hours
-app.get("/last24hours/:tableName", async (req, res) => {
+app.get("/timeframe/:tableName/:timeframe", async (req, res) => {
   try {
-    const { tableName } = req.params;
-    let queryStr = `SELECT * FROM ${tableName} WHERE date_time >= NOW() - INTERVAL '24 HOURS' ORDER BY date_time`
+    const { tableName, timeframe } = req.params;
+    console.log(timeframe)
+    let queryStr = `SELECT * FROM ${tableName} WHERE date_time >= NOW() - INTERVAL '${timeframe}' ORDER BY date_time`
     const allData = await pool.query(queryStr);
-    res.join(allData.rows);
+    res.json(allData.rows);
   } catch (err) {
     console.error(err.message)
   }

@@ -4,10 +4,12 @@ import GetGroups from '../ApiCalls/GetGroups'
 import GetUser from '../ApiCalls/GetUser'
 import SearchInspections from '../ApiCalls/SearchInspections'
 import SearchTemplates from '../ApiCalls/SearchTemplates'
-import { getLoginDataPoint, getLastDataPointTime, getDateTime, getAllData } from '../dataStorage'
+import { getLoginDataPoint, getLastDataPointTime, getDateTime } from '../dataStorage'
+// import { getAllData, getDataInTimeframe } from '../getPastData'
 import { testLoginTime } from './LoginTest'
 import RunningLogo from '../Running_Logo/RunningLogo'
 import { getAvgTime, getBestTime, getWorstTime } from './bestWorstAverage';
+import DisplayPastData from '../PastData/charts'
 
 import MainChart from '../Charts/MainChart'
 import SideChart from '../Charts/sideChart'
@@ -335,6 +337,7 @@ const AutomatedTest = () => {
 
   return (
     <div>
+      <DisplayPastData />
       {/* Title Buttons Logo */}
       <div style={{ textAlign: "center" }}>
         <h1>Automated Response Time Tests</h1>
@@ -450,7 +453,7 @@ async function runTests() {
   await GetUser()
   await SearchTemplates()
   await SearchInspections()
-  getAllData()
+  // getDataInTimeframe("users", '1 DAY')
 }
 
 // Used to fix a reload bug
