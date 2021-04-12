@@ -5,11 +5,9 @@ import GetUser from '../ApiCalls/GetUser'
 import SearchInspections from '../ApiCalls/SearchInspections'
 import SearchTemplates from '../ApiCalls/SearchTemplates'
 import { getLoginDataPoint, getLastDataPointTime, getDateTime } from '../dataStorage'
-// import { getAllData, getDataInTimeframe } from '../getPastData'
 import { testLoginTime } from './LoginTest'
 import RunningLogo from '../Running_Logo/RunningLogo'
 import { getAvgTime, getBestTime, getWorstTime } from './bestWorstAverage';
-import DisplayPastData from '../PastData/charts'
 
 import MainChart from '../Charts/MainChart'
 import SideChart from '../Charts/sideChart'
@@ -337,7 +335,6 @@ const AutomatedTest = () => {
 
   return (
     <div>
-      <DisplayPastData />
       {/* Title Buttons Logo */}
       <div style={{ textAlign: "center" }}>
         <h1>Automated Response Time Tests</h1>
