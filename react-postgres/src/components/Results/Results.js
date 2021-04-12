@@ -7,7 +7,6 @@ import SideChart from '../Charts/sideChart'
 const Results = () => {
     const [state, setState] = useState({})
     useEffect(async () => {
-        console.log('use effect')
         Promise.all([
             await getDataInTimeframe('access_token', '24 HOURS').then(formatTableData),
             await getDataInTimeframe('groups', '24 HOURS').then(formatTableData),
@@ -71,7 +70,6 @@ const Results = () => {
             })
         }).catch(err=>console.error(err.message))}, []
     )
-    console.log('re-rendering')
 
     let labels = ['start'];
     let groupData = [0];

@@ -139,7 +139,7 @@ app.get("/timeframe/:tableName/:timeframe", async (req, res) => {
   try {
     const { tableName, timeframe } = req.params;
     console.log(timeframe)
-    let queryStr = `SELECT * FROM ${tableName} WHERE date_time >= NOW() - INTERVAL '${timeframe}' ORDER BY date_time`
+    let queryStr = `SELECT ${dateTimeConversion} FROM ${tableName} WHERE date_time >= NOW() - INTERVAL '${timeframe}' ORDER BY date_time`
     const allData = await pool.query(queryStr);
     res.json(allData.rows);
   } catch (err) {
