@@ -4,7 +4,7 @@ import GetGroups from '../ApiCalls/GetGroups'
 import GetUser from '../ApiCalls/GetUser'
 import SearchInspections from '../ApiCalls/SearchInspections'
 import SearchTemplates from '../ApiCalls/SearchTemplates'
-import { getLoginDataPoint, getLastDataPointTime, getDateTime } from '../dataStorage'
+import { getLoginDataPoint, getLastDataPointTime, getDateTime, getAllData } from '../dataStorage'
 import { testLoginTime } from './LoginTest'
 import RunningLogo from '../Running_Logo/RunningLogo'
 import { getAvgTime, getBestTime, getWorstTime } from './bestWorstAverage';
@@ -450,6 +450,7 @@ async function runTests() {
   await GetUser()
   await SearchTemplates()
   await SearchInspections()
+  getAllData()
 }
 
 // Used to fix a reload bug

@@ -71,3 +71,42 @@ export const getDateTime = async (tableName) => {
         console.log(err.message);
     }
 }
+
+
+export const getAllDataFromTable = async (tableName) => {
+    try {
+        const response = await fetch(`http://localhost:5000/${tableName}`);
+        const jsonData = await response.json();
+        return jsonData;
+
+    } catch (err) {
+        console.log(err.message)
+    }
+}
+
+export const formatTableData = (data) => {
+    let formatData = {'date_time': [], 'time': []}
+    for (let i = 0; i <= data.length -1; i++) {
+        formatData['date_time'].push(data[i]['date_time'])
+        formatData['time'].push(data[i]['time'])
+    }
+    return formatData;
+}
+
+export const getAllData = async () => {
+    let allData = {};
+    Promise.all([
+        await getAllDataFromTable('access_token').then(formatTableData),
+        await getAllDataFromTable('groups').then(formatTableData),
+        await getAllDataFromTable('users').then(formatTableData),
+        await getAllDataFromTable('templates').then(formatTableData),
+        await getAllDataFromTable('inspections').then(formatTableData),
+      ]).then((values) => {
+        allData['access_token'] = values[0];
+        allData['groups'] = values[0];
+        allData['users'] = values[0];
+        allData['templates'] = values[0];
+        allData['inspections'] = values[0];
+    })
+    return allData;
+}

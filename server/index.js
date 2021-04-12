@@ -27,7 +27,7 @@ app.post("/", async (req, res) => { // request from client side and response sen
 app.get("/:tableName", async (req, res) => {
   try {
     const { tableName } = req.params;
-    const allData = await pool.query(`SELECT ${dateTimeConversion} FROM ${tableName}`);
+    const allData = await pool.query(`SELECT time, TO_CHAR(date_time, 'YYYY-MM-DD HH24:MI:SS') AS date_time FROM ${tableName} ORDER BY date_time`);
     res.json(allData.rows);
   } catch(err) {
       console.error("table: " + err.message);
@@ -40,9 +40,6 @@ app.get("/:tableName/last", async (req, res) => {
   try {
     const { tableName } = req.params;
     const allData = await pool.query(`SELECT ${dateTimeConversion} FROM ${tableName} ORDER BY id DESC LIMIT 1`);
-    const datetime = await pool.query(`SELECT id, response_ok, time, num_items_retrieved, TO_CHAR(date_time, 'YYYY-MM-DD HH24:MI:SS') AS date_time from ${tableName}`) 
-    console.log(datetime.rows)
-    // console.log(allData.rows)
     res.json(allData.rows);
   } catch(err) {
       console.error("last: " + err.message);
@@ -134,6 +131,21 @@ app.get("/access_token/avg/:id/:bool", async (req, res) => {
     console.log('avg - access_token: ' + err.message);
   }
 })
+
+
+// PAST CHARTS //
+// data from the last 24 hours
+app.get("/last24hours/:tableName", async (req, res) => {
+  try {
+    const { tableName } = req.params;
+    let queryStr = `SELECT * FROM ${tableName} WHERE date_time >= NOW() - INTERVAL '24 HOURS' ORDER BY date_time`
+    const allData = await pool.query(queryStr);
+    res.join(allData.rows);
+  } catch (err) {
+    console.error(err.message)
+  }
+});
+
 
 
 app.listen(5000, () => {
