@@ -6,20 +6,27 @@ import SideChart from '../Charts/sideChart'
 
 const Results = () => {
     const [state, setState] = useState({})
+    let dropDown = 'last24Hours'
+    let promises = [];
     useEffect(async () => {
-        Promise.all([
-            await getDataInTimeframe('access_token', '24 HOURS').then(formatTableData),
-            await getDataInTimeframe('groups', '24 HOURS').then(formatTableData),
-            await getDataInTimeframe('users', '24 HOURS').then(formatTableData),
-            await getDataInTimeframe('templates', '24 HOURS').then(formatTableData),
-            await getDataInTimeframe('inspections', '24 HOURS').then(formatTableData),
-          ]).then((values) => {
+        if (dropDown === 'last24Hours') {
+            promises = [
+                await getDataInTimeframe('access_token', '24 HOURS').then(formatTableData),
+                await getDataInTimeframe('groups', '24 HOURS').then(formatTableData),
+                await getDataInTimeframe('users', '24 HOURS').then(formatTableData),
+                await getDataInTimeframe('templates', '24 HOURS').then(formatTableData),
+                await getDataInTimeframe('inspections', '24 HOURS').then(formatTableData),
+              ]
+        } else if (dropDown === 'last7Days') {
+            promises = []
+        }
+        Promise.all(promises).then((values) => {
             past24Hours['access_token'] = values[0];
             past24Hours['groups'] = values[1];
             past24Hours['users'] = values[2];
             past24Hours['templates'] = values[3];
             past24Hours['inspections'] = values[4];
-
+            console.log(past24Hours)
             return past24Hours
           }).then(past24Hours => {
             labels = past24Hours['groups']['date_time']
@@ -83,101 +90,19 @@ const Results = () => {
 // will need to get the required data for each of the charts and setup in format that chart can read from
     return (
         <div>
-            <div style={{backgroundColor: 'lightsalmon'}}>
+            <div>
+                <label for="dropDown"></label>
+                <select value='last24Hours'> {/* dropDownValue onChange={handleChangeDropDown} <-- will change charts*/}
+                    <option value="last24Hours">Last 24 Hours</option>
+                    <option value="last7Days">Last 7 Days</option>
+                </select>
+            </div>
+
+            <div>
                 <h2 style={{textAlign: 'center'}}>24hr chart spot</h2>
 
                 <div>
                     <MainChart data={state}/>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
-                    <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Login Chart"}/>                      
-                    </div>
-
-                    <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Group Chart"}/>                      
-                    </div>
-
-                    <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"User Chart"}/>                    
-                    </div>
-
-                    <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Template Chart"}/>                      
-                    </div>
-
-                    <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Inspection Chart"}/>                     
-                    </div>
-                </div>
-            </div>
-
-            <div  style={{backgroundColor: 'lightblue'}}>
-                <h2 style={{textAlign: 'center'}}>1 week chart spot</h2>
-
-                <div>
-                    <MainChart/>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
-                    <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Login Chart"}/>                      
-                    </div>
-
-                    <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Group Chart"}/>                      
-                    </div>
-
-                    <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"User Chart"}/>                    
-                    </div>
-
-                    <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Template Chart"}/>                      
-                    </div>
-
-                    <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Inspection Chart"}/>                     
-                    </div>
-                </div>
-            </div>
-
-            <div style={{backgroundColor: 'lightgoldenrodyellow'}}>
-                <h2 style={{textAlign: 'center'}}>1 fortnight chart spot</h2>
-
-                <div>
-                    <MainChart/>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
-                    <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Login Chart"}/>                      
-                    </div>
-
-                    <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Group Chart"}/>                      
-                    </div>
-
-                    <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"User Chart"}/>                    
-                    </div>
-
-                    <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Template Chart"}/>                      
-                    </div>
-
-                    <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Inspection Chart"}/>                     
-                    </div>
-                </div>
-            </div>
-
-            <div style={{backgroundColor: 'lightgreen'}}>
-                <h2 style={{textAlign: 'center'}}>1 month chart spot</h2>
-
-                <div>
-                    <MainChart/>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
