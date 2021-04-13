@@ -127,6 +127,12 @@ const AutomatedTest = () => {
         await getDateTime('inspections')
       ]).then((values) => {
 
+        /*
+        format for charts {
+          x: data time the data was collected
+          y: response time in ms
+        }
+        */
         acceptData.push({
           x: values[0]['date_time'],
           y: values[0]['time']
