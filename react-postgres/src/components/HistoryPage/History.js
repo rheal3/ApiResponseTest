@@ -6,7 +6,8 @@ import SideChart from '../Charts/sideChart'
 
 const History = () => {
     // const [state, setState] = useState({})
-    const [dropDownValue, setDropDownValue] = useState("last7Days")
+    const [dropDownValue, setDropDownValue] = useState("last24Hours")
+    const [chartTitle, setChartTitle] = useState("Last 24 Hours")
     const [mainChartState, setMainChartState] = useState({})
     const [dayLoginChartState, setDayLoginChartState] = useState({})
     const [dayGroupChartState, setDayGroupChartState] = useState({})
@@ -19,6 +20,17 @@ const History = () => {
     const handleChangeDropDown = (e) => {
         let choice = e.target.value;
         setDropDownValue(choice);
+        switch (choice) {
+            case "last24Hours":
+                setChartTitle("Last 24 Hours")
+                break;
+            case "last7Days":
+                setChartTitle("Last 7 Days")
+                break;
+            case "last2Weeks":
+                setChartTitle("Last 2 Weeks")
+                break;
+        }
     }
 
     useEffect(async () => {
@@ -269,7 +281,7 @@ const History = () => {
             </div>
 
             <div>
-                <h2 style={{textAlign: 'center'}}>TITLE</h2>
+                <h2 style={{textAlign: 'center'}}>{chartTitle}</h2>
 
                 <div>
                     <MainChart data={mainChartState}/>
