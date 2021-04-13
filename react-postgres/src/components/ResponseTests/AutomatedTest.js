@@ -193,7 +193,6 @@ const AutomatedTest = () => {
     // Main Chart
     setMainChartState({
       // Login Accept
-      // labels: labels,
       datasets: [{
         label: 'Login Accept',
         data: acceptData,
@@ -252,7 +251,6 @@ const AutomatedTest = () => {
 
     // Login Chart
     setLoginChartState({
-      // labels: labels,
       datasets: [{
         label: 'Login Accept',
         data: acceptData,
@@ -274,7 +272,6 @@ const AutomatedTest = () => {
 
     // Group Chart
     setGroupChartState({
-      // labels: labels,
       datasets: [{
         label: 'Group',
         data: groupData,
@@ -288,7 +285,6 @@ const AutomatedTest = () => {
 
     // User Chart
     setUserChartState({
-      // labels: labels,
       datasets: [{
         label: 'User',
         data: userData,
@@ -302,7 +298,6 @@ const AutomatedTest = () => {
 
     // Template Chart
     setTemplateChartState({
-      // labels: labels,
       datasets: [{
         label: 'Template',
         data: templateData,
@@ -316,7 +311,6 @@ const AutomatedTest = () => {
 
     // Inspection Chart
     setInspectionChartState({
-      // labels: labels,
       datasets: [{
         label: 'Inspection',
         data: inspectionData,

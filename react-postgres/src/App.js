@@ -23,11 +23,6 @@ const App = () => {
                 </Switch>
             </div>
         </BrowserRouter>
-        
-        // <div>
-        // <Login/>
-        // <AutomatedTest/>  
-        // </div>
     )
 }
 
