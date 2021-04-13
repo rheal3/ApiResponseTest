@@ -29,14 +29,54 @@ const History = () => {
             console.log(past24Hours)
             return past24Hours
           }).then(past24Hours => {
+
+            let groupResponseTimes = past24Hours['groups']['time']
+            let groupDateTimes = past24Hours['groups']['date_time']
+
+            let userResponseTimes = past24Hours['users']['time']
+            let userDateTimes = past24Hours['users']['date_time']
+
+            let inspectionResponseTimes = past24Hours['inspections']['time']
+            let inspectionDateTimes = past24Hours['inspections']['date_time']
+
+            let templateResponseTimes = past24Hours['templates']['time']
+            let templateDateTimes = past24Hours['templates']['date_time']
+
             labels = past24Hours['groups']['date_time']
-            groupData = past24Hours['groups']['time']
-            userData = past24Hours['users']['time']
-            inspectionData = past24Hours['inspections']['time']
-            templateData = past24Hours['templates']['time']
+            // groupData = past24Hours['groups']['time']
+            // userData = past24Hours['users']['time']
+            // inspectionData = past24Hours['inspections']['time']
+            // templateData = past24Hours['templates']['time']
+
+            for (let i=0;i<groupDateTimes.length;i++) {
+              groupData.push({
+                x: groupDateTimes[i],
+                y: groupResponseTimes[i]
+              })
+            }
+
+            for (let i=0;i<userDateTimes.length;i++) {
+              userData.push({
+                x: userDateTimes[i],
+                y: userResponseTimes[i]
+              })
+            }
+
+            for (let i=0;i<inspectionDateTimes.length;i++) {
+              inspectionData.push({
+                x: inspectionDateTimes[i],
+                y: inspectionResponseTimes[i]
+              })
+            }
+
+            for (let i=0;i<templateDateTimes.length;i++) {
+              templateData.push({
+                x: templateDateTimes[i],
+                y: templateResponseTimes[i]
+              })
+            }
 
             setState({
-                labels: labels,
                 datasets: [{
                   // Group 
                   label: 'Group',
@@ -78,12 +118,13 @@ const History = () => {
         }).catch(err=>console.error(err.message))}, []
     )
 
-    let labels = ['start'];
-    let groupData = [0];
+    let labels = [];
+
+    let groupData = [];
     // let accessTokenData = [0];
-    let userData = [0];
-    let inspectionData = [0];
-    let templateData = [0];    
+    let userData = [];
+    let inspectionData = [];
+    let templateData = [];    
     const past24Hours = {};
 
 
@@ -111,19 +152,19 @@ const History = () => {
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Group Chart"}/>                      
+                        <SideChart title={"Group Chart"} data={groupData}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"User Chart"}/>                    
+                        <SideChart title={"User Chart"} data={userData}/>                    
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Template Chart"}/>                      
+                        <SideChart title={"Template Chart"} data={templateData}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Inspection Chart"}/>                     
+                        <SideChart title={"Inspection Chart"} data={inspectionData}/>                     
                     </div>
                 </div>
             </div>

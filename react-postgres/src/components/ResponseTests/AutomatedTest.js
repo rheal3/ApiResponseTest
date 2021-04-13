@@ -129,7 +129,7 @@ const AutomatedTest = () => {
 
         /*
         format for charts {
-          x: data time the data was collected
+          x: date time the data was collected
           y: response time in ms
         }
         */
