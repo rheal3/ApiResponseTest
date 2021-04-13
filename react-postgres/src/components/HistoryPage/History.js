@@ -283,7 +283,7 @@ const History = () => {
             <div>
                 <h2 style={{textAlign: 'center'}}>{chartTitle}</h2>
 
-                <div>
+                <div style={{margin: "20px 50px"}}>
                     <MainChart data={mainChartState}/>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
