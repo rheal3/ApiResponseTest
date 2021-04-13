@@ -15,7 +15,7 @@ const Navbar = () => {
               Home
             </NavLink>
 
-            <NavLink
+            <NavLink style={{margin: 'auto 20px'}}
               to="/results_history"
               exact
             >

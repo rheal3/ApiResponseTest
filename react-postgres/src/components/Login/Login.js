@@ -31,7 +31,7 @@ const Login = () => {
     }
 
     return (
-        <div style={{padding: "10px"}}class="input-group mb-3 d-flex justify-content-end">
+        <div style={{padding: "10px"}}class="input-group d-flex justify-content-end">
             {!apiToken && (<input class="input-group-text" type="text" value={usernameValue} onChange={handleUsernameInputChange} placeholder="email" />)}
             {!apiToken && (<input class="input-group-text" type="password" value={passwordValue} onChange={handlePasswordInputChange} placeholder="password" />)}
             {!apiToken && (<button class="btn btn-primary" onClick={sendLoginRequest}>LOGIN</button>)}
