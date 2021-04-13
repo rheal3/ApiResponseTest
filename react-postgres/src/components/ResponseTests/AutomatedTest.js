@@ -385,7 +385,7 @@ const AutomatedTest = () => {
           <SideChart data={getLoginChartState} title={'Login Time'} />
           {chartHasData && (<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly' }}>
             <div>
-              <p className="tooltipFetch">Login Accept<span className="tooltiptext">/auth</span></p>
+              <h6 className="tooltipFetch">Login Accept<span className="tooltiptext">/auth</span></h6>
               <div>Average: {avgTimesData['access_token_true'][0]['avg']} ms</div>
               <div>Worst: {worstTimesData['access_token_true'][0]['time']} ms @ {worstTimesData['access_token_true'][0]['date_time']}</div>
               <div>Best: {bestTimesData['access_token_true'][0]['time']} ms @ {bestTimesData['access_token_true'][0]['date_time']}</div>
@@ -394,7 +394,7 @@ const AutomatedTest = () => {
             <br />
 
             <div>
-              <p className="tooltipFetch">Login Reject<span className="tooltiptext">/auth</span></p>
+              <h6 className="tooltipFetch">Login Reject<span className="tooltiptext">/auth</span></h6>
               <div>Average: {avgTimesData['access_token_false'][0]['avg']} ms</div>
               <div>Worst: {worstTimesData['access_token_false'][0]['time']} ms @ {worstTimesData['access_token_false'][0]['date_time']}</div>
               <div>Best: {bestTimesData['access_token_false'][0]['time']} ms @ {bestTimesData['access_token_false'][0]['date_time']}</div>
@@ -407,7 +407,7 @@ const AutomatedTest = () => {
           {/* group Chart */}
           <SideChart data={getGroupChartState} title={'Group Time'} />
           {chartHasData && (<div>
-            <p className="tooltipFetch">Group<span className="tooltiptext">/share/connections</span></p>
+            <h6 className="tooltipFetch">Group<span className="tooltiptext">/share/connections</span></h6>
             <div>Average: {avgTimesData['groups'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['groups'][0]['time']} ms @ {worstTimesData['groups'][0]['date_time']}</div>
             <div>Best: {bestTimesData['groups'][0]['time']} ms @ {bestTimesData['groups'][0]['date_time']} </div>
@@ -419,7 +419,7 @@ const AutomatedTest = () => {
           {/* User Chart */}
           <SideChart data={getUserChartState} title={'User Time'} />
           {chartHasData && (<div>
-            <p className="tooltipFetch">User<span className="tooltiptext">/groups/&lt;group_id&gt;users</span></p>
+            <h6 className="tooltipFetch">User<span className="tooltiptext">/groups/&lt;group_id&gt;users</span></h6>
             <div>Average: {avgTimesData['users'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['users'][0]['time']} ms @ {worstTimesData['users'][0]['date_time']}</div>
             <div>Best: {bestTimesData['users'][0]['time']} ms @ {bestTimesData['users'][0]['date_time']}</div>
@@ -431,7 +431,7 @@ const AutomatedTest = () => {
           {/* Template Chart */}
           <SideChart data={getTemplateChartState} title={'Template Time'} />
           {chartHasData && (<div>
-            <p className="tooltipFetch">Template<span className="tooltiptext">/templates/search?field=template_id&amp;field=modified_at</span></p>
+            <h6 className="tooltipFetch">Template<span className="tooltiptext">/templates/search?field=template_id&amp;field=modified_at</span></h6>
             <div>Average: {avgTimesData['templates'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['templates'][0]['time']} ms @ {worstTimesData['templates'][0]['date_time']}</div>
             <div>Best: {bestTimesData['templates'][0]['time']} ms @ {bestTimesData['templates'][0]['date_time']}</div>
@@ -443,7 +443,7 @@ const AutomatedTest = () => {
           {/* Inspection Chart */}
           <SideChart data={getInspectionChartState} title={'Inspection Time'} />
           {chartHasData && (<div>
-            <p className="tooltipFetch">Inspection<span className="tooltiptext">/audits/search?field=audit_id&amp;field=modified_at</span></p>
+            <h6 className="tooltipFetch">Inspection<span className="tooltiptext">/audits/search?field=audit_id&amp;field=modified_at</span></h6>
             <div>Average: {avgTimesData['inspections'][0]['avg']} ms</div>
             <div>Worst: {worstTimesData['inspections'][0]['time']} ms @ {worstTimesData['inspections'][0]['date_time']}</div>
             <div>Best: {bestTimesData['inspections'][0]['time']} ms @ {bestTimesData['inspections'][0]['date_time']}</div>

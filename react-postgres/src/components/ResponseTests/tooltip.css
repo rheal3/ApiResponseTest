@@ -1,5 +1,5 @@
 /* Tooltip container */
-.tooltipFetch {
+.tooltipFetch { /* had to be renamed from tooltip as it clashed with bootstrap which handles other stylings */
     position: relative;
     display: inline-block;
     border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
