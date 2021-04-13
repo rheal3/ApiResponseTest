@@ -374,7 +374,7 @@ const AutomatedTest = () => {
       </div>
 
       {/* Charts and Key data Details */}
-      <div>
+      <div style={{margin: "20px 50px"}}>
         <MainChart data={getMainChartState} />
       </div>
 
