@@ -138,25 +138,25 @@ app.get("/access_token/avg/:id/:bool", async (req, res) => {
 app.get("/timeframe/:tableName/:timeframe", async (req, res) => {
   try {
     const { tableName, timeframe } = req.params;
-    if (tableName !== "access_token") {
-      let queryStr = `SELECT ${dateTimeConversion} FROM ${tableName} WHERE date_time >= NOW() - INTERVAL '${timeframe}' ORDER BY date_time`
-      const allData = await pool.query(queryStr);
-      res.json(allData.rows);
-    } else {
-      let apiToken = {};
-      let trueQueryStr = `SELECT ${dateTimeConversion} FROM ${tableName} WHERE response_ok = true AND date_time >= NOW() - INTERVAL '${timeframe}' ORDER BY date_time`
-      const allTrueData = await pool.query(trueQueryStr);
-      apiToken["true"] = allTrueData.rows
-      let falseQueryStr = `SELECT ${dateTimeConversion} FROM ${tableName} WHERE response_ok = false AND date_time >= NOW() - INTERVAL '${timeframe}' ORDER BY date_time`
-      const allFalseData = await pool.query(falseQueryStr);
-      apiToken["false"] = allFalseData.rows
-      console.log(apiToken)
-      res.json(apiToken)
-    }
+    let queryStr = `SELECT ${dateTimeConversion} FROM ${tableName} WHERE date_time >= NOW() - INTERVAL '${timeframe}' ORDER BY date_time`
+    const allData = await pool.query(queryStr);
+    res.json(allData.rows);
   } catch (err) {
     console.error(err.message)
   }
 });
+
+app.get("/timeframe/:tableName/:bool/:timeframe", async (req, res) => {
+  try {
+    const { tableName, bool, timeframe } = req.params;
+    let queryStr = `SELECT ${dateTimeConversion} FROM ${tableName} WHERE response_ok = ${bool} AND date_time >= NOW() - INTERVAL '${timeframe}' ORDER BY date_time`
+    const allData = await pool.query(queryStr);
+    res.json(allData.rows)
+  } catch (err) {
+    console.error(err.message)
+  }
+});
+
 
 
 

@@ -47,7 +47,16 @@ export const getDataInTimeframe = async (tableName, timeframe) => {
     try {
         const response = await fetch(`http://localhost:5000/timeframe/${tableName}/${timeframe}`);
         const jsonData = await response.json();
-        console.log(jsonData)
+        return jsonData;
+    } catch (err) {
+        console.log(err.message)
+    }
+}
+
+export const getAccessDataInTimeframe = async (tableName, timeframe, bool) => {
+    try {
+        const response = await fetch(`http://localhost:5000/timeframe/${tableName}/${bool}/${timeframe}`);
+        const jsonData = await response.json();
         return jsonData;
     } catch (err) {
         console.log(err.message)

@@ -1,4 +1,4 @@
-import { getDataInTimeframe, formatTableData } from '../getPastData'
+import { getDataInTimeframe, getAccessDataInTimeframe, formatTableData } from '../getPastData'
 import { useEffect, useState } from 'react';
 
 import MainChart from '../Charts/MainChart'
@@ -11,7 +11,8 @@ const History = () => {
     useEffect(async () => {
         if (dropDown === 'last24Hours') {
             promises = [
-                await getDataInTimeframe('access_token', '24 HOURS').then(formatTableData),
+                await getAccessDataInTimeframe('access_token', '24 HOURS', true).then(formatTableData),
+                await getAccessDataInTimeframe('access_token', '24 HOURS', false).then(formatTableData),
                 await getDataInTimeframe('groups', '24 HOURS').then(formatTableData),
                 await getDataInTimeframe('users', '24 HOURS').then(formatTableData),
                 await getDataInTimeframe('templates', '24 HOURS').then(formatTableData),
@@ -21,11 +22,12 @@ const History = () => {
             promises = []
         }
         Promise.all(promises).then((values) => {
-            past24Hours['access_token'] = values[0];
-            past24Hours['groups'] = values[1];
-            past24Hours['users'] = values[2];
-            past24Hours['templates'] = values[3];
-            past24Hours['inspections'] = values[4];
+            past24Hours['access_token_true'] = values[0];
+            past24Hours['access_token_false'] = values[1];
+            past24Hours['groups'] = values[2];
+            past24Hours['users'] = values[3];
+            past24Hours['templates'] = values[4];
+            past24Hours['inspections'] = values[5];
             console.log(past24Hours)
             return past24Hours
           }).then(past24Hours => {
@@ -34,45 +36,66 @@ const History = () => {
             userData = past24Hours['users']['time']
             inspectionData = past24Hours['inspections']['time']
             templateData = past24Hours['templates']['time']
+            acceptData = past24Hours['access_token_true']['time']
+            rejectData = past24Hours['access_token_false']['time']
 
             setState({
                 labels: labels,
-                datasets: [{
-                  // Group 
-                  label: 'Group',
-                  data: groupData,
-                  fill: false,
-                  borderColor: [
-                    'rgb(128, 128, 0)'
-                  ],
-                  tension: 0.1
+                datasets: [
+                          // Login Accept
+                {
+                    label: 'Login Accept',
+                    data: acceptData,
+                    fill: false,
+                    borderColor: [
+                    'rgb(0, 200, 0)'
+                    ],
+                    tension: 0.1
                 }, {
-                  // User
-                  label: 'User',
-                  data: userData,
-                  fill: false,
-                  borderColor: [
-                    'rgb(64, 64, 64)'
-                  ],
-                  tension: 0.1
+                    // Login Reject
+                    label: 'Login Reject',
+                    data: rejectData,
+                    fill: false,
+                    borderColor: [
+                    'rgb(255, 0, 0)'
+                    ],
+                    tension: 0.1
                 }, {
-                  // Template
-                  label: 'Template',
-                  data: templateData,
-                  fill: false,
-                  borderColor: [
-                    'rgb(128, 0, 128)'
-                  ],
-                  tension: 0.1
+                    // Group 
+                    label: 'Group',
+                    data: groupData,
+                    fill: false,
+                    borderColor: [
+                        'rgb(128, 128, 0)'
+                    ],
+                    tension: 0.1
                 }, {
-                  // Inspection
-                  label: 'Inspection',
-                  data: inspectionData,
-                  fill: false,
-                  borderColor: [
-                    'rgb(0, 0, 255)'
-                  ],
-                  tension: 0.1
+                    // User
+                    label: 'User',
+                    data: userData,
+                    fill: false,
+                    borderColor: [
+                        'rgb(64, 64, 64)'
+                    ],
+                    tension: 0.1
+                }, {
+                    // Template
+                    label: 'Template',
+                    data: templateData,
+                    fill: false,
+                    borderColor: [
+                        'rgb(128, 0, 128)'
+                    ],
+                    tension: 0.1
+                }, {
+                    // Inspection
+                    label: 'Inspection',
+                    data: inspectionData,
+                    fill: false,
+                    borderColor: [
+                        'rgb(0, 0, 255)'
+                    ],
+                    tension: 0.1
                 }]
             })
         }).catch(err=>console.error(err.message))}, []
@@ -80,7 +103,8 @@ const History = () => {
 
     let labels = ['start'];
     let groupData = [0];
-    // let accessTokenData = [0];
+    let acceptData = [0];
+    let rejectData = [0];    
     let userData = [0];
     let inspectionData = [0];
     let templateData = [0];    
