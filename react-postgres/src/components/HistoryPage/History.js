@@ -5,15 +5,21 @@ import MainChart from '../Charts/MainChart'
 import SideChart from '../Charts/sideChart'
 
 const History = () => {
-    const [state, setState] = useState({})
+    // const [state, setState] = useState({})
     const [dropDownValue, setDropDownValue] = useState("last7Days")
+    const [mainChartState, setMainChartState] = useState({})
+    const [dayLoginChartState, setDayLoginChartState] = useState({})
+    const [dayGroupChartState, setDayGroupChartState] = useState({})
+    const [dayUserChartState, setDayUserChartState] = useState({})
+    const [dayTemplateChartState, setDayTemplateChartState] = useState({})
+    const [dayInspectionChartState, setDayInspectionChartState] = useState({})
+
+    let promises = [];
 
     const handleChangeDropDown = (e) => {
         let choice = e.target.value;
         setDropDownValue(choice);
-      }
-
-    let promises = []; 
+    }
 
     useEffect(async () => {
         if (dropDownValue === 'last24Hours') {
@@ -114,82 +120,148 @@ const History = () => {
                 })
             }
 
-            setState({
-                datasets: [
-                    // Login Accept
-                {
-                    label: 'Login Accept',
-                    data: acceptData,
-                    fill: false,
-                    borderColor: [
-                    'rgb(0, 200, 0)'
-                    ],
-                    tension: 0.1
+            setMainChartState({
+                datasets: [{
+                      // Login Accept
+                      label: 'Login Accept',
+                      data: acceptData,
+                      fill: false,
+                      borderColor: [
+                      'rgb(0, 200, 0)'
+                      ],
+                      tension: 0.1
+                  }, {
+                      // Login Reject
+                      label: 'Login Reject',
+                      data: rejectData,
+                      fill: false,
+                      borderColor: [
+                      'rgb(255, 0, 0)'
+                      ],
+                      tension: 0.1
+                  }, {
+                  // Group 
+                  label: 'Group',
+                  data: groupData,
+                  fill: false,
+                  borderColor: [
+                    'rgb(128, 128, 0)'
+                  ],
+                  tension: 0.1
                 }, {
-                    // Login Reject
-                    label: 'Login Reject',
-                    data: rejectData,
-                    fill: false,
-                    borderColor: [
-                    'rgb(255, 0, 0)'
-                    ],
-                    tension: 0.1
+                  // User
+                  label: 'User',
+                  data: userData,
+                  fill: false,
+                  borderColor: [
+                    'rgb(64, 64, 64)'
+                  ],
+                  tension: 0.1
                 }, {
-                    // Group 
-                    label: 'Group',
-                    data: groupData,
-                    fill: false,
-                    borderColor: [
-                        'rgb(128, 128, 0)'
-                    ],
-                    tension: 0.1
+                  // Template
+                  label: 'Template',
+                  data: templateData,
+                  fill: false,
+                  borderColor: [
+                    'rgb(128, 0, 128)'
+                  ],
+                  tension: 0.1
                 }, {
-                    // User
-                    label: 'User',
-                    data: userData,
-                    fill: false,
-                    borderColor: [
-                        'rgb(64, 64, 64)'
-                    ],
-                    tension: 0.1
-                }, {
-                    // Template
-                    label: 'Template',
-                    data: templateData,
-                    fill: false,
-                    borderColor: [
-                        'rgb(128, 0, 128)'
-                    ],
-                    tension: 0.1
-                }, {
-                    // Inspection
-                    label: 'Inspection',
-                    data: inspectionData,
-                    fill: false,
-                    borderColor: [
-                        'rgb(0, 0, 255)'
-                    ],
-                    tension: 0.1
+                  // Inspection
+                  label: 'Inspection',
+                  data: inspectionData,
+                  fill: false,
+                  borderColor: [
+                    'rgb(0, 0, 255)'
+                  ],
+                  tension: 0.1
                 }]
-            })
+              })
+        
+              setDayLoginChartState({
+                datasets: [{
+                  label: 'Login Accept',
+                  data: acceptData,
+                  fill: false,
+                  borderColor: [
+                    'rgb(0, 200, 0)'
+                  ],
+                  tension: 0.1
+                }, {
+                  label: 'Login Reject',
+                  data: rejectData,
+                  fill: false,
+                  borderColor: [
+                    'rgb(255, 0, 0)'
+                  ],
+                  tension: 0.1
+                }]
+              })
+        
+              setDayGroupChartState({
+                datasets: [{
+                  label: 'Group',
+                  data: groupData,
+                  fill: false,
+                  borderColor: [
+                    'rgb(128, 128, 0)'
+                  ],
+                  tension: 0.1
+                }]
+              })
+        
+              setDayUserChartState({
+                datasets: [{
+                  label: 'User',
+                  data: userData,
+                  fill: false,
+                  borderColor: [
+                    'rgb(64, 64, 64)'
+                  ],
+                  tension: 0.1
+                }]
+              })
+        
+              setDayTemplateChartState({
+                datasets: [{
+                  label: 'Template',
+                  data: templateData,
+                  fill: false,
+                  borderColor: [
+                    'rgb(128, 0, 128)'
+                  ],
+                  tension: 0.1
+                }]
+              })
+        
+              setDayInspectionChartState({
+                datasets: [{
+                  label: 'Inspection',
+                  data: inspectionData,
+                  fill: false,
+                  borderColor: [
+                    'rgb(0, 0, 255)'
+                  ],
+                  tension: 0.1
+                }]
+              })
         }).catch(err=>console.error(err.message))}, [dropDownValue]
     )
 
-    let groupData = [];
     let acceptData = [];
-    let rejectData = [];    
+    let rejectData = [];  
+    let groupData = [];
     let userData = [];
     let inspectionData = [];
-    let templateData = [];    
+    let templateData = [];
     const past24Hours = {};
-
 
 // will need to get the required data for each of the charts and setup in format that chart can read from
     return (
         <div>
             <div>
                 <label for="dropDown"></label>
-                <select class="btn btn-secondary dropdown-toggle" style={{marginLeft: "15px"}}value={dropDownValue} onChange={handleChangeDropDown}> {/* <-- will change charts*/}
+                <select class="btn btn-secondary dropdown-toggle" style={{marginLeft: "15px"}} value={dropDownValue} onChange={handleChangeDropDown}> {/* <-- will change charts*/}
                     <option value="last24Hours">Last 24 Hours</option>
                     <option value="last7Days">Last 7 Days</option>
                     <option value="last2Weeks">Last 2 Weeks</option>
@@ -197,31 +269,30 @@ const History = () => {
             </div>
 
             <div>
-                <h2 style={{textAlign: 'center'}}>24hr chart spot</h2>
+                <h2 style={{textAlign: 'center'}}>TITLE</h2>
 
                 <div>
-                    <MainChart data={state}/>
+                    <MainChart data={mainChartState}/>
                 </div>
-
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Login Chart"}/>                      
+                        <SideChart title={"Login Chart"} data={dayLoginChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Group Chart"} data={groupData}/>                      
+                        <SideChart title={"Group Chart"} data={dayGroupChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"User Chart"} data={userData}/>                    
+                        <SideChart title={"User Chart"} data={dayUserChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Template Chart"} data={templateData}/>                      
+                        <SideChart title={"Template Chart"} data={dayTemplateChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Inspection Chart"} data={inspectionData}/>                     
+                        <SideChart title={"Inspection Chart"} data={dayInspectionChartState} />
                     </div>
                 </div>
             </div>
