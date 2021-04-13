@@ -24,6 +24,11 @@ const MainChart = (props) => {
                   labelString: "Response Time (ms)",
                   fontSize: 16
   
+                },
+                ticks: {
+                  callback: function(value, index, values) {
+                    return value + 'ms';
+                  }
                 }
               }],
   

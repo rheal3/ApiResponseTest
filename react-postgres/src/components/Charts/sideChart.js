@@ -27,6 +27,11 @@ const SideChart = (props) => {
                     labelString: "Response Time (ms)",
                     fontSize: 14
 
+                  },
+                  ticks: {
+                    callback: function(value, index, values) {
+                      return value + 'ms';
+                    }
                   }
                 }],
 
