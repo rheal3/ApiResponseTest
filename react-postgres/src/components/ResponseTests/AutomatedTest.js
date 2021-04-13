@@ -387,7 +387,7 @@ const AutomatedTest = () => {
             <div>
               <p className="tooltip">Login Accept<span className="tooltiptext">/auth</span></p>
               <div>Average: {avgTimesData['access_token_true'][0]['avg']} ms</div>
-              <div>Worst: {worstTimesData['access_token_true'][0]['time']} ms @ {worstTimesData['access_token_true'][0]['date_time']} ms</div>
+              <div>Worst: {worstTimesData['access_token_true'][0]['time']} ms @ {worstTimesData['access_token_true'][0]['date_time']}</div>
               <div>Best: {bestTimesData['access_token_true'][0]['time']} ms @ {bestTimesData['access_token_true'][0]['date_time']}</div>
             </div>
 
