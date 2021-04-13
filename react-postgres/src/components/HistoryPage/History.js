@@ -52,7 +52,7 @@ const History = () => {
                 await getDataInTimeframe('templates', '7 DAYS').then(formatTableData),
                 await getDataInTimeframe('inspections', '7 DAYS').then(formatTableData),
             ]
-        } else if (dropDownValue === 'lastMonth') {
+        } else if (dropDownValue === 'last2Weeks') {
             promises = [
                 await getAccessDataInTimeframe('access_token', '2 WEEKS', true).then(formatTableData),
                 await getAccessDataInTimeframe('access_token', '2 WEEKS', false).then(formatTableData),
@@ -61,7 +61,16 @@ const History = () => {
                 await getDataInTimeframe('templates', '2 WEEKS').then(formatTableData),
                 await getDataInTimeframe('inspections', '2 WEEKS').then(formatTableData),
             ]
-        }
+        } else if (dropDownValue === 'lastMonth') {
+          promises = [
+            await getAccessDataInTimeframe('access_token', '1 MONTH', true).then(formatTableData),
+            await getAccessDataInTimeframe('access_token', '1 MONTH', false).then(formatTableData),
+            await getDataInTimeframe('groups', '1 MONTH').then(formatTableData),
+            await getDataInTimeframe('users', '1 MONTH').then(formatTableData),
+            await getDataInTimeframe('templates', '1 MONTH').then(formatTableData),
+            await getDataInTimeframe('inspections', '1 MONTH').then(formatTableData),
+        ]
+    }
         Promise.all(promises).then((values) => {
             past24Hours['access_token_true'] = values[0];
             past24Hours['access_token_false'] = values[1];
@@ -277,6 +286,7 @@ const History = () => {
                     <option value="last24Hours">Last 24 Hours</option>
                     <option value="last7Days">Last 7 Days</option>
                     <option value="last2Weeks">Last 2 Weeks</option>
+                    <option value="lastMonth">Last Month</option>
                 </select>
             </div>
 
