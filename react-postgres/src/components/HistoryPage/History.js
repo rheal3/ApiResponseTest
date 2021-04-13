@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import MainChart from '../Charts/MainChart'
 import SideChart from '../Charts/sideChart'
 
-const Results = () => {
+const History = () => {
     const [state, setState] = useState({})
     let dropDown = 'last24Hours'
     let promises = [];
@@ -131,4 +131,4 @@ const Results = () => {
     )
 }
 
-export default Results
+export default History
