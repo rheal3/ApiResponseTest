@@ -112,7 +112,7 @@ app.get("/access_token/best/:id/:bool", async (req, res) => {
 app.get("/access_token/worst/:id/:bool", async (req, res) => {
   try {
     const {id, bool } = req.params;
-    let queryStr = `SELECT * FROM access_token WHERE response_ok = ${bool} AND id > ${id} - 1 ORDER BY time DESC LIMIT 1`
+    let queryStr = `SELECT ${dateTimeConversion} FROM access_token WHERE response_ok = ${bool} AND id > ${id} - 1 ORDER BY time DESC LIMIT 1`
     const allData = await pool.query(queryStr)
     res.json(allData.rows)
   } catch (err) {

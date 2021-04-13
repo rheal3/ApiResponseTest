@@ -6,15 +6,14 @@ import SideChart from '../Charts/sideChart'
 
 const History = () => {
     const [state, setState] = useState({})
-    const [dropDownValue, setDropDownValue] = useState("last24Hours")
+    const [dropDownValue, setDropDownValue] = useState("last7Days")
 
     const handleChangeDropDown = (e) => {
         let choice = e.target.value;
         setDropDownValue(choice);
       }
-    
 
-    let promises = [];
+    let promises = []; 
 
     useEffect(async () => {
         if (dropDownValue === 'last24Hours') {
@@ -27,7 +26,23 @@ const History = () => {
                 await getDataInTimeframe('inspections', '24 HOURS').then(formatTableData),
               ]
         } else if (dropDownValue === 'last7Days') {
-            promises = []
+            promises = [
+                await getAccessDataInTimeframe('access_token', '7 DAYS', true).then(formatTableData),
+                await getAccessDataInTimeframe('access_token', '7 DAYS', false).then(formatTableData),
+                await getDataInTimeframe('groups', '7 DAYS').then(formatTableData),
+                await getDataInTimeframe('users', '7 DAYS').then(formatTableData),
+                await getDataInTimeframe('templates', '7 DAYS').then(formatTableData),
+                await getDataInTimeframe('inspections', '7 DAYS').then(formatTableData),
+            ]
+        } else if (dropDownValue === 'lastMonth') {
+            promises = [
+                await getAccessDataInTimeframe('access_token', '2 WEEKS', true).then(formatTableData),
+                await getAccessDataInTimeframe('access_token', '2 WEEKS', false).then(formatTableData),
+                await getDataInTimeframe('groups', '2 WEEKS').then(formatTableData),
+                await getDataInTimeframe('users', '2 WEEKS').then(formatTableData),
+                await getDataInTimeframe('templates', '2 WEEKS').then(formatTableData),
+                await getDataInTimeframe('inspections', '2 WEEKS').then(formatTableData),
+            ]
         }
         Promise.all(promises).then((values) => {
             past24Hours['access_token_true'] = values[0];
@@ -36,7 +51,6 @@ const History = () => {
             past24Hours['users'] = values[3];
             past24Hours['templates'] = values[4];
             past24Hours['inspections'] = values[5];
-            console.log(past24Hours)
             return past24Hours
           }).then(past24Hours => {
 
@@ -158,7 +172,7 @@ const History = () => {
                     tension: 0.1
                 }]
             })
-        }).catch(err=>console.error(err.message))}, []
+        }).catch(err=>console.error(err.message))}, [dropDownValue]
     )
 
     let groupData = [];
@@ -175,9 +189,10 @@ const History = () => {
         <div>
             <div>
                 <label for="dropDown"></label>
-                <select value={dropDownValue} onChange={handleChangeDropDown}> {/* <-- will change charts*/}
+                <select class="btn btn-secondary dropdown-toggle" style={{marginLeft: "15px"}}value={dropDownValue} onChange={handleChangeDropDown}> {/* <-- will change charts*/}
                     <option value="last24Hours">Last 24 Hours</option>
                     <option value="last7Days">Last 7 Days</option>
+                    <option value="last2Weeks">Last 2 Weeks</option>
                 </select>
             </div>
 

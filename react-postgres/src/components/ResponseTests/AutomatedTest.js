@@ -351,26 +351,26 @@ const AutomatedTest = () => {
         <h1>Automated Response Time Tests</h1>
 
         <div style={{ textAlign: "end" }}>
-          {chartHasData && !getIsTesting && (<button onClick={clearClicked}>Clear Charts</button>)}
+          {chartHasData && !getIsTesting && (<button onClick={clearClicked} class="btn btn-warning" style={{marginRight: "15px"}}>Clear Charts</button>)}
         </div>
 
         {!getIsTesting && (
           <div>
-            <label for="interval">Interval Time:</label>
-            <select value={intervalValue} onChange={handleChangeIntervalTime}>
-              <option value="hour">1 hour</option>
-              <option value="thirty-min">30 minutes</option>
-              <option value="fifteen-min">15 minutes</option>
-              <option value="five-min">5 minutes</option>
-              <option value="one-min">1 minute</option>
-              <option value="thirty-secs">30 seconds</option>
-              <option value="ten-secs">10 seconds</option>
+            <label for="interval" style={{margin: "0px 5px 15px 0px"}}>Interval Time:</label>
+            <select class="btn btn-secondary dropdown-toggle" style={{marginRight: "10px"}} value={intervalValue} onChange={handleChangeIntervalTime}>
+              <option class="dropdown-item" value="hour">1 hour</option>
+              <option class="dropdown-item" value="thirty-min">30 minutes</option>
+              <option class="dropdown-item" value="fifteen-min">15 minutes</option>
+              <option class="dropdown-item" value="five-min">5 minutes</option>
+              <option class="dropdown-item" value="one-min">1 minute</option>
+              <option class="dropdown-item" value="thirty-secs">30 seconds</option>
+              <option class="dropdown-item" value="ten-secs">10 seconds</option>
             </select>
-            <button onClick={startTests}>Start Tests</button>
+            <button onClick={startTests} class="btn btn-primary">Start Tests</button>
           </div>
         )}
         {getIsTesting && (<RunningLogo />)}
-        {getIsTesting && (<button onClick={stopTests}>Stop Tests</button>)}
+        {getIsTesting && (<button onClick={stopTests} class="btn btn-danger">Stop Tests</button>)}
       </div>
 
       {/* Charts and Key data Details */}
