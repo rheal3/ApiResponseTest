@@ -7,15 +7,15 @@ const Navbar = () => {
         <nav>
       <div>
         <div>
-          <div style={{backgroundColor: 'silver'}}>
-            <NavLink style={{margin: '20px'}}
+          <div style={{backgroundColor: 'silver', display: "flex"}}>
+            <NavLink style={{margin: 'auto 20px'}}
               to="/"
               exact
             >
               Home
             </NavLink>
 
-            <NavLink style={{margin: '10px'}}
+            <NavLink
               to="/results_history"
               exact
             >

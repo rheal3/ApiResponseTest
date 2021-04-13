@@ -31,11 +31,11 @@ const Login = () => {
     }
 
     return (
-        <div class="input-group mb-3 d-flex justify-content-end">
-            {!apiToken && (<input class="input-group-text" style={{marginBottom: "15px"}} type="text" value={usernameValue} onChange={handleUsernameInputChange} placeholder="email" />)}
-            {!apiToken && (<input class="input-group-text" style={{marginBottom: "15px"}} type="password" value={passwordValue} onChange={handlePasswordInputChange} placeholder="password" />)}
-            {!apiToken && (<button class="btn btn-primary" style={{margin: "0px 15px 15px 0px"}} onClick={sendLoginRequest}>LOGIN</button>)}
-            {apiToken && (<button class="btn btn-primary" style={{margin: "0px 15px 15px 0px"}} onClick={handleLogout}>LOGOUT</button>)}
+        <div style={{padding: "10px"}}class="input-group mb-3 d-flex justify-content-end">
+            {!apiToken && (<input class="input-group-text" type="text" value={usernameValue} onChange={handleUsernameInputChange} placeholder="email" />)}
+            {!apiToken && (<input class="input-group-text" type="password" value={passwordValue} onChange={handlePasswordInputChange} placeholder="password" />)}
+            {!apiToken && (<button class="btn btn-primary" onClick={sendLoginRequest}>LOGIN</button>)}
+            {apiToken && (<button class="btn btn-primary" onClick={handleLogout}>LOGOUT</button>)}
         </div>
     )
 }
