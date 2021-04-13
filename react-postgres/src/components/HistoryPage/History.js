@@ -5,7 +5,6 @@ import MainChart from '../Charts/MainChart'
 import SideChart from '../Charts/sideChart'
 
 const History = () => {
-    const [state, setState] = useState({})
   const [dayMainChartState, setDayMainChartState] = useState({})
   const [dayLoginChartState, setDayLoginChartState] = useState({})
   const [dayGroupChartState, setDayGroupChartState] = useState({})
