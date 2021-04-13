@@ -6,10 +6,18 @@ import SideChart from '../Charts/sideChart'
 
 const History = () => {
     const [state, setState] = useState({})
-    let dropDown = 'last24Hours'
+    const [dropDownValue, setDropDownValue] = useState("last24Hours")
+
+    const handleChangeDropDown = (e) => {
+        let choice = e.target.value;
+        setDropDownValue(choice);
+      }
+    
+
     let promises = [];
+
     useEffect(async () => {
-        if (dropDown === 'last24Hours') {
+        if (dropDownValue === 'last24Hours') {
             promises = [
                 await getAccessDataInTimeframe('access_token', '24 HOURS', true).then(formatTableData),
                 await getAccessDataInTimeframe('access_token', '24 HOURS', false).then(formatTableData),
@@ -18,7 +26,7 @@ const History = () => {
                 await getDataInTimeframe('templates', '24 HOURS').then(formatTableData),
                 await getDataInTimeframe('inspections', '24 HOURS').then(formatTableData),
               ]
-        } else if (dropDown === 'last7Days') {
+        } else if (dropDownValue === 'last7Days') {
             promises = []
         }
         Promise.all(promises).then((values) => {
@@ -31,18 +39,70 @@ const History = () => {
             console.log(past24Hours)
             return past24Hours
           }).then(past24Hours => {
-            labels = past24Hours['groups']['date_time']
-            groupData = past24Hours['groups']['time']
-            userData = past24Hours['users']['time']
-            inspectionData = past24Hours['inspections']['time']
-            templateData = past24Hours['templates']['time']
-            acceptData = past24Hours['access_token_true']['time']
-            rejectData = past24Hours['access_token_false']['time']
+
+            let groupResponseTimes = past24Hours['groups']['time']
+            let groupDateTimes = past24Hours['groups']['date_time']
+
+            let userResponseTimes = past24Hours['users']['time']
+            let userDateTimes = past24Hours['users']['date_time']
+
+            let inspectionResponseTimes = past24Hours['inspections']['time']
+            let inspectionDateTimes = past24Hours['inspections']['date_time']
+
+            let templateResponseTimes = past24Hours['templates']['time']
+            let templateDateTimes = past24Hours['templates']['date_time']
+
+            let acceptResponseTimes = past24Hours['access_token_true']['time']
+            let acceptDateTimes = past24Hours['access_token_true']['date_time']
+
+            let rejectResponseTimes = past24Hours['access_token_false']['time']
+            let rejectDateTimes = past24Hours['access_token_false']['date_time']
+
+            for (let i=0;i<groupDateTimes.length;i++) {
+                groupData.push({
+                  x: groupDateTimes[i],
+                  y: groupResponseTimes[i]
+                })
+              }
+  
+            for (let i=0;i<userDateTimes.length;i++) {
+                userData.push({
+                    x: userDateTimes[i],
+                    y: userResponseTimes[i]
+                })
+            }
+
+            for (let i=0;i<inspectionDateTimes.length;i++) {
+                inspectionData.push({
+                    x: inspectionDateTimes[i],
+                    y: inspectionResponseTimes[i]
+                })
+            }
+
+            for (let i=0;i<templateDateTimes.length;i++) {
+                templateData.push({
+                    x: templateDateTimes[i],
+                    y: templateResponseTimes[i]
+                })
+            }
+            
+            for (let i=0;i<acceptDateTimes.length;i++) {
+                acceptData.push({
+                    x: acceptDateTimes[i],
+                    y: acceptResponseTimes[i]
+                })
+            }
+
+            for (let i=0;i<rejectDateTimes.length;i++) {
+                rejectData.push({
+                    x: rejectDateTimes[i],
+                    y: rejectResponseTimes[i]
+                })
+            }
 
             setState({
-                labels: labels,
                 datasets: [
-                          // Login Accept
+                    // Login Accept
                 {
                     label: 'Login Accept',
                     data: acceptData,
@@ -101,13 +161,12 @@ const History = () => {
         }).catch(err=>console.error(err.message))}, []
     )
 
-    let labels = ['start'];
-    let groupData = [0];
-    let acceptData = [0];
-    let rejectData = [0];    
-    let userData = [0];
-    let inspectionData = [0];
-    let templateData = [0];    
+    let groupData = [];
+    let acceptData = [];
+    let rejectData = [];    
+    let userData = [];
+    let inspectionData = [];
+    let templateData = [];    
     const past24Hours = {};
 
 
@@ -116,7 +175,7 @@ const History = () => {
         <div>
             <div>
                 <label for="dropDown"></label>
-                <select value='last24Hours'> {/* dropDownValue onChange={handleChangeDropDown} <-- will change charts*/}
+                <select value={dropDownValue} onChange={handleChangeDropDown}> {/* <-- will change charts*/}
                     <option value="last24Hours">Last 24 Hours</option>
                     <option value="last7Days">Last 7 Days</option>
                 </select>
@@ -135,19 +194,19 @@ const History = () => {
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Group Chart"}/>                      
+                        <SideChart title={"Group Chart"} data={groupData}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"User Chart"}/>                    
+                        <SideChart title={"User Chart"} data={userData}/>                    
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Template Chart"}/>                      
+                        <SideChart title={"Template Chart"} data={templateData}/>                      
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Inspection Chart"}/>                     
+                        <SideChart title={"Inspection Chart"} data={inspectionData}/>                     
                     </div>
                 </div>
             </div>
