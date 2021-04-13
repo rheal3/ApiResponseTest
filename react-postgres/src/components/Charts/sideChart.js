@@ -35,7 +35,12 @@ const SideChart = (props) => {
                     display: true,
                     labelString: "Date Time",
                     fontSize: 14
-                  }
+                  },
+                  type: 'time',
+                  time: {
+                   format: "YYYY-MM-DD hh:mm:ss"
+                  },
+                  distribution: 'linear'
                 }]
               },
               responsive: false

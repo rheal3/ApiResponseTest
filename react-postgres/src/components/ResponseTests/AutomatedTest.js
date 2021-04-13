@@ -34,13 +34,13 @@ const AutomatedTest = () => {
   const [intervalValue, setIntervalValue] = useState("ten-secs")
 
   let idCount = []; // a container for datapoint ID's for the current session
-  let labels = ['start']
-  let acceptData = [0]
-  let rejectData = [0]
-  let groupData = [0]
-  let userData = [0]
-  let templateData = [0]
-  let inspectionData = [0]
+
+  let acceptData = []
+  let rejectData = []
+  let groupData = []
+  let userData = []
+  let templateData = []
+  let inspectionData = []
 
 
   //handles the drop down menu
@@ -82,8 +82,7 @@ const AutomatedTest = () => {
 
       const intervalFunc = async () => {
         // if data for charts goes missing, grab from session storage (happened on stop tests then restart)
-        if (labels !== JSON.parse(sessionStorage.getItem('labels')) && sessionStorage['labels']) {
-          labels = JSON.parse(sessionStorage.getItem('labels'))
+        if (acceptData !== JSON.parse(sessionStorage.getItem('acceptData')) && sessionStorage['acceptData']) {
           acceptData = JSON.parse(sessionStorage.getItem('acceptData'))
           rejectData = JSON.parse(sessionStorage.getItem('rejectData'))
           groupData = JSON.parse(sessionStorage.getItem('groupData'))
@@ -127,16 +126,38 @@ const AutomatedTest = () => {
         await getLastDataPointTime('inspections'),
         await getDateTime('inspections')
       ]).then((values) => {
-        acceptData.push(values[0]['time'])
-        rejectData.push(values[1]['time'])
-        groupData.push(values[2]['time'])
-        userData.push(values[3]['time'])
-        templateData.push(values[4]['time'])
-        inspectionData.push(values[5]['time'])
-        labels.push(values[6])
+
+        acceptData.push({
+          x: values[0]['date_time'],
+          y: values[0]['time']
+        })
+
+        rejectData.push({
+          x: values[1]['date_time'],
+          y: values[1]['time']
+        })
+
+        groupData.push({
+          x: values[2]['date_time'],
+          y: values[2]['time']
+        })
+
+        userData.push({
+          x: values[3]['date_time'],
+          y: values[3]['time']
+        })
+        templateData.push({
+          x: values[4]['date_time'],
+          y: values[4]['time']
+        })
+
+        inspectionData.push({
+          x: values[5]['date_time'],
+          y: values[5]['time']
+        })
+
 
         // create backup of chart data
-        sessionStorage.setItem('labels', JSON.stringify(labels))
         sessionStorage.setItem('acceptData', JSON.stringify(acceptData))
         sessionStorage.setItem('rejectData', JSON.stringify(rejectData))
         sessionStorage.setItem('groupData', JSON.stringify(groupData))
@@ -153,7 +174,7 @@ const AutomatedTest = () => {
           'inspections': values[5]['id']
         })
 
-        if (labels.length > 2) {
+        if (acceptData.length > 2) {
           setChartHasData(true)
         }
       })
@@ -166,7 +187,7 @@ const AutomatedTest = () => {
     // Main Chart
     setMainChartState({
       // Login Accept
-      labels: labels,
+      // labels: labels,
       datasets: [{
         label: 'Login Accept',
         data: acceptData,
@@ -225,7 +246,7 @@ const AutomatedTest = () => {
 
     // Login Chart
     setLoginChartState({
-      labels: labels,
+      // labels: labels,
       datasets: [{
         label: 'Login Accept',
         data: acceptData,
@@ -247,7 +268,7 @@ const AutomatedTest = () => {
 
     // Group Chart
     setGroupChartState({
-      labels: labels,
+      // labels: labels,
       datasets: [{
         label: 'Group',
         data: groupData,
@@ -261,7 +282,7 @@ const AutomatedTest = () => {
 
     // User Chart
     setUserChartState({
-      labels: labels,
+      // labels: labels,
       datasets: [{
         label: 'User',
         data: userData,
@@ -275,7 +296,7 @@ const AutomatedTest = () => {
 
     // Template Chart
     setTemplateChartState({
-      labels: labels,
+      // labels: labels,
       datasets: [{
         label: 'Template',
         data: templateData,
@@ -289,7 +310,7 @@ const AutomatedTest = () => {
 
     // Inspection Chart
     setInspectionChartState({
-      labels: labels,
+      // labels: labels,
       datasets: [{
         label: 'Inspection',
         data: inspectionData,
@@ -305,7 +326,6 @@ const AutomatedTest = () => {
   // Handles clearing the charts
   const clearClicked = () => {
     setChartHasData(false)
-    labels = []
     acceptData = []
     rejectData = []
     groupData = []
@@ -315,15 +335,6 @@ const AutomatedTest = () => {
 
     updateChart()
 
-    labels = ['start']
-    acceptData = [0]
-    rejectData = [0]
-    groupData = [0]
-    userData = [0]
-    templateData = [0]
-    inspectionData = [0]
-
-    sessionStorage.setItem('labels', JSON.stringify(labels))
     sessionStorage.setItem('acceptData', JSON.stringify(acceptData))
     sessionStorage.setItem('rejectData', JSON.stringify(rejectData))
     sessionStorage.setItem('groupData', JSON.stringify(groupData))
@@ -455,7 +466,7 @@ async function runTests() {
 // Used to fix a reload bug
 window.onbeforeunload = () => {
   sessionStorage.removeItem('intervalID')
-  sessionStorage.removeItem('labels')
+  sessionStorage.removeItem('acceptData')
 }
 
 export default AutomatedTest

@@ -32,7 +32,12 @@ const MainChart = (props) => {
                   display: true,
                   labelString: "Date Time",
                   fontSize: 16
-                }
+                },
+                type: 'time',
+                time: {
+                 format: "YYYY-MM-DD hh:mm:ss"
+                },
+                distribution: 'linear'
               }]
             }
           }}

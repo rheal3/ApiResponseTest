@@ -3,7 +3,7 @@ import React from 'react'
 import MainChart from '../Charts/MainChart'
 import SideChart from '../Charts/sideChart'
 
-const Results = () => {
+const History = () => {
 // will need to get the required data for each of the charts and setup in format that chart can read from
     return (
         <div>
@@ -130,4 +130,4 @@ const Results = () => {
     )
 }
 
-export default Results
+export default History
