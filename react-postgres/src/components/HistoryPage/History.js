@@ -30,6 +30,9 @@ const History = () => {
             case "last2Weeks":
                 setChartTitle("Last 2 Weeks")
                 break;
+            case "lastMonth":
+                setChartTitle("Last Month")
+                break;
         }
     }
 

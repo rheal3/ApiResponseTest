@@ -12,7 +12,7 @@ const Navbar = () => {
               to="/"
               exact
             >
-              Home
+              Test
             </NavLink>
 
             <NavLink style={{margin: 'auto 20px'}}
