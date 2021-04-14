@@ -6,9 +6,14 @@ import { getAccessDataInTimeframe, formatTableData, getDataInTimeframe } from '.
 import { testLoginTime } from '../ResponseTests/LoginTest'
 
 import { mainChartDetails, loginChartDetails, setChartDetails } from './setCharts'
-import { setDataFunc } from './setData'
+import { setDataFunc, setPromiseTimeFrame } from './setData'
 
 const AutomatedHistory = () => {
+
+  const [dropDownValue, setDropDownValue] = useState("last24Hours")
+  const [chartTitle, setChartTitle] = useState("Last 24 Hours")
+
+
   // CHART STATES
   const [mainChartState, setMainChartState] = useState({});
   const [loginChartState, setLoginChartState] = useState({});
@@ -25,16 +30,36 @@ const AutomatedHistory = () => {
   const [templatesData, setTemplatesData] = useState([{}]);
   const [inspectionsData, setInspectionsData] = useState([{}]);
 
+  const handleChangeDropDown = (e) => {
+    let choice = e.target.value;
+    setDropDownValue(choice);
+    switch (choice) {
+        case "last24Hours":
+            setChartTitle("Last 24 Hours")
+            break;
+        case "last7Days":
+            setChartTitle("Last 7 Days")
+            break;
+        case "last2Weeks":
+            setChartTitle("Last 2 Weeks")
+            break;
+    }
+  }
+
   let allPastData = {};
+  let timeFrame = setPromiseTimeFrame(dropDownValue);
+
+
   const getStoredData = async () => {
-    return Promise.all([
-      await getAccessDataInTimeframe('access_token', '24 HOURS', true).then(formatTableData),
-      await getAccessDataInTimeframe('access_token', '24 HOURS', false).then(formatTableData),
-      await getDataInTimeframe('groups', '24 HOURS').then(formatTableData),
-      await getDataInTimeframe('users', '24 HOURS').then(formatTableData),
-      await getDataInTimeframe('templates', '24 HOURS').then(formatTableData),
-      await getDataInTimeframe('inspections', '24 HOURS').then(formatTableData)
-    ]).then(values => {
+    let promises = [
+      await getAccessDataInTimeframe('access_token', timeFrame, true).then(formatTableData),
+      await getAccessDataInTimeframe('access_token', timeFrame, false).then(formatTableData),
+      await getDataInTimeframe('groups', timeFrame).then(formatTableData),
+      await getDataInTimeframe('users', timeFrame).then(formatTableData),
+      await getDataInTimeframe('templates', timeFrame).then(formatTableData),
+      await getDataInTimeframe('inspections', timeFrame).then(formatTableData),
+    ]
+    return Promise.all(promises).then(values => {
       allPastData["access_token_true"] = values[0];
       allPastData["access_token_false"] = values[1];
       allPastData['groups'] = values[2];
@@ -95,11 +120,21 @@ const AutomatedHistory = () => {
 
   return (
     <div>
-      <button onClick={start}>Begin</button>
       <div>
+        <label for="dropDown"></label>
+        <select class="btn btn-secondary dropdown-toggle" style={{marginLeft: "15px"}} value={dropDownValue} onChange={handleChangeDropDown}> {/* <-- will change charts*/}
+          <option value="last24Hours">Last 24 Hours</option>
+          <option value="last7Days">Last 7 Days</option>
+          <option value="last2Weeks">Last 2 Weeks</option>
+        </select>
+      </div>
+      <button onClick={start}>Begin</button>
+      <div style={{margin: "20px 50px"}}>
+        <h2 style={{textAlign: 'center'}}>{chartTitle}</h2>
+
         <MainChart data={mainChartState}/>
       </div>
-      <div>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
         <div>
           <SideChart data={loginChartState} title={'Login Time'} />
         </div>
