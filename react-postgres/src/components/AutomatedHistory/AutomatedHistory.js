@@ -129,7 +129,7 @@ const AutomatedHistory = () => {
     }
     let intervalId = setInterval(intervalFunc, 10000)
     intervalFunc()
-  }).catch(err=>console.error(err.message))}, [dropDownValue]
+  }).catch(err=>console.error(err.message)), [dropDownValue]
   
 
   return (
@@ -168,6 +168,6 @@ const AutomatedHistory = () => {
       </div>
     </div>
   )
-}
+
 
 export default AutomatedHistory
