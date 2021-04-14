@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
+    "chart.js": "^2.5.0",
     "react": "^17.0.2",
     "react-chartjs-2": "^2.11.1",
     "react-dom": "^17.0.2",
@@ -39,7 +40,6 @@
   },
   "devDependencies": {
     "babel-install": "2.1.0",
-    "css-loader": "^4.3.0",
-    "webpack": "^4.44.2"
+    "css-loader": "^4.3.0"
   }
 }

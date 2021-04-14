@@ -5,18 +5,18 @@ import MainChart from '../Charts/MainChart'
 import SideChart from '../Charts/sideChart'
 
 const History = () => {
-    // const [state, setState] = useState({})
     const [dropDownValue, setDropDownValue] = useState("last24Hours")
     const [chartTitle, setChartTitle] = useState("Last 24 Hours")
     const [mainChartState, setMainChartState] = useState({})
-    const [dayLoginChartState, setDayLoginChartState] = useState({})
-    const [dayGroupChartState, setDayGroupChartState] = useState({})
-    const [dayUserChartState, setDayUserChartState] = useState({})
-    const [dayTemplateChartState, setDayTemplateChartState] = useState({})
-    const [dayInspectionChartState, setDayInspectionChartState] = useState({})
+    const [loginChartState, setLoginChartState] = useState({})
+    const [groupChartState, setGroupChartState] = useState({})
+    const [userChartState, setUserChartState] = useState({})
+    const [templateChartState, setTemplateChartState] = useState({})
+    const [inspectionChartState, setInspectionChartState] = useState({})
 
     let promises = [];
 
+    // handles the dropdown selection
     const handleChangeDropDown = (e) => {
         let choice = e.target.value;
         setDropDownValue(choice);
@@ -36,6 +36,7 @@ const History = () => {
         }
     }
 
+    // handles fetching the data from the database
     useEffect(async () => {
         if (dropDownValue === 'last24Hours') {
             promises = [
@@ -102,6 +103,7 @@ const History = () => {
             let rejectResponseTimes = past24Hours['access_token_false']['time']
             let rejectDateTimes = past24Hours['access_token_false']['date_time']
 
+            // format data to graph accepted format
             for (let i=0;i<groupDateTimes.length;i++) {
                 groupData.push({
                   x: groupDateTimes[i],
@@ -144,6 +146,7 @@ const History = () => {
                 })
             }
 
+            // update charts state
             setMainChartState({
                 datasets: [{
                       // Login Accept
@@ -202,7 +205,7 @@ const History = () => {
                 }]
               })
         
-              setDayLoginChartState({
+              setLoginChartState({
                 datasets: [{
                   label: 'Login Accept',
                   data: acceptData,
@@ -222,7 +225,7 @@ const History = () => {
                 }]
               })
         
-              setDayGroupChartState({
+              setGroupChartState({
                 datasets: [{
                   label: 'Group',
                   data: groupData,
@@ -234,7 +237,7 @@ const History = () => {
                 }]
               })
         
-              setDayUserChartState({
+              setUserChartState({
                 datasets: [{
                   label: 'User',
                   data: userData,
@@ -246,7 +249,7 @@ const History = () => {
                 }]
               })
         
-              setDayTemplateChartState({
+              setTemplateChartState({
                 datasets: [{
                   label: 'Template',
                   data: templateData,
@@ -258,7 +261,7 @@ const History = () => {
                 }]
               })
         
-              setDayInspectionChartState({
+              setInspectionChartState({
                 datasets: [{
                   label: 'Inspection',
                   data: inspectionData,
@@ -280,7 +283,6 @@ const History = () => {
     let templateData = [];
     const past24Hours = {};
 
-// will need to get the required data for each of the charts and setup in format that chart can read from
     return (
         <div>
             <div>
@@ -301,23 +303,23 @@ const History = () => {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Login Chart"} data={dayLoginChartState} />
+                        <SideChart title={"Login Chart"} data={loginChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Group Chart"} data={dayGroupChartState} />
+                        <SideChart title={"Group Chart"} data={groupChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"User Chart"} data={dayUserChartState} />
+                        <SideChart title={"User Chart"} data={userChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Template Chart"} data={dayTemplateChartState} />
+                        <SideChart title={"Template Chart"} data={templateChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Inspection Chart"} data={dayInspectionChartState} />
+                        <SideChart title={"Inspection Chart"} data={inspectionChartState} />
                     </div>
                 </div>
             </div>
