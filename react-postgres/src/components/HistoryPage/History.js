@@ -16,6 +16,7 @@ const History = () => {
 
     let promises = [];
 
+    // set dropDown value and chose and set title for page
     const handleChangeDropDown = (e) => {
         let choice = e.target.value;
         setDropDownValue(choice);
@@ -36,6 +37,7 @@ const History = () => {
     }
 
     useEffect(async () => {
+      // set promises called based on dropDown value, gets different timeframes for each
         if (dropDownValue === 'last24Hours') {
             promises = [
                 await getAccessDataInTimeframe('access_token', '24 HOURS', true).then(formatTableData),
@@ -73,6 +75,7 @@ const History = () => {
             await getDataInTimeframe('inspections', '1 MONTH').then(formatTableData),
         ]
     }
+        // call promises, set values to past24Hours obj 
         Promise.all(promises).then((values) => {
             past24Hours['access_token_true'] = values[0];
             past24Hours['access_token_false'] = values[1];
@@ -82,7 +85,7 @@ const History = () => {
             past24Hours['inspections'] = values[5];
             return past24Hours
           }).then(past24Hours => {
-
+            // set chart data points
             let groupResponseTimes = past24Hours['groups']['time']
             let groupDateTimes = past24Hours['groups']['date_time']
 
@@ -279,7 +282,6 @@ const History = () => {
     let templateData = [];
     const past24Hours = {};
 
-// will need to get the required data for each of the charts and setup in format that chart can read from
     return (
         <div>
             <div>
