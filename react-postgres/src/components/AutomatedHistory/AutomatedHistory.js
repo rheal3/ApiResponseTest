@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MainChart from '../Charts/MainChart'
 import SideChart from '../Charts/sideChart'
 
@@ -12,6 +12,7 @@ const AutomatedHistory = () => {
 
   const [dropDownValue, setDropDownValue] = useState("last24Hours")
   const [chartTitle, setChartTitle] = useState("Last 24 Hours")
+  const [timeFrame, setTimeFrame] = useState("24 HOURS")
 
 
   // CHART STATES
@@ -47,7 +48,7 @@ const AutomatedHistory = () => {
   }
 
   let allPastData = {};
-  let timeFrame = setPromiseTimeFrame(dropDownValue);
+  setTimeFrame(setPromiseTimeFrame(dropDownValue));
 
 
   const getStoredData = async () => {
@@ -104,7 +105,20 @@ const AutomatedHistory = () => {
     setTemplatesChartState(setChartDetails('Templates', templatesData))
   }
 
-  const start = async () => {
+  // const start = async () => {
+  //   await getStoredData()
+  //   updateChart()
+
+  //   const intervalFunc = async () => {
+  //     await testLoginTime()
+  //     await getStoredData()
+  //     updateChart()
+  //   }
+  //   let intervalId = setInterval(intervalFunc, 10000)
+  //   intervalFunc()
+  // }
+
+  useEffect(async () => {
     await getStoredData()
     updateChart()
 
@@ -115,7 +129,7 @@ const AutomatedHistory = () => {
     }
     let intervalId = setInterval(intervalFunc, 10000)
     intervalFunc()
-  }
+  }).catch(err=>console.error(err.message))}, [dropDownValue]
   
 
   return (
@@ -128,7 +142,7 @@ const AutomatedHistory = () => {
           <option value="last2Weeks">Last 2 Weeks</option>
         </select>
       </div>
-      <button onClick={start}>Begin</button>
+      {/* <button onClick={start}>Begin</button> */}
       <div style={{margin: "20px 50px"}}>
         <h2 style={{textAlign: 'center'}}>{chartTitle}</h2>
 
