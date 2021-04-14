@@ -79,14 +79,14 @@ export const loginChartDetails = (acceptData, rejectData) => {
     }
 }
 
-export const setChartDetails = (label, data) => {
+export const setChartDetails = (label, data, color) => {
     return {
         datasets: [{
             label: label,
             data: data,
             fill: false,
             borderColor: [
-              'rgb(128, 128, 0)'
+              color
             ],
             tension: 0.1
           }]

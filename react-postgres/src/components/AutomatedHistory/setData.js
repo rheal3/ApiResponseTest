@@ -6,23 +6,3 @@ export const setDataFunc = (allPastData, dataStore, keyName, i) => {
           })
           return old;
 }
-
-export const setPromiseTimeFrame = (dropDownValue) => {
-    let timeFrame;
-    switch (dropDownValue) {
-        case "last24Hours":
-            timeFrame = '24 HOURS';
-            break;
-        case "last7Days":
-            timeFrame = '7 DAYS';
-            break;
-        case "last2Weeks":
-            timeFrame = '2 WEEKS';
-            break;
-        case "lastMonth":
-            timeFrame = '1 MONTH';
-            break;
-                        
-    }
-    return timeFrame;
-}

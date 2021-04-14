@@ -1,17 +1,14 @@
 import React from 'react'
-import AutomatedTest from './components/ResponseTests/AutomatedTest'
 import AutomatedHistory from './components/AutomatedHistory/AutomatedHistory'
+import Login from './components/Login/Login'
 
-
-import Navbar from './components/Navbar'
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Results from './components/HistoryPage/History'
 
 const App = () => {
     sessionStorage.setItem('BASE_URL', "https://sandpit-api.safetyculture.io")
 
     return(
         <div>
+            <Login />
             <AutomatedHistory />
         </div>
         // <BrowserRouter>

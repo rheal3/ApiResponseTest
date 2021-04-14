@@ -1,12 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import MainChart from '../Charts/MainChart'
 import SideChart from '../Charts/sideChart'
 
 import { getAccessDataInTimeframe, formatTableData, getDataInTimeframe } from '../getPastData'
 import { testLoginTime } from '../ResponseTests/LoginTest'
+import GetGroups from '../ApiCalls/GetGroups'
+import GetUser from '../ApiCalls/GetUser'
+import SearchInspections from '../ApiCalls/SearchInspections'
+import SearchTemplates from '../ApiCalls/SearchTemplates'
+
+import RunningLogo from '../Running_Logo/RunningLogo'
 
 import { mainChartDetails, loginChartDetails, setChartDetails } from './setCharts'
-import { setDataFunc, setPromiseTimeFrame } from './setData'
+import { setDataFunc } from './setData'
+
 
 const AutomatedHistory = () => {
 
@@ -14,6 +21,9 @@ const AutomatedHistory = () => {
   const [chartTitle, setChartTitle] = useState("Last 24 Hours")
   const [timeFrame, setTimeFrame] = useState("24 HOURS")
 
+  const [getIsTesting, setIsTesting] = useState(false)
+  const [intervalTime, setIntervalTime] = useState(10000)
+  const [intervalValue, setIntervalValue] = useState("ten-secs")
 
   // CHART STATES
   const [mainChartState, setMainChartState] = useState({});
@@ -37,18 +47,56 @@ const AutomatedHistory = () => {
     switch (choice) {
         case "last24Hours":
             setChartTitle("Last 24 Hours")
+            setTimeFrame("24 HOURS")
             break;
         case "last7Days":
             setChartTitle("Last 7 Days")
+            setTimeFrame("7 DAYS")
             break;
         case "last2Weeks":
             setChartTitle("Last 2 Weeks")
+            setTimeFrame("2 WEEKS")
+            break;
+        case "lastMonth": 
+            setChartTitle("Last Month")
+            setTimeFrame("1 MONTH")
             break;
     }
   }
 
+  const handleChangeIntervalTime = (e) => {
+    let time = e.target.value;
+    let msTime = 0
+
+    switch (time) {
+      case "hour":
+        msTime = 3600000;
+        break;
+      case "thirty-min":
+        msTime = 1800000;
+        break;
+      case "fifteen-min":
+        msTime = 900000;
+        break;
+      case "five-min":
+        msTime = 300000;
+        break;
+      case "one-min":
+        msTime = 60000;
+        break;
+      case "thirty-secs":
+        msTime = 30000;
+        break;
+      case "ten-secs":
+        msTime = 10000;
+        break;
+    }
+    setIntervalTime(msTime);
+    setIntervalValue(time);
+  }
+
+
   let allPastData = {};
-  setTimeFrame(setPromiseTimeFrame(dropDownValue));
 
 
   const getStoredData = async () => {
@@ -93,61 +141,87 @@ const AutomatedHistory = () => {
         setInspectionsData(setDataFunc(allPastData, inspectionsData, 'inspections', i))
       }
 
-    }) 
+    })
   }
 
   const updateChart = async () => {
     setMainChartState(mainChartDetails(acceptData, rejectData, groupsData, usersData, templatesData, inspectionsData))
     setLoginChartState(loginChartDetails(acceptData, rejectData))
-    setGroupsChartState(setChartDetails('Groups', groupsData))
-    setUsersChartState(setChartDetails('Users', usersData))
-    setInspectionsChartState(setChartDetails('Inspections', inspectionsData))
-    setTemplatesChartState(setChartDetails('Templates', templatesData))
+    setGroupsChartState(setChartDetails('Groups', groupsData, 'rgb(128, 128, 0)'))
+    setUsersChartState(setChartDetails('Users', usersData, 'rgb(64, 64, 64)'))
+    setTemplatesChartState(setChartDetails('Templates', templatesData, 'rgb(128, 0, 128)'))
+    setInspectionsChartState(setChartDetails('Inspections', inspectionsData, 'rgb(0, 0, 255)'))
   }
 
-  // const start = async () => {
-  //   await getStoredData()
-  //   updateChart()
-
-  //   const intervalFunc = async () => {
-  //     await testLoginTime()
-  //     await getStoredData()
-  //     updateChart()
-  //   }
-  //   let intervalId = setInterval(intervalFunc, 10000)
-  //   intervalFunc()
-  // }
-
-  useEffect(async () => {
+  const startTests = async () => {
+    setIsTesting(true)
     await getStoredData()
     updateChart()
 
     const intervalFunc = async () => {
+      // run tests
       await testLoginTime()
+      await GetGroups()
+      await GetUser()
+      await SearchTemplates()
+      await SearchInspections()
+    
+      // get data
       await getStoredData()
       updateChart()
     }
-    let intervalId = setInterval(intervalFunc, 10000)
+    let intervalId = setInterval(intervalFunc, intervalTime)
     intervalFunc()
-  }).catch(err=>console.error(err.message)), [dropDownValue]
+    sessionStorage.setItem('intervalID', intervalId)
+  }
+
+  const stopTests = () => {
+    setIsTesting(false)
+    clearInterval(sessionStorage.getItem('intervalID'))
+  }
   
 
   return (
     <div>
-      <div>
-        <label for="dropDown"></label>
-        <select class="btn btn-secondary dropdown-toggle" style={{marginLeft: "15px"}} value={dropDownValue} onChange={handleChangeDropDown}> {/* <-- will change charts*/}
-          <option value="last24Hours">Last 24 Hours</option>
-          <option value="last7Days">Last 7 Days</option>
-          <option value="last2Weeks">Last 2 Weeks</option>
-        </select>
+      <div style={{ textAlign: "center" }}>
+        <h1>Automated Response Time Tests</h1>
+
+        {!getIsTesting && (
+          <div>
+            <label for="dropDown" ></label>
+            <select class="btn btn-secondary dropdown-toggle" style={{marginRight: "10px"}} value={dropDownValue} onChange={handleChangeDropDown}> {/* <-- will change charts*/}
+              <option value="last24Hours">Last 24 Hours</option>
+              <option value="last7Days">Last 7 Days</option>
+              <option value="last2Weeks">Last 2 Weeks</option>
+            </select>
+            <label for="interval" style={{margin: "0px 5px 15px 0px"}}>Interval Time:</label>
+            <select class="btn btn-secondary dropdown-toggle" style={{marginRight: "10px"}} value={intervalValue} onChange={handleChangeIntervalTime}>
+              <option class="dropdown-item" value="hour">1 hour</option>
+              <option class="dropdown-item" value="thirty-min">30 minutes</option>
+              <option class="dropdown-item" value="fifteen-min">15 minutes</option>
+              <option class="dropdown-item" value="five-min">5 minutes</option>
+              <option class="dropdown-item" value="one-min">1 minute</option>
+              <option class="dropdown-item" value="thirty-secs">30 seconds</option>
+              <option class="dropdown-item" value="ten-secs">10 seconds</option>
+            </select>
+            <button onClick={startTests} class="btn btn-primary">Start Tests</button>
+          </div>
+        )}
+        {getIsTesting && (<RunningLogo />)}
+        {getIsTesting && (<button onClick={stopTests} class="btn btn-danger">Stop Tests</button>)}
       </div>
+
+      <div>
+
+      </div>
+
       {/* <button onClick={start}>Begin</button> */}
       <div style={{margin: "20px 50px"}}>
         <h2 style={{textAlign: 'center'}}>{chartTitle}</h2>
 
         <MainChart data={mainChartState}/>
       </div>
+
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
         <div>
           <SideChart data={loginChartState} title={'Login Time'} />
@@ -168,6 +242,6 @@ const AutomatedHistory = () => {
       </div>
     </div>
   )
-
+  }
 
 export default AutomatedHistory
