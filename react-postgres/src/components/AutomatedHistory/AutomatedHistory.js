@@ -1,5 +1,6 @@
-import { useState } from "react"
-import MainChart from "../Charts/MainChart"
+import { useState } from 'react'
+import MainChart from '../Charts/MainChart'
+import SideChart from '../Charts/sideChart'
 
 import { getLoginDataPoint } from '../dataStorage'
 import { getAccessDataInTimeframe, formatTableData } from '../getPastData'
@@ -9,6 +10,7 @@ import { testLoginTime } from '../ResponseTests/LoginTest'
 const AutomatedHistory = () => {
   const [mainChartState, setMainChartState] = useState({});
   const [acceptData, setAcceptData] = useState([{}]);
+  const [loginChart, setLoginChart] = useState();
 
   let allPastData = {};
   const getStoredData = async () => {
@@ -49,19 +51,27 @@ const AutomatedHistory = () => {
   // }
 
   const updateChart = async () => {
-    setMainChartState(
-      {
-        datasets: [{
-          label: 'Login Accept',
-          data: acceptData,
-          fill: false,
-          borderColor: [
-            'rgb(0, 200, 0)'
-          ],
-          tension: 0.1
-        }]
-      }
-    )
+    setMainChartState({
+      datasets: [{
+        label: 'Login Accept',
+        data: acceptData,
+        fill: false,
+        borderColor: [
+          'rgb(0, 200, 0)'
+        ],
+        tension: 0.1}]
+      })
+
+    setLoginChart({
+      datasets: [{
+        label: 'Login Accept',
+        data: acceptData,
+        fill: false,
+        borderColor: [
+          'rgb(0, 200, 0)'
+        ],
+        tension: 0.1}]
+      })
   }
 
   const start = async () => {
@@ -73,7 +83,7 @@ const AutomatedHistory = () => {
       await getStoredData()
       updateChart()
     }
-    setInterval(intervalFunc, 10000)
+    let intervalId = setInterval(intervalFunc, 10000)
     intervalFunc()
   }
   
@@ -81,7 +91,12 @@ const AutomatedHistory = () => {
   return (
     <div>
       <button onClick={start}>Begin</button>
-      <MainChart data={mainChartState}/>
+      <div>
+        <MainChart data={mainChartState}/>
+      </div>
+      <div>
+        <SideChart data={loginChart} title={'Login Time'} />
+      </div>
     </div>
   )
 }
