@@ -5,15 +5,14 @@ import MainChart from '../Charts/MainChart'
 import SideChart from '../Charts/sideChart'
 
 const History = () => {
-    // const [state, setState] = useState({})
     const [dropDownValue, setDropDownValue] = useState("last24Hours")
     const [chartTitle, setChartTitle] = useState("Last 24 Hours")
     const [mainChartState, setMainChartState] = useState({})
-    const [dayLoginChartState, setDayLoginChartState] = useState({})
-    const [dayGroupChartState, setDayGroupChartState] = useState({})
-    const [dayUserChartState, setDayUserChartState] = useState({})
-    const [dayTemplateChartState, setDayTemplateChartState] = useState({})
-    const [dayInspectionChartState, setDayInspectionChartState] = useState({})
+    const [getLoginChartState, setLoginChartState] = useState({})
+    const [getGroupChartState, setGroupChartState] = useState({})
+    const [getUserChartState, setUserChartState] = useState({})
+    const [getTemplateChartState, setTemplateChartState] = useState({})
+    const [getInspectionChartState, setInspectionChartState] = useState({})
 
     let promises = [];
 
@@ -202,7 +201,7 @@ const History = () => {
                 }]
               })
         
-              setDayLoginChartState({
+              setLoginChartState({
                 datasets: [{
                   label: 'Login Accept',
                   data: acceptData,
@@ -222,7 +221,7 @@ const History = () => {
                 }]
               })
         
-              setDayGroupChartState({
+              setGroupChartState({
                 datasets: [{
                   label: 'Group',
                   data: groupData,
@@ -234,7 +233,7 @@ const History = () => {
                 }]
               })
         
-              setDayUserChartState({
+              setUserChartState({
                 datasets: [{
                   label: 'User',
                   data: userData,
@@ -246,7 +245,7 @@ const History = () => {
                 }]
               })
         
-              setDayTemplateChartState({
+              setTemplateChartState({
                 datasets: [{
                   label: 'Template',
                   data: templateData,
@@ -258,7 +257,7 @@ const History = () => {
                 }]
               })
         
-              setDayInspectionChartState({
+              setInspectionChartState({
                 datasets: [{
                   label: 'Inspection',
                   data: inspectionData,
@@ -301,23 +300,23 @@ const History = () => {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Login Chart"} data={dayLoginChartState} />
+                        <SideChart title={"Login Chart"} data={getLoginChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Group Chart"} data={dayGroupChartState} />
+                        <SideChart title={"Group Chart"} data={getGroupChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"User Chart"} data={dayUserChartState} />
+                        <SideChart title={"User Chart"} data={getUserChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Template Chart"} data={dayTemplateChartState} />
+                        <SideChart title={"Template Chart"} data={getTemplateChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Inspection Chart"} data={dayInspectionChartState} />
+                        <SideChart title={"Inspection Chart"} data={getInspectionChartState} />
                     </div>
                 </div>
             </div>
