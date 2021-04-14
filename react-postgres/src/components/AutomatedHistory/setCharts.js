@@ -9,7 +9,6 @@ export const mainChartDetails = (acceptData, rejectData, groupData, userData, te
             ],
             tension: 0.1
           }, {
-            // Login Reject
             label: 'Login Reject',
             data: rejectData,
             fill: false,
@@ -18,7 +17,6 @@ export const mainChartDetails = (acceptData, rejectData, groupData, userData, te
             ],
             tension: 0.1
           }, {
-            // Group 
             label: 'Group',
             data: groupData,
             fill: false,
@@ -27,7 +25,6 @@ export const mainChartDetails = (acceptData, rejectData, groupData, userData, te
             ],
             tension: 0.1
           }, {
-            // User
             label: 'User',
             data: userData,
             fill: false,
@@ -36,7 +33,6 @@ export const mainChartDetails = (acceptData, rejectData, groupData, userData, te
             ],
             tension: 0.1
           }, {
-            // Template
             label: 'Template',
             data: templateData,
             fill: false,
@@ -45,7 +41,6 @@ export const mainChartDetails = (acceptData, rejectData, groupData, userData, te
             ],
             tension: 0.1
           }, {
-            // Inspection
             label: 'Inspection',
             data: inspectionData,
             fill: false,

@@ -11,19 +11,6 @@ const App = () => {
             <Login />
             <AutomatedHistory />
         </div>
-        // <BrowserRouter>
-        //     <Navbar />
-        //     <div style={{ marginTop: 20 }}>
-        //         <Switch>
-        //             <Route exact path="/">
-        //                 <AutomatedTest />
-        //             </Route>
-        //             <Route path="/results_history">
-        //                 <Results />
-        //             </Route>
-        //         </Switch>
-        //     </div>
-        // </BrowserRouter>
     )
 }
 
