@@ -121,9 +121,9 @@ const AutomatedHistory = () => {
   const updateChart = async () => {
     setMainChartState(mainChartDetails(acceptData, rejectData, groupsData, usersData, templatesData, inspectionsData))
     setLoginChartState(loginChartDetails(acceptData, rejectData))
-    setGroupsChartState(setChartDetails('Groups', groupsData, 'rgb(128, 128, 0)'))
-    setUsersChartState(setChartDetails('Users', usersData, 'rgb(64, 64, 64)'))
-    setTemplatesChartState(setChartDetails('Templates', templatesData, 'rgb(128, 0, 128)'))
+    setGroupsChartState(setChartDetails('Groups', groupsData, 'rgb(255, 195, 0)'))
+    setUsersChartState(setChartDetails('Users', usersData, 'rgb(46, 230, 204)'))
+    setTemplatesChartState(setChartDetails('Templates', templatesData, 'rgb(232, 51, 255)'))
     setInspectionsChartState(setChartDetails('Inspections', inspectionsData, 'rgb(0, 0, 255)'))
   }
 

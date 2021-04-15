@@ -21,7 +21,7 @@ export const mainChartDetails = (acceptData, rejectData, groupData, userData, te
             data: groupData,
             fill: false,
             borderColor: [
-              'rgb(128, 128, 0)'
+              'rgb(255, 195, 0)'
             ],
             tension: 0.1
           }, {
@@ -29,7 +29,7 @@ export const mainChartDetails = (acceptData, rejectData, groupData, userData, te
             data: userData,
             fill: false,
             borderColor: [
-              'rgb(64, 64, 64)'
+              'rgb(46, 230, 204)'
             ],
             tension: 0.1
           }, {
@@ -37,7 +37,7 @@ export const mainChartDetails = (acceptData, rejectData, groupData, userData, te
             data: templateData,
             fill: false,
             borderColor: [
-              'rgb(128, 0, 128)'
+              'rgb(232, 51, 255)'
             ],
             tension: 0.1
           }, {
