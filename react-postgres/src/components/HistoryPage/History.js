@@ -8,15 +8,15 @@ const History = () => {
     const [dropDownValue, setDropDownValue] = useState("last24Hours")
     const [chartTitle, setChartTitle] = useState("Last 24 Hours")
     const [mainChartState, setMainChartState] = useState({})
-    const [getLoginChartState, setLoginChartState] = useState({})
-    const [getGroupChartState, setGroupChartState] = useState({})
-    const [getUserChartState, setUserChartState] = useState({})
-    const [getTemplateChartState, setTemplateChartState] = useState({})
-    const [getInspectionChartState, setInspectionChartState] = useState({})
+    const [loginChartState, setLoginChartState] = useState({})
+    const [groupChartState, setGroupChartState] = useState({})
+    const [userChartState, setUserChartState] = useState({})
+    const [templateChartState, setTemplateChartState] = useState({})
+    const [inspectionChartState, setInspectionChartState] = useState({})
 
     let promises = [];
 
-    // set dropDown value and chose and set title for page
+    // handles the dropdown selection
     const handleChangeDropDown = (e) => {
         let choice = e.target.value;
         setDropDownValue(choice);
@@ -36,6 +36,7 @@ const History = () => {
         }
     }
 
+    // handles fetching the data from the database
     useEffect(async () => {
       // set promises called based on dropDown value, gets different timeframes for each
         if (dropDownValue === 'last24Hours') {
@@ -104,6 +105,7 @@ const History = () => {
             let rejectResponseTimes = past24Hours['access_token_false']['time']
             let rejectDateTimes = past24Hours['access_token_false']['date_time']
 
+            // format data to graph accepted format
             for (let i=0;i<groupDateTimes.length;i++) {
                 groupData.push({
                   x: groupDateTimes[i],
@@ -146,6 +148,7 @@ const History = () => {
                 })
             }
 
+            // update charts state
             setMainChartState({
                 datasets: [{
                       // Login Accept
@@ -302,23 +305,23 @@ const History = () => {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'nowrap' }}>
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Login Chart"} data={getLoginChartState} />
+                        <SideChart title={"Login Chart"} data={loginChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Group Chart"} data={getGroupChartState} />
+                        <SideChart title={"Group Chart"} data={groupChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"User Chart"} data={getUserChartState} />
+                        <SideChart title={"User Chart"} data={userChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Template Chart"} data={getTemplateChartState} />
+                        <SideChart title={"Template Chart"} data={templateChartState} />
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                        <SideChart title={"Inspection Chart"} data={getInspectionChartState} />
+                        <SideChart title={"Inspection Chart"} data={inspectionChartState} />
                     </div>
                 </div>
             </div>
