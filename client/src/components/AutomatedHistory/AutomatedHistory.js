@@ -129,25 +129,29 @@ const AutomatedHistory = () => {
 
   // START TESTS :: GET PAST DATA -> UPDATE CHARTS W/DATA -> DEFINE INTERVAL FUNC -> SET INTERVAL TO RUN INTERVAL FUNC @ TIME -> INITIAL RUN OF INTERVAL FUNC
   const startTests = async () => {
-    setIsTesting(true)
-    await getStoredData()
-    updateChart()
-
-    const intervalFunc = async () => {
-      // run tests
-      await testLoginTime()
-      await GetGroups()
-      await GetUser()
-      await SearchTemplates()
-      await SearchInspections()
-    
-      // get data
+    if (sessionStorage['apiToken']) {
+      setIsTesting(true)
       await getStoredData()
       updateChart()
+  
+      const intervalFunc = async () => {
+        // run tests
+        await testLoginTime()
+        await GetGroups()
+        await GetUser()
+        await SearchTemplates()
+        await SearchInspections()
+      
+        // get data
+        await getStoredData()
+        updateChart()
+      }
+      let intervalId = setInterval(intervalFunc, intervalTime)
+      intervalFunc()
+      sessionStorage.setItem('intervalID', intervalId)
+    } else {
+      alert("LOGIN TO ACCESS SUPER COOL FEATURES")
     }
-    let intervalId = setInterval(intervalFunc, intervalTime)
-    intervalFunc()
-    sessionStorage.setItem('intervalID', intervalId)
   }
 
   const stopTests = () => {
